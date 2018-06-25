@@ -1,0 +1,15 @@
+<p class="jqLoaded">
+  balances works!
+</p>
+
+
+<input type="text" #key2>key<br>
+<input type="text" #val2>val<br><br>
+
+<button (click)="getFromLocal(key2.value)"> get</button><br>
+<button (click)="saveInLocal(key2.value, val2.value)"> set</button>
+<button (click)="console.log(data.length)"> sedfdfdt</button>
+
+<div *ngFor="let dat of data">
+  {{dat.name}}
+</div>
