@@ -71,18 +71,19 @@ export class SpendingComponent implements OnInit {
           cursor: 'pointer',
           dataLabels: {
             enabled: false
-          },
-          showInLegend: true
+          }
         }
       },
+      // credits: {
+      //   enabled: false
+      // },
       series: [{
         name: 'Brands',
-        colorByPoint: true,
         data: [{
           name: 'Chrome',
-          y: 61.41,
-          sliced: true,
-          selected: true
+          y: 61.41
+          // sliced: true,
+          // selected: true
         }, {
           name: 'Internet Explorer',
           y: 11.84

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, ChartModule } from 'angular-highcharts';
+import {Income} from "../../../models/Income";
+import {IncomeService} from "../service_income/income.service";
 
 @Component({
   selector: 'app-income',
@@ -13,12 +15,30 @@ export class IncomeComponent implements OnInit {
   currentEarned: number = 66000;
   currentSpent: number = 53730;
 
-  constructor() { }
-
   chart: Chart;
+
+  incomes: Income[] = [];
+
+  constructor(private serviceIncome: IncomeService) { }
+
+
 
   ngOnInit() {
     this.init();
+    this.getIncomes();
+  }
+
+  private getIncomes() {
+    console.log('calling');
+    this.serviceIncome.getIncomes().subscribe(incomes => {
+      // loop trough all the incomes
+      console.log('called');
+      for (let income of incomes) {
+        console.log('called 1');
+        this.incomes.push(income);
+      }
+    });
+
   }
 
   addPoint() {

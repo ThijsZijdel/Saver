@@ -12,7 +12,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)], // listener for browser url changes
+  exports: [ RouterModule ] // router directives available for appModule components
 })
 export class AppRoutingModule { }

@@ -4,6 +4,10 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {HttpClientModule} from '@angular/common/http';
+import {HttpModule} from "@angular/http";
+
 import { BillsComponent } from './sections/section_bills/bills/bills.component';
 import { ExpensesComponent } from './sections/section_expense/expenses/expenses.component';
 import { BudgetComponent } from './sections/section_budget/budget/budget.component';
@@ -26,10 +30,16 @@ import {SpendingService} from "./sections/section_spending/service_spending/spen
 import {BalanceService} from "./sections/section_balance/service_balance/balance.service";
 import {ExpenseService} from "./sections/section_expense/service_expense/expense.service";
 
+import {MessageService} from "./data/service_message/message.service";
+import {InMemoryDataService} from "./data/in-memory-data.service";
+
 import {StorageServiceModule} from "angular-webstorage-service";
 
 
 import { ChartModule } from 'angular-highcharts';
+
+
+
 
 @NgModule({
   declarations: [
@@ -53,7 +63,16 @@ import { ChartModule } from 'angular-highcharts';
     BrowserModule,
     AppRoutingModule,
     StorageServiceModule,
-    ChartModule
+    ChartModule,
+    HttpClientModule,
+    HttpModule,
+
+    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+    // and returns simulated server responses.
+    // Remove it when a real server is ready to receive requests.
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
   providers: [
     IncomeService,
@@ -61,7 +80,8 @@ import { ChartModule } from 'angular-highcharts';
     BillService,
     SpendingService,
     BalanceService,
-    ExpenseService
+    ExpenseService,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })
