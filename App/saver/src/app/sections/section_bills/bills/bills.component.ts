@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BillsComponent implements OnInit {
 
+  overdueTotal:number = 92.70;
+
   constructor() { }
 
   ngOnInit() {
