@@ -69,6 +69,8 @@ export class SpendingComponent implements OnInit {
         pie: {
           allowPointSelect: true,
           cursor: 'pointer',
+          colors:['#EB7092', '#D23556', '#FF6E1F', '#FFBB28', '#4BCA81',
+      '#00AEEF', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#B8E986'],
           dataLabels: {
             enabled: false
           }
@@ -79,6 +81,7 @@ export class SpendingComponent implements OnInit {
       },
       series: [{
         name: 'Brands',
+        innerSize: '75%',
         data: [{
           name: 'Chrome',
           y: 61.41
@@ -111,6 +114,10 @@ export class SpendingComponent implements OnInit {
     }, 2000);
 
     chart.ref$.subscribe(console.log);
+
+
+
+
   }
 
 }

@@ -81,6 +81,7 @@ export class IncomeComponent implements OnInit {
       chart: {
         type: 'column'
       },
+      colors:['#4BCA81', '#EEEEEE'],
       title: {
         text: 'Column chart with negative values'
       },
