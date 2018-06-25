@@ -16,6 +16,7 @@ import { AddExpenseComponent } from './add-expense/add-expense.component';
 import { AddBalanceComponent } from './add-balance/add-balance.component';
 import { AddIncomeComponent } from './add-income/add-income.component';
 import { AddBudgetComponent } from './add-budget/add-budget.component';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AddBudgetComponent } from './add-budget/add-budget.component';
     AddExpenseComponent,
     AddBalanceComponent,
     AddIncomeComponent,
-    AddBudgetComponent
+    AddBudgetComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
