@@ -3,20 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BillsComponent } from './bills/bills.component';
-import { ExpensesComponent } from './expenses/expenses.component';
-import { BudgetComponent } from './budget/budget.component';
-import { SpendingComponent } from './spending/spending.component';
-import { BalancesComponent } from './balances/balances.component';
-import { IncomeComponent } from './income/income.component';
-import { PersonalComponent } from './personal/personal.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { AddBillComponent } from './add-bill/add-bill.component';
-import { AddExpenseComponent } from './add-expense/add-expense.component';
-import { AddBalanceComponent } from './add-balance/add-balance.component';
-import { AddIncomeComponent } from './add-income/add-income.component';
-import { AddBudgetComponent } from './add-budget/add-budget.component';
-import { MessageComponent } from './message/message.component';
 
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {HttpClientModule} from '@angular/common/http';
@@ -44,13 +30,17 @@ import {SpendingService} from "./sections/section_spending/service_spending/spen
 import {BalanceService} from "./sections/section_balance/service_balance/balance.service";
 import {ExpenseService} from "./sections/section_expense/service_expense/expense.service";
 
+import {MessageComponent} from "./message/message.component";
 import {MessageService} from "./data/service_message/message.service";
 import {InMemoryDataService} from "./data/in-memory-data.service";
 
 import {StorageServiceModule} from "angular-webstorage-service";
 
 
+
 import { ChartModule } from 'angular-highcharts';
+
+
 
 
 
@@ -71,7 +61,8 @@ import { ChartModule } from 'angular-highcharts';
     AddBalanceComponent,
     AddIncomeComponent,
     AddBudgetComponent,
-    MessageComponent
+    MessageComponent,
+    BusinessComponent
   ],
   imports: [
     BrowserModule,

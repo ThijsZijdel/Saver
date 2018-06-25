@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {PersonalComponent} from "./views/personal/personal.component";
+import {MessageComponent} from "./message/message.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: PersonalComponent },
   // { path: 'current/:id', component: CurrentTaskComponent },
+  {path: 'console', component: MessageComponent},
   {path: '404', component: PersonalComponent},
   {path: '**', redirectTo: '/404'}
 

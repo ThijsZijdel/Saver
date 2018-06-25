@@ -74,9 +74,9 @@ export class SpendingComponent implements OnInit {
           }
         }
       },
-      // credits: {
-      //   enabled: false
-      // },
+       credits: {
+         enabled: false
+      },
       series: [{
         name: 'Brands',
         data: [{
