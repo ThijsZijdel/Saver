@@ -28,6 +28,9 @@ import {ExpenseService} from "./sections/section_expense/service_expense/expense
 
 import {StorageServiceModule} from "angular-webstorage-service";
 
+
+import { ChartModule } from 'angular-highcharts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +52,8 @@ import {StorageServiceModule} from "angular-webstorage-service";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StorageServiceModule
+    StorageServiceModule,
+    ChartModule
   ],
   providers: [
     IncomeService,
