@@ -1,0 +1,30 @@
+.navigation {
+  width: 100%;
+  height: 65px;
+  background: #0076DE;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.navigation .left,
+.navigation .center,
+.navigation .right{
+  width: 33%;
+  float: left;
+}
+.navigation .center {
+  text-align: center;
+}
+.navigation .right {
+  text-align: right;
+}
+
+.navigation img {
+  margin: 0 auto;
+  width: 75px;
+}
+
+.navigation a {
+  color: #fff;
+  margin: 15px 20px;
+}
