@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { billDay} from "../../../models/billDay";
 
 @Component({
   selector: 'app-bills',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bills.component.css']
 })
 export class BillsComponent implements OnInit {
+
+  monthName: string;
 
   datum: Date;
   dayNumber: number;
@@ -20,34 +23,39 @@ export class BillsComponent implements OnInit {
   lastDay: Date;
   lastDayNumber: number;
 
-  daysA: number[] = [];
-  daysB: number[];
-  daysC: number[];
-  daysD: number[];
+  daysA: billDay[] = [];
+  daysB: billDay[] = [];
+  daysC: billDay[] = [];
+  daysD: billDay[] = [];
+  daysE: billDay[] = [];
+
+  months: string[] = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+  ];
 
   constructor() { }
 
   ngOnInit() {
-    this.getDate();
+    this.getDate(new Date());
 
-    let numberDay:number = 1;
+    this.initializeCalRows(this.month);
 
-    for (let i = 0; i != 7; i++ ){
-      if (i >= this.firstDayNumber) {
-        this.daysA[i]=numberDay;
-        numberDay++;
-      } else {
-        this.daysA[i] = 99;
-      }
-    }
-
-    console.log(this.daysA.length)
 
   }
 
-  getDate(){
-    this.datum = new Date();
-
+  getDate(datum: Date){
+    this.datum = datum;
     this.dayNumber = this.datum.getDay();
     this.month = this.datum.getMonth();
     this.year = this.datum.getFullYear();
@@ -60,6 +68,9 @@ export class BillsComponent implements OnInit {
 
     this.firstDayNumber = this.firstDay.getDay();
     this.lastDayNumber = this.lastDay.getDay();
+
+
+    this.monthName = this.months[this.month];
   }
 
 
@@ -69,5 +80,76 @@ export class BillsComponent implements OnInit {
   }
 
 
+  protected prefMonth() {
 
+
+    this.getDate(new Date(this.datum.setMonth(this.datum.getMonth()-1)) );
+
+    this.initializeCalRows(this.month);
+  }
+
+  protected nextMonth() {
+    this.getDate(new Date(this.datum.setMonth(this.datum.getMonth()+2)) );
+    this.initializeCalRows(this.month)
+  }
+
+  protected initializeCalRows(monthIndex:number) {
+    let numberDay:number = 1;
+
+    let prevMonth = new Date(this.datum.setMonth(this.datum.getMonth()-1));
+    let lastDayNumber = new Date(prevMonth.getFullYear(),prevMonth.getMonth() + 1, 0).getDay() -1;
+    let prevMonthDays = this.getDaysInMonth(prevMonth.getMonth(), prevMonth.getFullYear());
+
+
+    let countPrevMonthDaysDisplayed = 0;
+
+    for (let i = 0; i != 7; i++ ){
+      if (i >= this.firstDayNumber-1) {
+
+        this.daysA[i] = new billDay(numberDay, monthIndex, false)
+        numberDay++;
+      } else {
+
+
+
+
+
+
+        this.daysA[i] = new billDay(prevMonthDays-lastDayNumber, monthIndex, true)
+        lastDayNumber--;
+      }
+    }
+
+    for (let i = 0; i != 7; i++ ){
+      this.daysB[i] = new billDay(numberDay, monthIndex, false)
+      numberDay++;
+
+    }
+
+    for (let i = 0; i != 7; i++ ){
+
+      this.daysC[i] = new billDay(numberDay, monthIndex, false);
+      numberDay++;
+
+    }
+
+    for (let i = 0; i != 7; i++ ){
+
+      this.daysD[i] = new billDay(numberDay, monthIndex, false);
+      numberDay++;
+
+    }
+
+    let reset:number = 1;
+    for (let i = 0; i != 7; i++ ){
+      if (i <= this.lastDayNumber-1) {
+        this.daysE[i] = new billDay(numberDay, monthIndex, false);
+        numberDay++;
+      } else {
+
+        this.daysE[i] = new billDay(reset, monthIndex, true);
+        reset++;
+      }
+    }
+  }
 }

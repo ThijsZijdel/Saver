@@ -65,6 +65,12 @@ section.calendar form label.day span {
   transition: all .2s linear;
   cursor: pointer;
 }
+section.calendar form label.day.reset span{
+  background: #999;
+}
+section.calendar form label.day.today span {
+  border-color: orangered;
+}
 section.calendar form label.day span:hover {
   border-color: #e7d84f;
 }

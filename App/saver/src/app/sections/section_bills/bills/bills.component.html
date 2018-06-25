@@ -1,5 +1,5 @@
 <section class='calendar'>
-  <h1>August 2015</h1>
+  <button (click)="prefMonth()"> < </button> <h1>{{monthName}} {{year}}</h1> <button (click)="nextMonth()"> > </button>
   <form action='#'>
     <label class='weekday'>Mo</label>
     <label class='weekday'>Tu</label>
@@ -11,22 +11,101 @@
 
     <div *ngFor="let day of daysA">
 
-      <label class='day invalid' data-day='0' *ngIf="day == 99">
+      <label class='day today' data-day='5' *ngIf="day.today">
+        <input class='appointment' date-day='1' placeholder='What would you like to do?' required='true' type='text'>
+        <span>{{day.dayIndex}}</span>
+        <em></em>
+      </label>
+
+      <label class='day reset' data-day='5' *ngIf="day.isReset">
+        <input class='appointment' date-day='1' placeholder='What would you like to do?' required='true' type='text'>
+        <span>{{day.dayIndex}}</span>
+        <em></em>
+      </label>
+      <label class='day' data-day='5' *ngIf="day.dayIndex != 99 && !day.today && !day.isReset">
+        <input class='appointment' date-day='1' placeholder='What would you like to do?' required='true' type='text'>
+        <span>{{day.dayIndex}}</span>
+        <em></em>
+      </label>
+
+    </div>
+
+    <div *ngFor="let day of daysB">
+
+      <label class='day invalid' data-day='0' *ngIf="day.dayIndex == 99">
         <input class='appointment' date-day='-4' placeholder='What would you like to do?' required='true' type='text'>
         <span>-4</span>
         <em></em>
       </label>
 
 
-      <label class='day' data-day='5' *ngIf="day != 99">
+      <label class='day' data-day='5' *ngIf="day.dayIndex != 99">
         <input class='appointment' date-day='1' placeholder='What would you like to do?' required='true' type='text'>
-        <span>{{day}}</span>
+        <span>{{day.dayIndex}}</span>
         <em></em>
       </label>
-      
+
     </div>
 
+    <div *ngFor="let day of daysC">
 
+      <label class='day invalid' data-day='0' *ngIf="day.dayIndex == 99">
+        <input class='appointment' date-day='-4' placeholder='What would you like to do?' required='true' type='text'>
+        <span>-4</span>
+        <em></em>
+      </label>
+
+
+      <label class='day' data-day='5' *ngIf="day.dayIndex != 99">
+        <input class='appointment' date-day='1' placeholder='What would you like to do?' required='true' type='text'>
+        <span>{{day.dayIndex}}</span>
+        <em></em>
+      </label>
+
+    </div>
+
+    <div *ngFor="let day of daysD">
+
+    <label class='day invalid' data-day='0' *ngIf="day.dayIndex == 99">
+      <input class='appointment' date-day='-4' placeholder='What would you like to do?' required='true' type='text'>
+      <span>-4</span>
+      <em></em>
+    </label>
+
+
+    <label class='day' data-day='5' *ngIf="day.dayIndex != 99">
+      <input class='appointment' date-day='1' placeholder='What would you like to do?' required='true' type='text'>
+      <span>{{day.dayIndex}}</span>
+      <em></em>
+    </label>
+
+  </div>
+
+    <div *ngFor="let day of daysE">
+
+
+
+      <label class='day today' data-day='5' *ngIf="day.today">
+        <input class='appointment' date-day='1' placeholder='What would you like to do?' required='true' type='text'>
+        <span>{{day.dayIndex}}</span>
+        <em></em>
+      </label>
+
+      <label class='day reset' data-day='5' *ngIf="day.isReset">
+        <input class='appointment' date-day='1' placeholder='What would you like to do?' required='true' type='text'>
+        <span>{{day.dayIndex}}</span>
+        <em></em>
+      </label>
+      <label class='day' data-day='5' *ngIf="day.dayIndex != 99 && !day.today && !day.isReset">
+        <input class='appointment' date-day='1' placeholder='What would you like to do?' required='true' type='text'>
+        <span>{{day.dayIndex}}</span>
+        <em></em>
+      </label>
+
+
+    </div>
+
+<!--
     <label class='day invalid' data-day='0'>
       <input class='appointment' date-day='-4' placeholder='What would you like to do?' required='true' type='text'>
       <span>-4</span>
@@ -208,7 +287,7 @@
       <span>31</span>
       <em></em>
     </label>
-
+-->
 
     <div class='clearfix'></div>
   </form>
