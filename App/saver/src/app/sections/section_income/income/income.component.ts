@@ -10,6 +10,9 @@ export class IncomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
+
+
 
 }
