@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { BillsComponent } from './sections/section_bills/bills/bills.component';
 import { ExpensesComponent } from './sections/section_expense/expenses/expenses.component';
 import { BudgetComponent } from './sections/section_budget/budget/budget.component';
@@ -25,6 +26,8 @@ import {SpendingService} from "./sections/section_spending/service_spending/spen
 import {BalanceService} from "./sections/section_balance/service_balance/balance.service";
 import {ExpenseService} from "./sections/section_expense/service_expense/expense.service";
 
+import {StorageServiceModule} from "angular-webstorage-service";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +48,8 @@ import {ExpenseService} from "./sections/section_expense/service_expense/expense
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StorageServiceModule
   ],
   providers: [
     IncomeService,
