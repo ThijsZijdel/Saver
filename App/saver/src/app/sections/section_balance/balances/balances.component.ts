@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
+import * as $ from "jquery"
 
 @Component({
   selector: 'app-balances',
@@ -15,12 +16,15 @@ export class BalancesComponent implements OnInit {
   public data:any=[];
 
   ngOnInit() {
+    $('.jqLoaded').css('color','blue');
   }
 
 
 
   saveInLocal(key, val): void {
     this.storage.set(key, val);
+
+
     this.data[key]= this.storage.get(key);
   }
 
