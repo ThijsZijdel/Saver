@@ -13,9 +13,7 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class IncomeService {
 
   private incomeUrl = 'api/incomes';  // URL to web api
@@ -25,20 +23,20 @@ export class IncomeService {
     private messageService: MessageService) { }
 
   /**
-   * get tasks from the server
+   * get incomes from the server
    * @author Thijs Zijdel
    */
   getIncomes(): Observable<Income[]> {
     const url = `${this.incomeUrl}?action=getAll`;
-    return this.http.get<Income[]>(url)
+    return this.http.get<Income[]>(this.incomeUrl)
       .pipe(
-        tap(tasks => this.log(`fetched income`)),
+        tap(incomes => this.log(`fetched incomes`)),
         catchError(this.handleError('getIncome', []))
       );
   }
 
   /**
-   * get task by id.
+   * get income by id.
    * @author Thijs Zijdel
    */
   getIncome(id: number): Observable<Income> {
@@ -60,7 +58,7 @@ export class IncomeService {
   }
 
   /**
-   * Log a TaskService message with the MessageService
+   * Log a incomeService message with the MessageService
    * @author Thijs Zijdel
    */
   private log(message: string) {
@@ -90,60 +88,60 @@ export class IncomeService {
 
 
   /**
-   * update the task on the server
+   * update the income on the server
    * note: PUT
    * @author Thijs Zijdel
    */
-  updateTask (task: Income): Observable<any> {
+  updateIncome (income: Income): Observable<any> {
     const url = `${this.incomeUrl}?action=edit`;
 
-    return this.http.put(url, task, httpOptions).pipe(
-      tap(_ => this.log(`updated task id=${task.id}`)),
-      catchError(this.handleError<any>('updateTask'))
+    return this.http.put(url, income, httpOptions).pipe(
+      tap(_ => this.log(`updated income id=${income.id}`)),
+      catchError(this.handleError<any>('updateIncome'))
     );
   }
 
   /**
-   * add a new task to the server
+   * add a new income to the server
    * note: POST
    */
-  addTask (task: Income): Observable<Income> {
+  addIncome (income: Income): Observable<Income> {
     const url = `${this.incomeUrl}?action=add`;
 
-    return this.http.post<Income>(url, task, httpOptions).pipe(
-      tap((income: Income) => this.log(`added task w/ id=${income.id}`)),
-      catchError(this.handleError<Income>('addTask'))
+    return this.http.post<Income>(url, income, httpOptions).pipe(
+      tap((income: Income) => this.log(`added income w/ id=${income.id}`)),
+      catchError(this.handleError<Income>('addIncome'))
     );
   }
 
   /**
-   * delete the task from the server
+   * delete the income from the server
    * note: DELETE
    * @author Thijs Zijdel
    */
-  deleteTask (task: Income | number): Observable<Income> {
-    const id = typeof task === 'number' ? task : task.id;
+  deleteIncome (income: Income | number): Observable<Income> {
+    const id = typeof income === 'number' ? income : income.id;
     const url = `${this.incomeUrl}?action=delete&id=${id}`;
 
     return this.http.delete<Income>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted task id=${id}`)),
-      catchError(this.handleError<Income>('deleteTask'))
+      tap(_ => this.log(`deleted incom id=${id}`)),
+      catchError(this.handleError<Income>('deleteIncome'))
     );
   }
 
   /**
-   * get tasks whose name contains search term
+   * get incomes whose name contains search term
    * note: GET
    * @author Thijs Zijdel
    */
-  searchTasks(term: string): Observable<Income[]> {
+  searchIncomes(term: string): Observable<Income[]> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
       return of([]);
     }
-    return this.http.get<Income[]>(`api/tasks/?name=${term}`).pipe(
-      tap(_ => this.log(`found tasks matching "${term}"`)),
-      catchError(this.handleError<Income[]>('searchTasks', []))
+    return this.http.get<Income[]>(`api/incomes/?name=${term}`).pipe(
+      tap(_ => this.log(`found incomes matching "${term}"`)),
+      catchError(this.handleError<Income[]>('searchIncomes', []))
     );
   }
 

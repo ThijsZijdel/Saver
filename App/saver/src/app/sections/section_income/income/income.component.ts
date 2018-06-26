@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, ChartModule } from 'angular-highcharts';
 import {Income} from "../../../models/Income";
 import {IncomeService} from "../service_income/income.service";
+import {SpendingService} from "../../section_spending/service_spending/spending.service";
+import {Spending} from "../../../models/Spending";
 
 @Component({
   selector: 'app-income',
@@ -15,69 +17,71 @@ export class IncomeComponent implements OnInit {
   currentEarned: number = 66000;
   currentSpent: number = 53730;
 
-  chart: Chart;
+  chartIncome: Chart;
 
   incomes: Income[] = [];
+  incomeData: number[] = [];
 
-  constructor(private serviceIncome: IncomeService) { }
+  spendings: Spending[] = [];
+  spendingData: number[] = [];
+
+  savedData: number[] = [];
+
+  constructor(private serviceIncome: IncomeService,
+              private serviceSpending: SpendingService) { }
 
 
 
   ngOnInit() {
-    this.init();
     this.getIncomes();
+    this.getSpendings();
+    this.calculateSaved();
+
+
+    this.calculateAvg();
+
+    this.init();
   }
 
   private getIncomes() {
-    console.log('calling');
     this.serviceIncome.getIncomes().subscribe(incomes => {
       // loop trough all the incomes
-      console.log('called');
       for (let income of incomes) {
-        console.log('called 1');
         this.incomes.push(income);
+
+        this.incomeData.push(income.amount);
       }
     });
-
   }
+  private getSpendings() {
+    this.serviceSpending.getSpendings().subscribe(spendings => {
+      // loop trough all the incomes
+      for (let spending of spendings) {
+        this.spendings.push(spending);
 
-  addPoint() {
-    if (this.chart) {
-      this.chart.addPoint(Math.floor(Math.random() * 10));
-    } else {
-      alert('init chart, first!');
-    }
-  }
+        this.spendingData.push(-Math.abs(spending.amount));
 
-  addSerie() {
-    this.chart.addSerie({
-      name: 'Line ' + Math.floor(Math.random() * 10),
-      data: [
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10)
-      ]
+      }
     });
   }
 
-  removePoint() {
-    this.chart.removePoint(this.chart.ref.series[0].data.length - 1);
-  }
+  private calculateSaved() {
 
-  removeSerie() {
-    this.chart.removeSerie(this.chart.ref.series.length - 1);
+    for(let i = 0; i < this.incomes.length; i++){
+
+      if(this.spendings[i].monthName == this.incomes[i].monthName) {
+        this.savedData[i] = Math.round(-Math.abs(this.spendings[i].amount) + this.incomes[i].amount);
+
+      }
+
+    }
   }
 
   init() {
 
+    this.calculateAvg();
 
-    let chart = new Chart({
+    let chartIncomed = new Chart({
       chart: {
         type: 'column'
       },
@@ -104,33 +108,36 @@ export class IncomeComponent implements OnInit {
       },
       series: [{
         name: 'Income',
-        data: [5, 3, 1, 4, 7, null, 4],
+        data: this.incomeData,
         stack: 'overview'
       }, {
         name: 'Saved',
-        data: [3, 1, -1, 2, 4, null, 3]
+        data: this.savedData
       }, {
         name: 'Expenses',
-        data: [-2, -2, -3, -3, -1, null, -1],
+        data: this.spendingData,
         stack: 'overview'
-      }, {
-        name: 'IncomeCur',
-        data: [null, null, null, null, null, 6, null],
-        stack: 'overviewCur'
-      }, {
-        name: 'ExpensesCur',
-        data: [null, null, null, null, null,-4,null],
-        stack: 'overviewCur'
       }]
     });
-    //chart.addPoint(4);
-    this.chart = chart;
-    // chart.addPoint(5);
-    // setTimeout(() => {
-    //   chart.addPoint(6);
-    // }, 2000);
 
-    chart.ref$.subscribe(console.log);
+    this.chartIncome = chartIncomed;
+
+
+    chartIncomed.ref$.subscribe(console.log);
   }
 
+
+  private calculateAvg() {
+    let sum: number = 0;
+
+    for(let data of this.incomeData){
+      sum+=data;
+    }
+
+    this.avgIncome = Math.round(sum/this.incomeData.length);
+  }
+
+
+
 }
+
