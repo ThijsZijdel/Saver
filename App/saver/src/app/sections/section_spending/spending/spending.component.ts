@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Chart} from "angular-highcharts";
 import {SpendingService} from "../service_spending/spending.service";
 import {Spending} from "../../../models/Spending";
+import {BehaviorSubject} from "rxjs/index";
 
 @Component({
   selector: 'app-spending',
@@ -20,7 +21,10 @@ export class SpendingComponent implements OnInit {
 
   ngOnInit() {
     this.getSpendings();
-    this.init();
+
+    setTimeout(()=>{
+      this.init();
+    }, 500);
   }
 
 
@@ -31,11 +35,14 @@ export class SpendingComponent implements OnInit {
 
 
     this.serviceSpending.getSpendings().subscribe(spendings => {
+      this.spendingData = [];
+      this.spendings = [];
+
       // loop trough all the incomes
       for (let spending of spendings) {
         this.spendings.push(spending);
 
-        this.spendingData.push( new dataObj(spending.name, spending.amount) );
+        this.spendingData.push( new dataObj(spending.monthName, spending.amount) );
 
       }
     });
@@ -45,44 +52,49 @@ export class SpendingComponent implements OnInit {
 
 
   init() {
-    let chart = new Chart({
-      chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-      },
-      title: {
-        text: ''
-      },
-      tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: 'pointer',
-          colors:['#EB7092', '#D23556', '#FF6E1F', '#FFBB28', '#4BCA81',
-      '#00AEEF', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#B8E986'],
-          dataLabels: {
-            enabled: false
+    console.log(this.spendingData.length+": spend chart")
+
+      let chart = new Chart({
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: ''
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            colors: ['#EB7092', '#D23556', '#FF6E1F', '#FFBB28', '#4BCA81',
+              '#00AEEF', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#B8E986'],
+            dataLabels: {
+              enabled: false
+            }
           }
-        }
-      },
-       credits: {
-         enabled: false
-      },
-      series: [{
-        name: 'Categories',
-        innerSize: '75%',
-        data: this.spendingData
-      }]
-    });
+        },
+        credits: {
+          enabled: false
+        },
+        series: [{
+          name: 'Categories',
+          innerSize: '75%',
+          data: this.spendingData
+        }]
+
+      });
 
 
-    this.chart = chart;
+      this.chart = chart;
 
-    chart.ref$.subscribe(console.log);
+
+      chart.ref$.subscribe(console.log);
+
 
 
 

@@ -1,6 +1,12 @@
-<h1>Spending</h1>
+<h1 class="clickable" (click)="init()">Spending</h1>
 
 
-  <div [chart]="chart"></div>
+<div class="row">
+  <div class="col-md-6">
+    <div [chart]="chart"></div>
+  </div>
+  <div class="col-md-6">
+    <h4>List</h4>
+  </div>
+</div>
 
-<button (click)="init()">t</button>
