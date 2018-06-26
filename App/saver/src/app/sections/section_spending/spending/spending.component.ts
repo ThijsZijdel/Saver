@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Chart} from "angular-highcharts";
+import {SpendingService} from "../service_spending/spending.service";
+import {Spending} from "../../../models/Spending";
 
 @Component({
   selector: 'app-spending',
@@ -8,50 +10,41 @@ import {Chart} from "angular-highcharts";
 })
 export class SpendingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private serviceSpending: SpendingService) { }
 
   chart: Chart;
 
+  spendings: Spending[] = [];
+  spendingData: dataObj[] = [];
+
+
   ngOnInit() {
+    this.getSpendings();
     this.init();
   }
 
-  addPoint() {
-    if (this.chart) {
-      this.chart.addPoint(Math.floor(Math.random() * 10));
-    } else {
-      alert('init chart, first!');
-    }
-  }
 
-  addSerie() {
-    this.chart.addSerie({
-      name: 'Line ' + Math.floor(Math.random() * 10),
-      data: [
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10)
-      ]
+
+  private getSpendings() {
+    //TODO the spendings should be collected in groups, sorted and the sum of the amounts for each category!
+    //TODO This way they can be all loaded into the chart
+
+
+    this.serviceSpending.getSpendings().subscribe(spendings => {
+      // loop trough all the incomes
+      for (let spending of spendings) {
+        this.spendings.push(spending);
+
+        this.spendingData.push( new dataObj(spending.name, spending.amount) );
+
+      }
     });
   }
 
-  removePoint() {
-    this.chart.removePoint(this.chart.ref.series[0].data.length - 1);
-  }
 
-  removeSerie() {
-    this.chart.removeSerie(this.chart.ref.series.length - 1);
-  }
+
 
   init() {
-
-
     let chart = new Chart({
       chart: {
         plotBackgroundColor: null,
@@ -80,38 +73,14 @@ export class SpendingComponent implements OnInit {
          enabled: false
       },
       series: [{
-        name: 'Brands',
+        name: 'Categories',
         innerSize: '75%',
-        data: [{
-          name: 'Chrome',
-          y: 61.41
-          // sliced: true,
-          // selected: true
-        }, {
-          name: 'Internet Explorer',
-          y: 11.84
-        }, {
-          name: 'Firefox',
-          y: 10.85
-        }, {
-          name: 'Edge',
-          y: 4.67
-        }, {
-          name: 'Safari',
-          y: 4.18
-        }, {
-          name: 'Other',
-          y: 7.05
-        }]
+        data: this.spendingData
       }]
     });
 
-    chart.addPoint(4);
+
     this.chart = chart;
-    chart.addPoint(5);
-    setTimeout(() => {
-      chart.addPoint(6);
-    }, 2000);
 
     chart.ref$.subscribe(console.log);
 
@@ -120,4 +89,14 @@ export class SpendingComponent implements OnInit {
 
   }
 
+}
+
+export class dataObj {
+  name: string;
+  y: number;
+
+  constructor(name: string, y: number) {
+    this.y = y;
+    this.name = name;
+  }
 }
