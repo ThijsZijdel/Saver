@@ -1,14 +1,17 @@
 export class Income {
   id: number;
   name: string;
-  imgLink: string;
+  amount: number;
   mainDescription: string;
+  dateRecieved: Date;
+  monthName: string;
 
-  constructor(id: number, name: string, imgLink: string, mainDescription: string) {
+  constructor(id: number, name: string, amount: number, mainDescription: string, dateRecieved: Date, monthName: string) {
     this.id = id;
     this.name = name;
-    this.imgLink = imgLink;
+    this.amount = amount;
     this.mainDescription = mainDescription;
-
+    this.dateRecieved = dateRecieved;
+    this.monthName = monthName;
   }
 }
