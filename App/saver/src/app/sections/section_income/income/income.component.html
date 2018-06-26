@@ -31,23 +31,9 @@
 <br>
 
 
-<div [chart]="chart"></div>
+<div [chart]="chartIncome"></div>
 
 <button (click)="init()">Init</button>
-<button (click)="addSerie()">Add Serie</button>
-<button (click)="removeSerie()">Remove Serie</button>
-<button (click)="addPoint()">Add Point</button>
-<button (click)="removePoint()">Remove Point</button>
 
 
 <hr>
--
-{{incomes.length}}
-<div *ngFor="let income of incomes">
-
-  <h1>{{income.name}}</h1>
-
-  ----
-</div>
-
--
