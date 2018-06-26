@@ -81,33 +81,54 @@ export class IncomeComponent implements OnInit {
       chart: {
         type: 'column'
       },
-      colors:['#4BCA81', '#EEEEEE'],
+      colors:['#4BCA81', '#bababa', '#EEEEEE', '#00AEEF','#D23556'],
       title: {
-        text: 'Column chart with negative values'
+        text: ''
       },
       xAxis: {
-        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+        categories: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+      },
+      plotOptions: {
+        column: {
+          stacking: 'normal'
+        }
+      },
+      tooltip: {
+        formatter: function () {
+          return '<b>' + this.x + '</b><br/>' +
+            this.series.name + ': ' + this.y ;
+        }
       },
       credits: {
         enabled: false
       },
       series: [{
-        name: 'John',
-        data: [5, 3, 4, 7, 2]
+        name: 'Income',
+        data: [5, 3, 1, 4, 7, null, 4],
+        stack: 'overview'
       }, {
-        name: 'Jane',
-        data: [2, -2, -3, 2, 1]
+        name: 'Saved',
+        data: [3, 1, -1, 2, 4, null, 3]
       }, {
-        name: 'Joe',
-        data: [3, 4, 4, -2, 5]
+        name: 'Expenses',
+        data: [-2, -2, -3, -3, -1, null, -1],
+        stack: 'overview'
+      }, {
+        name: 'IncomeCur',
+        data: [null, null, null, null, null, 6, null],
+        stack: 'overviewCur'
+      }, {
+        name: 'ExpensesCur',
+        data: [null, null, null, null, null,-4,null],
+        stack: 'overviewCur'
       }]
     });
-    chart.addPoint(4);
+    //chart.addPoint(4);
     this.chart = chart;
-    chart.addPoint(5);
-    setTimeout(() => {
-      chart.addPoint(6);
-    }, 2000);
+    // chart.addPoint(5);
+    // setTimeout(() => {
+    //   chart.addPoint(6);
+    // }, 2000);
 
     chart.ref$.subscribe(console.log);
   }
