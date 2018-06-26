@@ -4,6 +4,7 @@ import {Income} from "../../../models/Income";
 import {IncomeService} from "../service_income/income.service";
 import {SpendingService} from "../../section_spending/service_spending/spending.service";
 import {Spending} from "../../../models/Spending";
+import * as $ from "jquery"
 
 @Component({
   selector: 'app-income',
@@ -33,53 +34,66 @@ export class IncomeComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getIncomes();
-    this.getSpendings();
+    this.incomeData = this.getIncomes();
+    this.spendingData = this.getSpendings();
     this.calculateSaved();
-
-
     this.calculateAvg();
 
-    this.init();
+    setTimeout(()=>{
+      this.init();
+    }, 500);
+
+
   }
 
-  private getIncomes() {
+  private getIncomes(): number[] {
+    this.incomes = [];
+    let incomeDataC: number[] = [];
+
     this.serviceIncome.getIncomes().subscribe(incomes => {
       // loop trough all the incomes
       for (let income of incomes) {
         this.incomes.push(income);
 
-        this.incomeData.push(income.amount);
+        incomeDataC.push(income.amount);
       }
     });
+    return incomeDataC;
   }
-  private getSpendings() {
+  private getSpendings(): number[] {
+    let spendingDataC: number[] = [];
+    this.spendings = [];
+
     this.serviceSpending.getSpendings().subscribe(spendings => {
       // loop trough all the incomes
       for (let spending of spendings) {
         this.spendings.push(spending);
 
-        this.spendingData.push(-Math.abs(spending.amount));
+        spendingDataC.push(-Math.abs(spending.amount));
 
       }
     });
+
+    return spendingDataC;
   }
 
   private calculateSaved() {
+    for(let i = 0; i < this.incomeData.length; i++){
 
-    for(let i = 0; i < this.incomes.length; i++){
-
-      if(this.spendings[i].monthName == this.incomes[i].monthName) {
-        this.savedData[i] = Math.round(-Math.abs(this.spendings[i].amount) + this.incomes[i].amount);
-
-      }
+      // if(this.spendings[i].monthName == this.incomes[i].monthName) {
+        this.savedData[i] = Math.round(-Math.abs(this.spendingData[i]) + this.incomeData[i]);
+      // }
 
     }
   }
 
+
   init() {
 
     this.calculateAvg();
+    this.calculateSaved();
+
+    console.log(this.incomeData.length+": income |"+this.spendingData.length+": spend |"+this.savedData.length+": saved");
 
     let chartIncomed = new Chart({
       chart: {
@@ -101,6 +115,11 @@ export class IncomeComponent implements OnInit {
         formatter: function () {
           return '<b>' + this.x + '</b><br/>' +
             this.series.name + ': ' + this.y ;
+        }
+      },
+      yAxis:{
+        title: {
+          text: ''
         }
       },
       credits: {
@@ -138,6 +157,10 @@ export class IncomeComponent implements OnInit {
   }
 
 
+  addIncome(){
+    console.log("add")
+    this.serviceIncome.addIncome({ id: 13, name: 'Salary', amount: 230.20, mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Jan" })
+  }
 
 }
 

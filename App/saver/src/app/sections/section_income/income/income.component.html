@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-4">
-      <h1>Net Income</h1>
+      <h1 (click)="init()" class="clickable">Net Income</h1>
     </div>
     <div class="col-md-4">
       <Label>Viewing</Label>
@@ -33,7 +33,7 @@
 
 <div [chart]="chartIncome"></div>
 
-<button (click)="init()">Init</button>
-
-
 <hr>
+
+
+<button (click)="addIncome()">add</button>
