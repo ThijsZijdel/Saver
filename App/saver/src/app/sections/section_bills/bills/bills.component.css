@@ -5,13 +5,13 @@ div.bill-labels ul {
 }
 div.bill-labels ul li {
   font-family: 'Lato', sans-serif;
-  font-weight: 300;
+  font-weight: 600;
   text-transform: uppercase;
   display: inline-block;
   padding: 5px;
   margin: 5px 10px;
   width: 75px;
-  font-size: 16px;
+  font-size: 13px;
 }
 div.bill-labels ul li span {
   content: " ";
@@ -20,7 +20,7 @@ div.bill-labels ul li span {
   padding: 0 5px;
   margin-right: 5px;
   vertical-align: 2px;
-  font-size: 9px;
+  font-size: 8px;
 }
 
 div.bill-labels ul li.bill span {

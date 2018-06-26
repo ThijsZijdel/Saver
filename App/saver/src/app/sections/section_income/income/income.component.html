@@ -1,25 +1,38 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <h1 (click)="init()" class="clickable">Net Income</h1>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-5">
       <Label>Viewing</Label>
-      <option value="MONTHLY"></option>
-      <option value="LAST 12 MONTHS"></option>
+      <span class="selections">
+        <select class="selection" name="frequency">
+          <option value="monthly">Monthly</option>
+          <option value="weekly">Weekly</option>
+          <option value="daily">Daily</option>
+        </select>
+      </span>
+      <span class="selections">
+        <select class="selection" name="interval">
+          <option value="12mnths">Last 12 Months</option>
+          <option value="6mnths">Last 6 Months</option>
+          <option value="3mnths">Last 3 Months</option>
+          <option value="1mnth">Last Month</option>
+        </select>
+        </span>
     </div>
     <div class="col-md-4">
-      <h1>
+      <h1 class="avg-display">
         <span>Avg</span>
-        &euro;{{avgIncome}}
+        &euro;{{avgIncome}},00
       </h1>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
-      {{currentMonth}}
+      <h3 class="current-month">{{currentMonth}}</h3>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 text-right">
       <span>Earned</span>&euro;{{currentEarned}}
       <span>Spent</span>&euro;{{currentSpent}}
     </div>
@@ -35,5 +48,3 @@
 
 <hr>
 
-
-<button (click)="addIncome()">add</button>
