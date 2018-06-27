@@ -1,11 +1,9 @@
+@import "../../../../assets/css/fonts.css";
+
 .clickable {
   cursor: pointer;
 }
-h1 {
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
-  font-size: 26px;
-}
+
 
 
 h3.current-month {
@@ -25,10 +23,12 @@ h1.avg-display span {
 }
 
 .selection {
+  margin-top: 5px;
+  text-transform: uppercase;
   border: 1px solid #bababa;
   background: #fff;
   color: #127BE0;
-  font-size: 14px;
+  font-size: 11px;
   margin-right: -20px;
   margin-left: 25px;
   -webkit-appearance: button;
@@ -55,5 +55,23 @@ h1.avg-display span {
   border-radius: 0 3px 3px 0;
 }
 .selection option{
+  text-transform: uppercase;
   background: #fff;
+}
+.label.small.view {
+  margin-right: -10px;
+}
+.label{
+  font-weight: 300;
+}
+.label.small {
+  font-size: 13px;
+  color: #bababa;
+}
+.label.dark {
+  color:#222;
+  margin-left: 5px;
+}
+.margin-t{
+  margin-top: 15px;
 }
