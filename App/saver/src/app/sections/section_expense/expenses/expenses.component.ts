@@ -81,7 +81,23 @@ export class ExpensesComponent implements OnInit {
   }
 
   setShowStateSubLayer(id: number, name: string) {
-    $('section.category #'+id.toString()+name.substr(0,4)).toggleClass("show");
+    let element: string = 'section.category #'+id.toString()+name.substr(0,4);
+
+    $(element).toggleClass("show");
+
+
+
+    let time = 0;
+
+    if ($(element).hasClass('relative')){
+      time = 100;
+    }
+
+    setTimeout(()=>{
+      $(element).toggleClass("relative");
+    }, time);
+
+
   }
 
   protected getLastExpenseOf(categoryId: Number): Expense[] {
@@ -99,5 +115,19 @@ export class ExpensesComponent implements OnInit {
   }
 
 
+  getColor(category: Category): string {
+    return category.color;
+  }
+
+
+  monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  formatDate(dateI: Date): string {
+    let date = new Date(dateI);
+    let curr_date = date.getDay();
+    let curr_month = date.getMonth();
+    let curr_year = date.getFullYear();
+    return(this.monthnames[curr_month] + " " + curr_date + ", " + curr_year);
+  }
 }
 

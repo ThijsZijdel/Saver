@@ -43,6 +43,9 @@ import {StorageServiceModule} from "angular-webstorage-service";
 import { ChartModule } from 'angular-highcharts';
 
 
+import {AngularFontAwesomeComponent, AngularFontAwesomeModule, AngularFontAwesomeService} from "angular-font-awesome";
+
+
 
 
 
@@ -79,7 +82,9 @@ import { ChartModule } from 'angular-highcharts';
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ),
+
+    AngularFontAwesomeModule
   ],
   providers: [
     IncomeService,
