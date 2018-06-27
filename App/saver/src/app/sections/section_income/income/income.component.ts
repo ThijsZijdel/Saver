@@ -112,6 +112,7 @@ export class IncomeComponent implements OnInit {
         }
       },
       tooltip: {
+        borderColor: 'rgba(205,205,205,0.8)',
         formatter: function () {
           return '<b>' + this.x + '</b><br/>' +
             this.series.name + ': ' + this.y ;

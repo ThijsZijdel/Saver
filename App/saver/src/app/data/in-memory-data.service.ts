@@ -60,10 +60,13 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 11, name: 'Rent', description: 'Home costs.', color: "#444", icon:"home", subCategoryFk: 1},
       { id: 12, name: 'Study', description: 'desc.', color: "#938234",icon:"graduation-cap", subCategoryFk: 0}
     ];
-    return {incomes, spendings, expenses, categories};
+    const budgets = [
+      { id: 1, name: 'Bulk Budget', repeatingFk: 1, description: 'Main Budget.', startDate: new Date(), endDate: new Date(), balanceFk: 1, typeFk: "bulk", amountStart: 3563.52, amountLeft:2963.52, monthFk: 6, isPast: 0},
+      { id: 2, name: 'Dinner Budget', repeatingFk: 1, description: 'Saving some cash.', startDate: new Date(), endDate: new Date(), balanceFk: 1, typeFk: "save", amountStart: 500.50, amountLeft:50, monthFk: 6, isPast: 0}
+    ];
+    return {incomes, spendings, expenses, categories, budgets};
   }
 }
-
 
 
 

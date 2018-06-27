@@ -43,7 +43,19 @@ ul li {
   border: 1px solid #d0d0d0;
   color: #bababa;
   font-size: 12px;
+  transition: all 250ms ease-in-out;
 }
 .btn.wide{
   width: 100%;
+}
+
+
+.btn:hover {
+  background: #eee;
+}
+.btn:active{
+  background: #e5e5e5;
+  border: 1px solid #b4b4b4;
+  color: #878787;
+
 }

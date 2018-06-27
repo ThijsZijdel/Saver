@@ -9,7 +9,7 @@ h2.subLabel {
 }
 
 
-ul, li {
+ul, li, .category-box {
   -webkit-transition: opacity 150ms ease-in-out, top 400ms ease-in-out;
   transition: opacity 150ms ease-in-out, top  400ms ease-in-out;
 }

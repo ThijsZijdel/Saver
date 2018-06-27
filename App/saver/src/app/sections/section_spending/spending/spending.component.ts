@@ -65,6 +65,7 @@ export class SpendingComponent implements OnInit {
           text: ''
         },
         tooltip: {
+          borderColor: 'rgba(205,205,205,0.8)',
           pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         plotOptions: {

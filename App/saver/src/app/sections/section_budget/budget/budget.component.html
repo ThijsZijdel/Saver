@@ -1,23 +1,29 @@
 <div class="row correction">
-  <h1>June 2018</h1>
+  <h1 (click)="reload()" class="clickable">June 2018</h1>
 
   <button class="prev"> &#9664; </button> <button class="next"> &#9654; </button>
 
   <h1 class="bulkBudgetLeft">&euro;{{totalBudget-budgetSpend}}</h1>
 </div>
 
-<div class="row correction budget">
-  <h3>Bulk Budget</h3>
+<div *ngFor="let budget of budgets; let i = index">
+  <div class="row correction budget" *ngIf="i < budgetsShown">
+    <h3>{{budget.name}}</h3>
 
-  <div class="amount-box">
-    <span>&euro;{{budgetSpend}} / &euro;{{totalBudget}}</span>
+    <div class="amount-box">
+      <span>&euro;{{budget.amountStart-budget.amountLeft}} / &euro;{{budget.amountStart}}</span>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress" [ngStyle]="{'width':calculateWidth(budget.amountStart, budget.amountLeft)}"></div>
+      <span class="tooltipPerc">{{calculateWidth(budget.amountStart, budget.amountLeft)}} left</span>
+    </div>
   </div>
-
-  <div class="progress-bar">
-    <div class="progress"></div>
-  </div>
-
 </div>
 
 
-<button class="btn wide">More budgets</button>
+<button class="btn wide" (click)="allBudgets()">{{btnText}}</button>
+
+
+
+

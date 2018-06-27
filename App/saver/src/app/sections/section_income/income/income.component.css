@@ -75,3 +75,12 @@ h1.avg-display span {
 .margin-t{
   margin-top: 15px;
 }
+
+.viewing-options {
+  text-align: right;
+  margin-top: -5px;
+}
+.earned-spend {
+  margin-top: -5px;
+  text-align: right;
+}
