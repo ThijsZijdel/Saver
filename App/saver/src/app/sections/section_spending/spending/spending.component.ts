@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Chart} from "angular-highcharts";
+import {SpendingService} from "../service_spending/spending.service";
+import {Spending} from "../../../models/Spending";
+import {BehaviorSubject} from "rxjs/index";
 
 @Component({
   selector: 'app-spending',
@@ -8,116 +11,105 @@ import {Chart} from "angular-highcharts";
 })
 export class SpendingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private serviceSpending: SpendingService) { }
 
   chart: Chart;
 
+  spendings: Spending[] = [];
+  spendingData: dataObj[] = [];
+
+
   ngOnInit() {
-    this.init();
+    this.getSpendings();
+
+    setTimeout(()=>{
+      this.init();
+    }, 500);
   }
 
-  addPoint() {
-    if (this.chart) {
-      this.chart.addPoint(Math.floor(Math.random() * 10));
-    } else {
-      alert('init chart, first!');
-    }
-  }
 
-  addSerie() {
-    this.chart.addSerie({
-      name: 'Line ' + Math.floor(Math.random() * 10),
-      data: [
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10)
-      ]
+
+  private getSpendings() {
+    //TODO the spendings should be collected in groups, sorted and the sum of the amounts for each category!
+    //TODO This way they can be all loaded into the chart
+
+
+    this.serviceSpending.getSpendings().subscribe(spendings => {
+      this.spendingData = [];
+      this.spendings = [];
+
+      // loop trough all the incomes
+      for (let spending of spendings) {
+        this.spendings.push(spending);
+
+        this.spendingData.push( new dataObj(spending.monthName, spending.amount) );
+
+      }
     });
   }
 
-  removePoint() {
-    this.chart.removePoint(this.chart.ref.series[0].data.length - 1);
-  }
 
-  removeSerie() {
-    this.chart.removeSerie(this.chart.ref.series.length - 1);
-  }
+
 
   init() {
+    console.log(this.spendingData.length+": spend chart")
 
-
-    let chart = new Chart({
-      chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-      },
-      title: {
-        text: 'Browser market shares in January, 2018'
-      },
-      tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: 'pointer',
-          colors:['#EB7092', '#D23556', '#FF6E1F', '#FFBB28', '#4BCA81',
-      '#00AEEF', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#B8E986'],
-          dataLabels: {
-            enabled: false
+      let chart = new Chart({
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: ''
+        },
+        tooltip: {
+          borderColor: 'rgba(205,205,205,0.8)',
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            colors: ['#EB7092', '#D23556', '#FF6E1F', '#FFBB28', '#4BCA81',
+              '#00AEEF', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#B8E986'],
+            dataLabels: {
+              enabled: false
+            }
           }
-        }
-      },
-       credits: {
-         enabled: false
-      },
-      series: [{
-        name: 'Brands',
-        innerSize: '75%',
-        data: [{
-          name: 'Chrome',
-          y: 61.41
-          // sliced: true,
-          // selected: true
-        }, {
-          name: 'Internet Explorer',
-          y: 11.84
-        }, {
-          name: 'Firefox',
-          y: 10.85
-        }, {
-          name: 'Edge',
-          y: 4.67
-        }, {
-          name: 'Safari',
-          y: 4.18
-        }, {
-          name: 'Other',
-          y: 7.05
+        },
+        credits: {
+          enabled: false
+        },
+        series: [{
+          name: 'Categories',
+          innerSize: '75%',
+          data: this.spendingData
         }]
-      }]
-    });
 
-    chart.addPoint(4);
-    this.chart = chart;
-    chart.addPoint(5);
-    setTimeout(() => {
-      chart.addPoint(6);
-    }, 2000);
+      });
 
-    chart.ref$.subscribe(console.log);
+
+      this.chart = chart;
+
+
+      chart.ref$.subscribe(console.log);
+
 
 
 
 
   }
 
+}
+
+export class dataObj {
+  name: string;
+  y: number;
+
+  constructor(name: string, y: number) {
+    this.y = y;
+    this.name = name;
+  }
 }

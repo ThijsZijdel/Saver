@@ -1,4 +1,4 @@
-export class Income {
+export class Spending {
   id: number;
   name: string;
   amount: number;
@@ -9,6 +9,7 @@ export class Income {
   date: Date;
   monthName: string;  // TODO add monthName field to API
   monthFk: number;
+  subcategoryFk: number;
 
   balanceFk: number;
   companyFk: number;
@@ -16,24 +17,26 @@ export class Income {
   alreadyPaid: boolean;
 
 
-  constructor(
-      id: number,
-      name: string,
-      amount: number,
-      repeatingFk: number,
-      description: string,
-      date: Date,
-      monthName: string,
-      monthFk: number,
-      balanceFk: number,
-      companyFk: number,
-      alreadyPaid: number) {
+  constructor(id: number,
+              name: string,
+              amount: number,
+              repeatingFk: number,
+              description: string,
+              date: Date,
+              monthName: string,
+              monthFk: number,
+              subcategoryFk: number,
+              balanceFk: number,
+              companyFk: number,
+              alreadyPaid: number) {
     this.id = id;
     this.name = name;
     this.amount = amount;
     this.description = description;
     this.date = date;
     this.monthName = monthName;
+
+    this.subcategoryFk = subcategoryFk;
 
     this.balanceFk = balanceFk;
     this.companyFk = companyFk;

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, ChartModule } from 'angular-highcharts';
 import {Income} from "../../../models/Income";
 import {IncomeService} from "../service_income/income.service";
+import {SpendingService} from "../../section_spending/service_spending/spending.service";
+import {Spending} from "../../../models/Spending";
+import * as $ from "jquery"
 
 @Component({
   selector: 'app-income',
@@ -15,101 +18,147 @@ export class IncomeComponent implements OnInit {
   currentEarned: number = 66000;
   currentSpent: number = 53730;
 
-  chart: Chart;
+  chartIncome: Chart;
 
   incomes: Income[] = [];
+  incomeData: number[] = [];
 
-  constructor(private serviceIncome: IncomeService) { }
+  spendings: Spending[] = [];
+  spendingData: number[] = [];
+
+  savedData: number[] = [];
+
+  constructor(private serviceIncome: IncomeService,
+              private serviceSpending: SpendingService) { }
 
 
 
   ngOnInit() {
-    this.init();
-    this.getIncomes();
+    this.incomeData = this.getIncomes();
+    this.spendingData = this.getSpendings();
+    this.calculateSaved();
+    this.calculateAvg();
+
+    setTimeout(()=>{
+      this.init();
+    }, 500);
+
+
   }
 
-  private getIncomes() {
-    console.log('calling');
+  private getIncomes(): number[] {
+    this.incomes = [];
+    let incomeDataC: number[] = [];
+
     this.serviceIncome.getIncomes().subscribe(incomes => {
       // loop trough all the incomes
-      console.log('called');
       for (let income of incomes) {
-        console.log('called 1');
         this.incomes.push(income);
+
+        incomeDataC.push(income.amount);
+      }
+    });
+    return incomeDataC;
+  }
+  private getSpendings(): number[] {
+    let spendingDataC: number[] = [];
+    this.spendings = [];
+
+    this.serviceSpending.getSpendings().subscribe(spendings => {
+      // loop trough all the incomes
+      for (let spending of spendings) {
+        this.spendings.push(spending);
+
+        spendingDataC.push(-Math.abs(spending.amount));
+
       }
     });
 
+    return spendingDataC;
   }
 
-  addPoint() {
-    if (this.chart) {
-      this.chart.addPoint(Math.floor(Math.random() * 10));
-    } else {
-      alert('init chart, first!');
+  private calculateSaved() {
+    for(let i = 0; i < this.incomeData.length; i++){
+
+      // if(this.spendings[i].monthName == this.incomes[i].monthName) {
+        this.savedData[i] = Math.round(-Math.abs(this.spendingData[i]) + this.incomeData[i]);
+      // }
+
     }
   }
 
-  addSerie() {
-    this.chart.addSerie({
-      name: 'Line ' + Math.floor(Math.random() * 10),
-      data: [
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10)
-      ]
-    });
-  }
-
-  removePoint() {
-    this.chart.removePoint(this.chart.ref.series[0].data.length - 1);
-  }
-
-  removeSerie() {
-    this.chart.removeSerie(this.chart.ref.series.length - 1);
-  }
 
   init() {
 
+    this.calculateAvg();
+    this.calculateSaved();
 
-    let chart = new Chart({
+    console.log(this.incomeData.length+": income |"+this.spendingData.length+": spend |"+this.savedData.length+": saved");
+
+    let chartIncomed = new Chart({
       chart: {
         type: 'column'
       },
-      colors:['#4BCA81', '#EEEEEE'],
+      colors:['#4BCA81', '#bababa', '#EEEEEE', '#00AEEF','#D23556'],
       title: {
-        text: 'Column chart with negative values'
+        text: ''
       },
       xAxis: {
-        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+        categories: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+      },
+      plotOptions: {
+        column: {
+          stacking: 'normal'
+        }
+      },
+      tooltip: {
+        borderColor: 'rgba(205,205,205,0.8)',
+        formatter: function () {
+          return '<b>' + this.x + '</b><br/>' +
+            this.series.name + ': ' + this.y ;
+        }
+      },
+      yAxis:{
+        title: {
+          text: ''
+        }
       },
       credits: {
         enabled: false
       },
       series: [{
-        name: 'John',
-        data: [5, 3, 4, 7, 2]
+        name: 'Income',
+        data: this.incomeData,
+        stack: 'overview'
       }, {
-        name: 'Jane',
-        data: [2, -2, -3, 2, 1]
+        name: 'Saved',
+        data: this.savedData
       }, {
-        name: 'Joe',
-        data: [3, 4, 4, -2, 5]
+        name: 'Expenses',
+        data: this.spendingData,
+        stack: 'overview'
       }]
     });
-    chart.addPoint(4);
-    this.chart = chart;
-    chart.addPoint(5);
-    setTimeout(() => {
-      chart.addPoint(6);
-    }, 2000);
 
-    chart.ref$.subscribe(console.log);
+    this.chartIncome = chartIncomed;
+
+
+    chartIncomed.ref$.subscribe(console.log);
   }
 
+
+  private calculateAvg() {
+    let sum: number = 0;
+
+    for(let data of this.incomeData){
+      sum+=data;
+    }
+
+    this.avgIncome = Math.round(sum/this.incomeData.length);
+  }
+
+
+
+
 }
+

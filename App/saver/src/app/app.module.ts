@@ -33,12 +33,17 @@ import {ExpenseService} from "./sections/section_expense/service_expense/expense
 import {MessageComponent} from "./message/message.component";
 import {MessageService} from "./data/service_message/message.service";
 import {InMemoryDataService} from "./data/in-memory-data.service";
+import {CategoryService} from "./data/service/service_category/category.service";
+
 
 import {StorageServiceModule} from "angular-webstorage-service";
 
 
 
 import { ChartModule } from 'angular-highcharts';
+
+
+import {AngularFontAwesomeComponent, AngularFontAwesomeModule, AngularFontAwesomeService} from "angular-font-awesome";
 
 
 
@@ -77,7 +82,9 @@ import { ChartModule } from 'angular-highcharts';
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ),
+
+    AngularFontAwesomeModule
   ],
   providers: [
     IncomeService,
@@ -86,7 +93,8 @@ import { ChartModule } from 'angular-highcharts';
     SpendingService,
     BalanceService,
     ExpenseService,
-    MessageService
+    MessageService,
+    CategoryService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,68 +1,73 @@
-<section class="category">
-  <h3>Home</h3>
-  <span class="totalAmount">&euro;1.054,10</span>
-
-  <hr>
-
-  <ul class="sub-cat">
-    <li class="expense">
-      <span></span>Mortage <span class="amount">&euro;120.50</span>
-      <span class="date">Jul 20, 2018</span><span class="dot"></span><span class="company">Bol.com</span>
-    </li>
-  </ul>
-
-</section>
 
 
-<section class="category">
-  <h3>Utilities</h3>
-  <span class="totalAmount">&euro;3.004,10</span>
-
-  <hr>
-
-  <ul class="sub-cat">
-    <li class="expense">
-      <span></span>Electricity <span class="amount">&euro;120.50</span>
-      <span class="date">Jul 20, 2018</span><span class="dot"></span><span class="company">EDP</span>
-    </li>
-    <li class="expense">
-      <span></span>Mobile Phone <span class="amount">&euro;120.50</span>
-      <span class="date">Jul 20, 2018</span><span class="dot"></span><span class="company">EDP</span>
-    </li>
-    <li class="expense">
-      <span></span>Internet <span class="amount">&euro;120.50</span>
-      <span class="date">Jul 20, 2018</span><span class="dot"></span><span class="company">EDP</span>
-    </li>
-  </ul>
-
-</section>
+<div class="sections-container"
+     style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;"
+     unselectable="on"
+     onselectstart="return false;"
+     onmousedown="return false;">
 
 
-<section class="category">
-  <h3>Groceries</h3>
-  <span class="totalAmount">&euro;442,10</span>
+  <div class="category-box" *ngFor="let categoryMain of categories">
+    <div class="check" *ngIf="categoryMain.subCategoryFk == 0">
+      <section class="category">
+        <h3 (click)="setShowStateSubLayer(categoryMain.id, categoryMain.name)" class="clickable">
+          {{categoryMain.name}}
+        </h3>
+        <span class="amount-box">&euro;
+        {{  getSumAmounts(getExpensesOf(categoryMain.id))  }}
+      </span>
 
-  <hr>
-</section>
+        <hr>
 
 
-<section class="category">
-  <h3>Insurances</h3>
-  <span class="totalAmount">&euro;42,10</span>
+        <ul class="sub-cat  hiddenNow" id="{{categoryMain.id.toString()+categoryMain.name.substr(0,4)}}">
+          <div class="expense" *ngFor="let category of categories">
+            <li *ngIf="category.subCategoryFk == categoryMain.id" (click)="setShowStateSubLayer(category.id, category.name)" >
 
-  <hr>
-</section>
+              <span class="icon-subcat clickable" [ngStyle]="{'background':getColor(category)}">
+                <fa name="{{category.icon}}"></fa>
+              </span>
 
-<section class="category">
-  <h3>Miscellaneous</h3>
-  <span class="totalAmount">&euro;42,10</span>
+                <h2 class="clickable subLabel">
+                  {{category.name}}
+                  <span class="amount">
+                    &euro;{{getSumAmounts(getExpensesOf(category.id))}}
+                  </span>
+                </h2>
 
-  <hr>
+              <div *ngFor="let expenseDisplay of getLastExpenseOf(category.id)">
+                <span class="info clickable">
+                  <span class="date">
+                    {{formatDate(expenseDisplay.date)}}
+                  </span>
 
-  <ul class="sub-cat">
-    <li class="expense">
-      <span></span>Clothing <span class="amount">&euro;120.50</span>
-      <span class="date">Jul 20, 2018</span><span class="dot"></span><span class="company">Bol.com</span>
-    </li>
-  </ul>
-</section>
+                  <span class="dot">&middot;</span>
+
+                  <span class="company">
+                    {{expenseDisplay.companyFk}}
+                  </span></span>
+
+              </div>
+
+
+              <ul class="expenses-seperate hiddenNow" id="{{category.id.toString()+category.name.substr(0,4)}}">
+                  <li class="forloop" *ngFor="let expense of getExpensesOf(category.id)">
+                    {{expense.name}} - {{expense.amount}}
+                  </li>
+                </ul>
+
+              </li>
+          </div>
+        </ul>
+
+
+      </section>
+    </div>
+  </div>
+
+
+
+</div>
+
+
+
