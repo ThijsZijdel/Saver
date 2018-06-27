@@ -1,3 +1,5 @@
+@import "../../../../assets/css/fonts.css";
+
 div.bill-labels ul {
   list-style-type: none;
   margin: 0;
@@ -31,4 +33,44 @@ div.bill-labels ul li.paid span {
 }
 div.bill-labels ul li.over span {
   border-color: #D02C4D;
+}
+
+
+section {
+  margin: 15px 0 35px;
+}
+.btn {
+  background: #fff;
+  text-transform: uppercase;
+  font-weight: 400;
+  border: 1px solid #d0d0d0;
+  color: #bababa;
+  font-size: 12px;
+}
+.btn.wide{
+  width: 100%;
+}
+
+.row.correction {
+  text-align: center;
+}
+button.prev{
+
+}
+button.next {
+  position: absolute;
+  right: 25px;
+}
+
+button.prev, button.next {
+  border-radius: 50%;
+  border: 2px solid #222;
+  background: none;
+  font-size: 9px;
+  height: 24px;
+  font-weight: 800;
+  margin: 3px 0 0 5px;
+}
+.correction {
+  margin: 0;
 }

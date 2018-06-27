@@ -1,16 +1,16 @@
-<div class="row">
+<div class="row correction">
   <h1>June 2018</h1>
 
-  <button class="prev"> < </button> <button class="next"> > </button>
+  <button class="prev"> &#9664; </button> <button class="next"> &#9654; </button>
 
-  <h1 class="bulkBudgetLeft">&euro;2.294,00</h1>
+  <h1 class="bulkBudgetLeft">&euro;{{totalBudget-budgetSpend}}</h1>
 </div>
 
-<div class="row budget">
+<div class="row correction budget">
   <h3>Bulk Budget</h3>
 
   <div class="amount-box">
-    <span>&euro;2.294,00 / &euro;3.154,00</span>
+    <span>&euro;{{budgetSpend}} / &euro;{{totalBudget}}</span>
   </div>
 
   <div class="progress-bar">
@@ -20,4 +20,4 @@
 </div>
 
 
-<button>More budgets</button>
+<button class="btn wide">More budgets</button>

@@ -1,0 +1,86 @@
+@import "../../../../assets/css/fonts.css";
+
+.clickable {
+  cursor: pointer;
+}
+
+h2.subLabel {
+  margin-bottom: -5px;
+}
+
+
+ul, li {
+  -webkit-transition: opacity 150ms ease-in-out, top 400ms ease-in-out;
+  transition: opacity 150ms ease-in-out, top  400ms ease-in-out;
+}
+
+ul.sub-cat li {
+  padding-left: 20px;
+}
+.icon-subcat {
+  position: absolute;
+  left: 15px;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  font-size: 24px;
+  color: #fff;
+}
+
+ul li {
+  list-style-type: none;
+  padding: 5px 0;
+
+}
+ul.sub-cat li::before {
+  /*content: '>';*/
+  position: absolute;
+  left: 0;
+  color: #666;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+ul.sub-cat li::before > ul.expenses-seperate.show {
+  content: '\/';
+}
+
+ul.sub-cat li ul li:last-child {
+  margin-bottom: 25px;
+}
+
+
+
+.hiddenNow {
+  opacity: 0;
+  -webkit-transition: opacity 150ms ease-in-out, top 400ms ease-in-out;
+  transition: opacity 150ms ease-in-out, top  400ms ease-in-out;
+  position: absolute;
+  z-index: -10;
+}
+
+
+.show {
+  opacity: 1 !important;
+  z-index: 1;
+}
+.relative {
+  position: relative;
+}
+
+
+.info {
+  margin-top: -10px;
+}
+span.dot {
+  font-weight: 600;
+  font-size: 25px;
+  position: absolute;
+  top: 13px;
+  padding-left: 3px;
+
+}
+
+span.company {
+  margin-left: 15px;
+}

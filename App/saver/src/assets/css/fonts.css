@@ -1,0 +1,49 @@
+h1 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+}
+h3 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.amount-box{
+  position: absolute;
+  right: 25px;
+  font-size: 13px;
+  font-weight: 300;
+  color: #bababa;
+  margin-top: -25px;
+}
+h2 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+}
+span.info {
+  color: #bababa;
+  font-size: 10px;
+}
+
+h2 span.amount {
+  position: absolute;
+  right: 25px;
+}
+ul li {
+
+}
+
+
+.btn {
+  background: #fff;
+  text-transform: uppercase;
+  font-weight: 400;
+  border: 1px solid #d0d0d0;
+  color: #bababa;
+  font-size: 12px;
+}
+.btn.wide{
+  width: 100%;
+}
