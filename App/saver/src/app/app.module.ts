@@ -33,6 +33,8 @@ import {ExpenseService} from "./sections/section_expense/service_expense/expense
 import {MessageComponent} from "./message/message.component";
 import {MessageService} from "./data/service_message/message.service";
 import {InMemoryDataService} from "./data/in-memory-data.service";
+import {CategoryService} from "./data/service/service_category/category.service";
+
 
 import {StorageServiceModule} from "angular-webstorage-service";
 
@@ -86,7 +88,8 @@ import { ChartModule } from 'angular-highcharts';
     SpendingService,
     BalanceService,
     ExpenseService,
-    MessageService
+    MessageService,
+    CategoryService
   ],
   bootstrap: [AppComponent]
 })

@@ -157,10 +157,7 @@ export class IncomeComponent implements OnInit {
   }
 
 
-  addIncome(){
-    console.log("add")
-    this.serviceIncome.addIncome({ id: 13, name: 'Salary', amount: 230.20, mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Jan" })
-  }
+
 
 }
 
