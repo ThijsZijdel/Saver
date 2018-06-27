@@ -2,19 +2,20 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
+
     const incomes = [
-      { id: 1, name: 'Salary', amount: 530.20, mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Jan" },
-      { id: 2, name: 'Salary', amount: 300.40, mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Feb"  },
-      { id: 3, name: 'Salary', amount: 600.10, mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Mar"  },
-      { id: 4, name: 'Salary', amount: 100.30, mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Apr"  },
-      { id: 5, name: 'Salary', amount: 750.20, mainDescription: 'desc.', dateRecieved: new Date(), monthName: "May"  },
-      { id: 6, name: 'Salary', amount: 900,    mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Jun"  },
-      { id: 7, name: 'Salary', amount: 300.40, mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Jul"  },
-      { id: 8, name: 'Salary', amount: 500,    mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Aug"  },
-      { id: 9, name: 'Salary', amount: 600.50, mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Sep"  },
-      { id: 10, name: 'Salary', amount: 400.50, mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Oct"  },
-      { id: 11, name: 'Salary', amount: 600.50, mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Nov"  },
-      { id: 12, name: 'Salary', amount: 900,    mainDescription: 'desc.', dateRecieved: new Date(), monthName: "Dec"  }
+      { id: 1, name: 'Salary', amount: 530.20, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jan", monthFk: 1, balanceFk: 1, companyFk: 1, alreadyPaid: 1 },
+      { id: 2, name: 'Salary', amount: 300.40, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Feb", monthFk: 2, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 3, name: 'Salary', amount: 600.10, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Mar", monthFk: 3, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 4, name: 'Salary', amount: 100.30, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Apr", monthFk: 4, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 5, name: 'Salary', amount: 750.20, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "May", monthFk: 5, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 6, name: 'Salary', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 6, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 7, name: 'Salary', amount: 300.40, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jul", monthFk: 7, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 8, name: 'Salary', amount: 500,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Aug", monthFk: 8, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 9, name: 'Salary', amount: 600.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Sep", monthFk: 9, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 10, name: 'Salary', amount: 400.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Oct", monthFk: 10, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 11, name: 'Salary', amount: 600.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Nov", monthFk: 11, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 12, name: 'Salary', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Dec", monthFk: 12, balanceFk: 1, companyFk: 1, alreadyPaid: 0  }
     ];
     const spendings = [
       { id: 1, name: 'Salary', amount: 230.20, mainDescription: 'desc.', dateSpend: new Date(), monthName: "Jan", cacategoryId: 1 },
@@ -30,10 +31,36 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 11, name: 'Salary', amount: 650.50, mainDescription: 'desc.', dateSpend: new Date(), monthName: "Nov", cacategoryId: 1  },
       { id: 12, name: 'Salary', amount: 800,    mainDescription: 'desc.', dateSpend: new Date(), monthName: "Dec", cacategoryId: 1  }
     ];
-    const expenses = [];
+    const expenses = [
+      { id: 1, name: 'Salary', amount: 530.20, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jan", monthFk: 1, subCategoryFk: 1, balanceFk: 1, companyFk: 1, alreadyPaid: 1 },
+      { id: 2, name: 'Salary', amount: 300.40, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Feb", monthFk: 2, subCategoryFk: 2, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 3, name: 'Salary', amount: 600.10, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Mar", monthFk: 3, subCategoryFk: 3, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 4, name: 'Salary', amount: 100.30, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Apr", monthFk: 4, subCategoryFk: 4, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 5, name: 'Salary', amount: 750.20, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "May", monthFk: 5, subCategoryFk: 5, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 6, name: 'Salary', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 6, subCategoryFk: 2, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 7, name: 'Salary', amount: 300.40, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jul", monthFk: 7, subCategoryFk: 4, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 8, name: 'Salary', amount: 500,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Aug", monthFk: 8, subCategoryFk: 3, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 9, name: 'Salary', amount: 600.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Sep", monthFk: 9, subCategoryFk: 1, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 10, name: 'Salary', amount: 400.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Oct", monthFk: 10, subCategoryFk: 3, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 11, name: 'Salary', amount: 600.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Nov", monthFk: 11, subCategoryFk: 8, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 12, name: 'Salary', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Dec", monthFk: 12, subCategoryFk: 1, balanceFk: 1, companyFk: 1, alreadyPaid: 0  }
+    ];
     const balances = [];
-
-    return {incomes, spendings};
+    const categories = [
+      { id: 1, name: 'Home', description: 'home related expenses.', color: "#333", subCategoryFk: 0},
+      { id: 2, name: 'Utilities', description: 'Mostly monthly expenses.', color: "#444", subCategoryFk: 0},
+      { id: 3, name: 'Groceries', description: 'Food, drinks.', color: "#938234", subCategoryFk: 0},
+      { id: 4, name: 'Transportation', description: 'Transportation expenses.', color: "#333", subCategoryFk: 0},
+      { id: 5, name: 'Personal', description: 'Personal expenses.', color: "#444", subCategoryFk: 0},
+      { id: 6, name: 'Mobile Phone', description: 'Tele2.', color: "#938234", subCategoryFk: 2},
+      { id: 7, name: 'Clothing', description: 'Clothes.', color: "#333", subCategoryFk: 0},
+      { id: 8, name: 'Festivals', description: 'Parties.', color: "#444", subCategoryFk: 5},
+      { id: 9, name: 'Insurances', description: 'desc.', color: "#938234", subCategoryFk: 0},
+      { id: 10, name: 'Scooter costs', description: 'desc.', color: "#333", subCategoryFk: 4},
+      { id: 11, name: 'Rent', description: 'Home costs.', color: "#444", subCategoryFk: 1},
+      { id: 12, name: 'Study', description: 'desc.', color: "#938234", subCategoryFk: 0}
+    ];
+    return {incomes, spendings, expenses, categories};
   }
 }
 
