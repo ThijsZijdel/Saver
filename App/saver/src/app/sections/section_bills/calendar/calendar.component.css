@@ -1,0 +1,47 @@
+table#calendarTbl {
+  display: inline-block  !important;
+  vertical-align: top !important;
+  border-collapse: collapse !important;
+  width: 80% !important;
+  margin: 0 auto !important;
+  height: 200px !important;
+}
+
+table#calendarTbl tbody tr:hover {
+  background-color: #fff;
+}
+
+table#calendarTbl td {
+  text-align: center;
+  line-height: 1.75rem;
+  width: 1.75rem;
+}
+
+table#calendarTbl thead td {
+  color: #999;
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+table#calendarTbl tbody td {
+  font-size: .875rem;
+  padding: 12px;
+}
+table#calendarTbl tbody td.before {
+  color: #bdbdbd;
+}
+table#calendarTbl tbody td.currentDay{
+  color: red;
+}
+
+table#calendarTbl tbody td:hover {
+  background-color: rgba(64, 64, 64, 0.35);
+  color: #353535;
+  cursor: pointer;
+}
+#calender-box table {
+
+}
+/*td.before, td.after {*/
+  /*color: #999;*/
+/*}*/

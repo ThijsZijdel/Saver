@@ -46,6 +46,7 @@ import { ChartModule } from 'angular-highcharts';
 import {AngularFontAwesomeModule, AngularFontAwesomeService} from "angular-font-awesome";
 import {LocalStorageDatabase} from "@ngx-pwa/local-storage";
 import {OfflineProvidersConfig} from "@ngx-pwa/offline";
+import {CalendarComponent} from "./sections/section_bills/calendar/calendar.component";
 
 
 
@@ -69,7 +70,9 @@ import {OfflineProvidersConfig} from "@ngx-pwa/offline";
     AddIncomeComponent,
     AddBudgetComponent,
     MessageComponent,
-    BusinessComponent
+    BusinessComponent,
+
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
