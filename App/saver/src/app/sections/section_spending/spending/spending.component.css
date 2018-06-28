@@ -70,10 +70,14 @@ ul.sub-cat li {
 
 }
 
-ul li {
+ul.sub-cat li {
   list-style-type: none;
   padding: 5px 0;
 
+}
+
+ul.sub-cat ul li {
+  padding: 5px 0 0 15px;
 }
 ul.sub-cat li::before {
   /*content: '>';*/
@@ -165,4 +169,7 @@ span.company {
 
 #chart-spending {
   height: 80%;
+}
+.mgtp{
+  margin-top: 10px;
 }

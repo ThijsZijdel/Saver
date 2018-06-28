@@ -17,11 +17,11 @@
 
 
 
-    <ul class="sub-cat">
+    <ul class="sub-cat mgtp">
       <div class="expense" *ngFor="let category of spendings">
 
 
-        <div class="sub-layer {{category.name+'-'+category.id}}">
+        <div class="sub-layer {{category.name+'-'+category.name+'-'+category.subcategoryFk}}">
 
 
           <li>
@@ -31,14 +31,14 @@
                 </span>
 
             <h2 class="clickable subLabel parent-tooltip subCategoryLbl"
-                (click)="setShowStateSubLayer(category.id, category.name);
-                               toggleTooltipSub(category.name+'-'+category.id)">
-              {{getPercentage(category)}}%
+                (click)="setShowStateSubLayer(category.subcategoryFk, category.name);
+                         toggleTooltipSub(category.name+'-'+category.name+'-'+category.subcategoryFk)">
+              {{getPercentage(category)}}
               <span class="amount">
                       &euro;{{category.amount}}
                     </span>
               <span class="tooltipPerc">
-                    some extra info: 3 biggest.. ?
+                    {{getExpensesOf(category.subcategoryFk).length}} expenses
                     </span>
             </h2>
 
@@ -52,11 +52,11 @@
 
 
 
-            <ul class="expenses-seperate hiddenNow" id="{{category.id.toString()+category.name.substr(0,4)}}">
+            <ul class="expenses-seperate hiddenNow" id="{{category.subcategoryFk.toString()+category.name.substr(0,4)}}">
 
               <li class="forloop" *ngFor="let expense of getExpensesOf(category.subcategoryFk)">
                 <span>{{expense.name}} - {{expense.amount}}</span> <br>
-                <span class="info">in Shopping Mall on {{formatDate(expense.date)}}</span>
+                <span class="info">Shopping Mall on {{formatDate(expense.date)}}</span>
               </li>
             </ul>
 
