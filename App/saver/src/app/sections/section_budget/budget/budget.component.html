@@ -1,9 +1,9 @@
 <div class="row correction">
-  <h1 (click)="reload()" class="clickable">June 2018</h1>
+  <h1 (click)="reload()" class="clickable" >June 2018</h1>
 
   <button class="prev"> &#9664; </button> <button class="next"> &#9654; </button>
 
-  <h1 class="bulkBudgetLeft">&euro;{{totalBudget-budgetSpend}}</h1>
+  <h1 class="bulkBudgetLeft">&euro;{{totalBudgetSpend}}</h1>
 </div>
 
 <div *ngFor="let budget of budgets; let i = index">
@@ -14,7 +14,7 @@
       <span>&euro;{{budget.amountStart-budget.amountLeft}} / &euro;{{budget.amountStart}}</span>
     </div>
 
-    <div class="progress-bar">
+    <div class="progress-bar parent-tooltip">
       <div class="progress" [ngStyle]="{'width':calculateWidth(budget.amountStart, budget.amountLeft)}"></div>
       <span class="tooltipPerc">{{calculateWidth(budget.amountStart, budget.amountLeft)}} left</span>
     </div>

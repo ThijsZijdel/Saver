@@ -1,4 +1,5 @@
 @import "../../../../assets/css/fonts.css";
+@import "../../../../assets/css/tooltip.css";
 
 .clickable {
   cursor: pointer;
@@ -44,6 +45,28 @@ ul.sub-cat li::before {
 ul.sub-cat li::before > ul.expenses-seperate.show {
   content: '\/';
 }
+ul.sub-cat li ul{
+  padding: 0;
+}
+ul.sub-cat li ul li {
+  list-style-type: none;
+  font-size: 15px;
+  font-weight: 300;
+}
+ul.sub-cat li ul li::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  color: #666;
+  font-weight: 500;
+  cursor: pointer;
+}
+ul.sub-cat li ul li span {
+  margin-bottom: -5px;
+}
+ul.sub-cat li ul li span.info {
+  font-size: 12px;
+}
 
 ul.sub-cat li ul li:last-child {
   margin-bottom: 25px;
@@ -83,4 +106,15 @@ span.dot {
 
 span.company {
   margin-left: 15px;
+}
+
+
+.tooltipPerc {
+  top: 26px;
+  left: 0px;
+  z-index: 9;
+}
+.tooltipPerc:before,
+.tooltipPerc:after {
+  left: 15%;
 }

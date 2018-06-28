@@ -18,32 +18,32 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 12, name: 'Salary', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Dec", monthFk: 12, balanceFk: 1, companyFk: 1, alreadyPaid: 0  }
     ];
     const spendings = [
-      { id: 1, name: 'Salary', amount: 230.20, mainDescription: 'desc.', dateSpend: new Date(), monthName: "Jan", cacategoryId: 1 },
-      { id: 2, name: 'Salary', amount: 100.40, mainDescription: 'desc.', dateSpend: new Date(), monthName: "Feb", cacategoryId: 1  },
-      { id: 3, name: 'Salary', amount: 700.10, mainDescription: 'desc.', dateSpend: new Date(), monthName: "Mar", cacategoryId: 1  },
-      { id: 4, name: 'Salary', amount: 50.30,  mainDescription: 'desc.', dateSpend: new Date(), monthName: "Apr", cacategoryId: 1  },
-      { id: 5, name: 'Salary', amount: 350.20, mainDescription: 'desc.', dateSpend: new Date(), monthName: "May", cacategoryId: 1  },
-      { id: 6, name: 'Salary', amount: 100,    mainDescription: 'desc.', dateSpend: new Date(), monthName: "Jun", cacategoryId: 1  },
-      { id: 7, name: 'Salary', amount: 200.40, mainDescription: 'desc.', dateSpend: new Date(), monthName: "Jul", cacategoryId: 1  },
-      { id: 8, name: 'Salary', amount: 700,    mainDescription: 'desc.', dateSpend: new Date(), monthName: "Aug", cacategoryId: 1  },
-      { id: 9, name: 'Salary', amount: 300.50, mainDescription: 'desc.', dateSpend: new Date(), monthName: "Sep", cacategoryId: 1  },
-      { id: 10, name: 'Salary', amount: 500.50, mainDescription: 'desc.', dateSpend: new Date(), monthName: "Oct", cacategoryId: 1  },
-      { id: 11, name: 'Salary', amount: 650.50, mainDescription: 'desc.', dateSpend: new Date(), monthName: "Nov", cacategoryId: 1  },
-      { id: 12, name: 'Salary', amount: 800,    mainDescription: 'desc.', dateSpend: new Date(), monthName: "Dec", cacategoryId: 1  }
+      { id: 1, name: 'Household', amount: 230.20,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 1, balanceFk: 1},
+      { id: 2, name: 'Utilities', amount: 100.40,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 2, balanceFk: 1  },
+      { id: 3, name: 'Groceries', amount: 700.10,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 3, balanceFk: 1  },
+      { id: 4, name: 'Transportation', amount: 50.30,   description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 4, balanceFk: 1  },
+      { id: 5, name: 'Personal', amount: 350.20,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 5, balanceFk: 1  },
+      { id: 6, name: 'Mobile Phone', amount: 100,     description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 6, balanceFk: 1  },
+      { id: 7, name: 'Clothing', amount: 200.40,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 7, balanceFk: 1  },
+      { id: 8, name: 'Festivals', amount: 700,     description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 8, balanceFk: 1  },
+      { id: 9, name: 'Insurances', amount: 300.50,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 9, balanceFk: 1  },
+      { id: 10, name: 'Scooter costs', amount: 500.50,description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 10, balanceFk: 1  },
+      { id: 11, name: 'Rent', amount: 650.50,description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 11, balanceFk: 1  },
+      { id: 12, name: 'Study', amount: 800,   description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 12, balanceFk: 1  }
     ];
     const expenses = [
-      { id: 1, name: 'Salary', amount: 530.20, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jan", monthFk: 1, subCategoryFk: 1, balanceFk: 1, companyFk: 1, alreadyPaid: 1 },
-      { id: 2, name: 'Salary', amount: 300.40, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Feb", monthFk: 2, subCategoryFk: 2, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
-      { id: 3, name: 'Salary', amount: 600.10, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Mar", monthFk: 3, subCategoryFk: 3, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
-      { id: 4, name: 'Salary', amount: 100.30, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Apr", monthFk: 4, subCategoryFk: 4, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
-      { id: 5, name: 'Salary', amount: 750.20, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "May", monthFk: 5, subCategoryFk: 5, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
-      { id: 6, name: 'Salary', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 6, subCategoryFk: 2, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
-      { id: 7, name: 'Salary', amount: 300.40, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jul", monthFk: 7, subCategoryFk: 4, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
-      { id: 8, name: 'Salary', amount: 500,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Aug", monthFk: 8, subCategoryFk: 3, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
-      { id: 9, name: 'Salary', amount: 600.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Sep", monthFk: 9, subCategoryFk: 1, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
-      { id: 10, name: 'Salary', amount: 400.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Oct", monthFk: 10, subCategoryFk: 3, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
-      { id: 11, name: 'Salary', amount: 600.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Nov", monthFk: 11, subCategoryFk: 8, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
-      { id: 12, name: 'Salary', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Dec", monthFk: 12, subCategoryFk: 1, balanceFk: 1, companyFk: 1, alreadyPaid: 0  }
+      { id: 1, name: 'Monthly Rent', amount: 530.20, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jan", monthFk: 1, subCategoryFk: 11, balanceFk: 1, companyFk: 1, alreadyPaid: 1 },
+      { id: 2, name: 'Awakenings', amount: 300.40, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Feb", monthFk: 2, subCategoryFk: 8, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 3, name: 'Ah Food', amount: 600.10, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Mar", monthFk: 3, subCategoryFk: 3, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 4, name: 'Scooter Benzine', amount: 100.30, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Apr", monthFk: 4, subCategoryFk: 4, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 5, name: 'Drone', amount: 750.20, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "May", monthFk: 5, subCategoryFk: 5, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 6, name: 'Stufi', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 6, subCategoryFk: 2, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
+      { id: 7, name: 'Scooter Repair', amount: 300.40, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jul", monthFk: 7, subCategoryFk: 4, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 8, name: 'Foods', amount: 500,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Aug", monthFk: 8, subCategoryFk: 3, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 9, name: 'Lamps', amount: 600.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Sep", monthFk: 9, subCategoryFk: 1, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 10, name: 'Drinks', amount: 400.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Oct", monthFk: 10, subCategoryFk: 3, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 11, name: 'Mysteryland', amount: 600.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Nov", monthFk: 11, subCategoryFk: 8, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 12, name: 'Athome', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Dec", monthFk: 12, subCategoryFk: 1, balanceFk: 1, companyFk: 1, alreadyPaid: 0  }
     ];
     const balances = [];
     const categories = [

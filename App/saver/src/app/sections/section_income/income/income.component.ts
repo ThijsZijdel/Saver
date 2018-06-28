@@ -97,7 +97,8 @@ export class IncomeComponent implements OnInit {
 
     let chartIncomed = new Chart({
       chart: {
-        type: 'column'
+        type: 'column',
+        height: '250px'
       },
       colors:['#4BCA81', '#bababa', '#EEEEEE', '#00AEEF','#D23556'],
       title: {
@@ -132,7 +133,8 @@ export class IncomeComponent implements OnInit {
         stack: 'overview'
       }, {
         name: 'Saved',
-        data: this.savedData
+        data: this.savedData,
+        visible: false
       }, {
         name: 'Expenses',
         data: this.spendingData,
