@@ -44,6 +44,7 @@ import { ChartModule } from 'angular-highcharts';
 
 
 import {AngularFontAwesomeComponent, AngularFontAwesomeModule, AngularFontAwesomeService} from "angular-font-awesome";
+import {LocalStorageDatabase} from "@ngx-pwa/local-storage";
 
 
 
@@ -94,7 +95,8 @@ import {AngularFontAwesomeComponent, AngularFontAwesomeModule, AngularFontAwesom
     BalanceService,
     ExpenseService,
     MessageService,
-    CategoryService
+    CategoryService,
+    LocalStorageDatabase
   ],
   bootstrap: [AppComponent]
 })
