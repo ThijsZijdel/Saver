@@ -32,7 +32,7 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 12, name: 'Salary', amount: 800,    mainDescription: 'desc.', dateSpend: new Date(), monthName: "Dec", cacategoryId: 1  }
     ];
     const expenses = [
-      { id: 1, name: 'Salary', amount: 530.20, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jan", monthFk: 1, subCategoryFk: 1, balanceFk: 1, companyFk: 1, alreadyPaid: 1 },
+      { id: 1, name: 'Salary', amount: 530.20, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jan", monthFk: 1, subCategoryFk: 11, balanceFk: 1, companyFk: 1, alreadyPaid: 1 },
       { id: 2, name: 'Salary', amount: 300.40, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Feb", monthFk: 2, subCategoryFk: 2, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
       { id: 3, name: 'Salary', amount: 600.10, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Mar", monthFk: 3, subCategoryFk: 3, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
       { id: 4, name: 'Salary', amount: 100.30, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Apr", monthFk: 4, subCategoryFk: 4, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
