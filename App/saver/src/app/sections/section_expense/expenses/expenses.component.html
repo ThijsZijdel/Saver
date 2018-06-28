@@ -38,14 +38,15 @@
             <div class="sub-layer {{category.name+'-'+category.id}}">
 
 
-              <li *ngIf="category.subCategoryFk == categoryMain.id" (click)="setShowStateSubLayer(category.id, category.name);
-                                                                            toggleTooltipSub(category.name+'-'+category.id)" >
+              <li *ngIf="category.subCategoryFk == categoryMain.id" >
 
-                <span class="icon-subcat clickable" [ngStyle]="{'background':getColor(category)}">
+                <span class="icon-subcat" [ngStyle]="{'background':getColor(category)}">
                   <fa name="{{category.icon}}"></fa>
                 </span>
 
-                  <h2 class="clickable subLabel parent-tooltip subCategoryLbl">
+                  <h2 class="clickable subLabel parent-tooltip subCategoryLbl"
+                      (click)="setShowStateSubLayer(category.id, category.name);
+                               toggleTooltipSub(category.name+'-'+category.id)">
                     {{category.name}}
                     <span class="amount">
                       &euro;{{getSumAmounts(getExpensesOf(category.id))}}
@@ -56,7 +57,7 @@
                   </h2>
 
                 <div *ngFor="let expenseDisplay of getLastExpenseOf(category.id)">
-                  <span class="info clickable">
+                  <span class="info">
                     <span class="date">
                       {{formatDate(expenseDisplay.date)}}
                     </span>
@@ -65,14 +66,22 @@
 
                     <span class="company">
                       {{expenseDisplay.companyFk}}
-                    </span></span>
-
+                    </span>
+                  </span>
+                </div>
+                <div *ngIf="getLastExpenseOf(category.id).length == 0">
+                  <span class="info clickable">
+                    <span class="date">
+                      No expenses in this category
+                    </span>
+                  </span>
                 </div>
 
 
                 <ul class="expenses-seperate hiddenNow" id="{{category.id.toString()+category.name.substr(0,4)}}">
                     <li class="forloop" *ngFor="let expense of getExpensesOf(category.id)">
-                      {{expense.name}} - {{expense.amount}}
+                      <span>{{expense.name}} - {{expense.amount}}</span> <br>
+                      <span class="info">in Shopping Mall on {{formatDate(expense.date)}}</span>
                     </li>
                 </ul>
 

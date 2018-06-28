@@ -107,7 +107,7 @@ export class ExpensesComponent implements OnInit {
   protected getLastExpenseOf(categoryId: Number): Expense[] {
     let data: Expense[] = [];
     for (let expense of this.expenses) {
-      if(expense.id == categoryId){
+      if(expense.subCategoryFk == categoryId){
         data.push(expense);
       }
 
@@ -159,12 +159,12 @@ export class ExpensesComponent implements OnInit {
   protected toggleTooltip(classe: string) {
     let parent = 'section.category.'+classe;
 
-    $(parent).find('.mainCategoryLbl span.tooltipPerc').toggle().delay(500);
+    $(parent).find('.mainCategoryLbl span.tooltipPerc').fadeToggle();
   }
 
   protected toggleTooltipSub(classe: string) {
     let parent = 'div.sub-layer.'+classe;
-    $(parent).find('.subCategoryLbl span.tooltipPerc').toggle().delay(500);
+    $(parent).find('.subCategoryLbl span.tooltipPerc').fadeToggle();
   }
 
   getAmountExpensesMain(id: number):number {
