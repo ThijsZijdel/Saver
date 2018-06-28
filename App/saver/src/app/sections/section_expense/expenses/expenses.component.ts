@@ -3,6 +3,9 @@ import {ExpenseService} from "../service_expense/expense.service";
 import {Expense} from "../../../models/Expense";
 import {CategoryService} from "../../../data/service/service_category/category.service";
 import {Category} from "../../../models/Category";
+
+import {catchOffline, Network} from '@ngx-pwa/offline';
+
 import * as $ from "jquery"
 
 @Component({
@@ -13,7 +16,8 @@ import * as $ from "jquery"
 export class ExpensesComponent implements OnInit {
 
   constructor(private serviceExpenses: ExpenseService,
-              private serviceCategories: CategoryService) { }
+              private serviceCategories: CategoryService,
+              protected network: Network) { }
 
   expenses: Expense[] = [];
   categories: Category[] = [];
@@ -21,6 +25,8 @@ export class ExpensesComponent implements OnInit {
   ngOnInit() {
     this.categories = this.getCategories();
     this.expenses = this.getExpenses();
+
+    console.log(this.network.online+" network")
   }
 
   private getExpenses(): Expense[] {
@@ -30,7 +36,7 @@ export class ExpensesComponent implements OnInit {
     // TODO  when importing all the expenses: sort them in categories and sub cats.
     // TODO  --> show only the sum of that category and subcategory
     // TODO  --> --> when click: show last 5 expenses in that subc.
-    this.serviceExpenses.getExpenses().subscribe(expenses => {
+    this.serviceExpenses.getExpenses().pipe(catchOffline()).subscribe(expenses => {
       // loop trough all the expenes
       for (let income of expenses) {
         data.push(income);
@@ -85,8 +91,6 @@ export class ExpensesComponent implements OnInit {
 
     $(element).toggleClass("show");
 
-
-
     let time = 0;
 
     if ($(element).hasClass('relative')){
@@ -128,6 +132,64 @@ export class ExpensesComponent implements OnInit {
     let curr_month = date.getMonth();
     let curr_year = date.getFullYear();
     return(this.monthnames[curr_month] + " " + curr_date + ", " + curr_year);
+  }
+
+  protected getSumSubCats(id: number):number {
+    let sum: number = 0;
+
+    for (let category of this.categories) {
+      if(category.subCategoryFk == id && category.subCategoryFk != 0){
+        sum++;
+      }
+    }
+    return sum;
+  }
+
+
+
+  private getMainCategoryId(subCatId: number):number{
+    for (let cat of this.categories){
+      if (cat.id == subCatId){
+        return cat.subCategoryFk;
+      }
+    }
+    return 0;
+  }
+
+  protected toggleTooltip(classe: string) {
+    let parent = 'section.category.'+classe;
+
+    $(parent).find('.mainCategoryLbl span.tooltipPerc').toggle().delay(500);
+  }
+
+  protected toggleTooltipSub(classe: string) {
+    let parent = 'div.sub-layer.'+classe;
+    $(parent).find('.subCategoryLbl span.tooltipPerc').toggle().delay(500);
+  }
+
+  getAmountExpensesMain(id: number):number {
+    let sum: number = 0;
+
+    for (let expense of this.expenses) {
+
+      //todo check for recursive call?
+      if (this.getMainCategoryId(expense.subCategoryFk) == id || expense.subCategoryFk == id){
+        sum++;
+      }
+    }
+    return sum;
+  }
+  protected getAmountExpensesSub(id: number): number {
+    let sum: number = 0;
+
+    for (let expense of this.expenses) {
+
+      //todo check for recursive call?
+      if(expense.subCategoryFk == id){
+        sum++;
+      }
+    }
+    return sum;
   }
 }
 
