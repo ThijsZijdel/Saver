@@ -1,0 +1,8 @@
+{
+  "name": "Saver - by Thijs Zijdel",
+  "short_name": "Saver",
+  "lang": "en-US",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "theme_color": "#0076DE"
+}
