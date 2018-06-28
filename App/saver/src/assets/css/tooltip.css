@@ -12,7 +12,7 @@
   width: 100px;
   height: auto;
   padding: 5px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   border: 2px solid rgba(205,205,205,0.8);
   margin: 0 auto;
   left: 10px;
@@ -49,4 +49,22 @@
   display: block;
   position: absolute !important;
   opacity: 1 !important;
+}
+
+
+
+/* Touch */
+@media (pointer: coarse) {
+  .parent-tooltip:hover .tooltipPerc {
+    display: none !important;
+  }
+  .tooltipPerc {
+    display: none !important;
+  }
+}
+/* Mouse */
+@media (pointer: fine) {
+  .parent-tooltip:hover .tooltipPerc {
+    display: block;
+  }
 }
