@@ -17,47 +17,55 @@
 
 <section class="overdue">
   <h3>Overdue</h3>
-  <span class="amount-box">&euro;{{overdueTotal}}</span>
+  <span class="amount-box">&euro;{{getSumExpenses(overdueBills)}}</span>
 
   <hr>
 
-  <ul class="bills-overdue">
+  <ul class="bills-overdue" *ngFor="let bill of overdueBills; let o = index">
+    <div *ngIf="o < overdueShown">
+      <li class="over">
+        <span></span><h2>{{bill.name}} <span class="amount">&euro;{{bill.amount}}</span></h2>
+        <span class="info"><span class="date">Mar 20, 2018</span><span class="dot"></span><span class="company">Bol.com</span></span>
+      </li>
+    </div>
+  </ul>
+  <ul *ngIf="overdueBills.length == 0">
     <li class="over">
-      <span></span><h2>UG Monthly Pass <span class="amount">&euro;80.00</span></h2>
-      <span class="info"><span class="date">Sep 08, 2018</span><span class="dot"></span><span class="company">Carris</span></span>
-    </li>
-    <li class="over">
-      <span></span><h2>Domain Renewal <span class="amount">&euro;12.70</span></h2>
-      <span class="info"><span class="date">Sep 09, 2018</span><span class="dot"></span><span class="company">Names</span></span>
+      <span></span><h2>There are no bills overdue </h2>
+      <span class="info"><span class="date">But, {{billBills.length}} bills need to be payed soon </span><span class="dot"></span><span class="company">Total: &euro;{{getSumExpenses(billBills)}}</span></span>
     </li>
   </ul>
 
-  <button class="more btn wide">More overdue bills (1)</button>
+  <button class="more btn wide overdueShown" (click)="showBills('overdueShown')">
+    {{billsBtnText}}
+    <span *ngIf="overdueBills.length-overdueShown > 0">({{overdueBills.length-overdueShown}})</span>
+  </button>
 </section>
 
 <section class="bill">
   <h3>Bill</h3>
-  <span class="amount-box">&euro;{{overdueTotal}}</span>
+  <span class="amount-box">&euro;{{getSumExpenses(billBills)}}</span>
 
   <hr>
 
-  <ul class="bills-bill">
-    <li class="bill">
-      <span></span><h2>Order online <span class="amount">&euro;120.50</span></h2>
-      <span class="info"><span class="date">Jul 20, 2018</span><span class="dot"></span><span class="company">Bol.com</span></span>
-    </li>
-    <li class="bill">
-      <span></span><h2>Domain Renewal <span class="amount">&euro;32.70</span></h2>
-      <span class="info"><span class="date">Sep 09, 2018</span><span class="dot"></span><span class="company">Names</span></span>
-    </li>
+  <ul class="bills-bill" *ngFor="let bill of billBills; let i = index">
+    <div *ngIf="i < billsShown">
+      <li class="bill">
+        <span></span><h2>{{bill.name}} <span class="amount">&euro;{{bill.amount}}</span></h2>
+        <span class="info"><span class="date">Jul 20, 2018</span><span class="dot"></span><span class="company">Bol.com</span></span>
+      </li>
+    </div>
   </ul>
 
-  <button class="more btn wide">More bills (13)</button>
+  <button class="more btn wide billsShown" (click)="showBills('billsShown')">
+    {{billsBtnText}}
+    <span *ngIf="billBills.length-billsShown > 0">({{billBills.length-billsShown}})</span>
+  </button>
 </section>
 
 <section class="paid">
   <h3>Paid</h3>
-  <span class="amount-box">&euro;{{overdueTotal}}</span>
+  <span class="amount-box">&euro;{{getSumExpenses(paidBills)}}</span>
 
   <hr>
 

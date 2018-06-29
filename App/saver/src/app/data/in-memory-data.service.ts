@@ -47,18 +47,18 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
     const balances = [];
     const categories = [
-      { id: 1, name: 'Home', description: 'home related expenses.', color: "#333", icon:"home", subCategoryFk: 0},
-      { id: 2, name: 'Utilities', description: 'Mostly monthly expenses.', color: "#444",icon:"cogs", subCategoryFk: 0},
-      { id: 3, name: 'Groceries', description: 'Food, drinks.', color: "#938234",icon:"utensils", subCategoryFk: 0},
-      { id: 4, name: 'Transportation', description: 'Transportation expenses.', color: "#333",icon:"car", subCategoryFk: 0},
+      { id: 1, name: 'Home', description: 'home related expenses.', color: "#EB7092", icon:"home", subCategoryFk: 0},
+      { id: 2, name: 'Utilities', description: 'Mostly monthly expenses.', color: "#D23556",icon:"cogs", subCategoryFk: 0},
+      { id: 3, name: 'Groceries', description: 'Food, drinks.', color: "#FFBB28",icon:"utensils", subCategoryFk: 0},
+      { id: 4, name: 'Transportation', description: 'Transportation expenses.', color: "#55BF3B",icon:"car", subCategoryFk: 0},
       { id: 5, name: 'Personal', description: 'Personal expenses.', color: "#444",icon:"user", subCategoryFk: 0},
-      { id: 6, name: 'Mobile Phone', description: 'Tele2.', color: "#938234",icon:"phone", subCategoryFk: 2},
-      { id: 7, name: 'Clothing', description: 'Clothes.', color: "#333",icon:"tshirt", subCategoryFk: 0},
-      { id: 8, name: 'Festivals', description: 'Parties.', color: "#444",icon:"gift", subCategoryFk: 5},
+      { id: 6, name: 'Mobile Phone', description: 'Tele2.', color: "#4BCA81",icon:"phone", subCategoryFk: 2},
+      { id: 7, name: 'Clothing', description: 'Clothes.', color: "#8a6fca",icon:"tshirt", subCategoryFk: 0},
+      { id: 8, name: 'Festivals', description: 'Parties.', color: "#00AEEF",icon:"gift", subCategoryFk: 5},
       { id: 9, name: 'Insurances', description: 'desc.', color: "#938234",icon:"medkit", subCategoryFk: 0},
-      { id: 10, name: 'Scooter costs', description: 'desc.', color: "#333",icon:"motorcycle", subCategoryFk: 4},
-      { id: 11, name: 'Rent', description: 'Home costs.', color: "#444", icon:"home", subCategoryFk: 1},
-      { id: 12, name: 'Study', description: 'desc.', color: "#938234",icon:"graduation-cap", subCategoryFk: 0}
+      { id: 10, name: 'Scooter costs', description: 'desc.', color: "#eeaaee",icon:"motorcycle", subCategoryFk: 4},
+      { id: 11, name: 'Rent', description: 'Home costs.', color: "#FFBB28", icon:"home", subCategoryFk: 1},
+      { id: 12, name: 'Study', description: 'desc.', color: "#B8E986",icon:"graduation-cap", subCategoryFk: 0}
     ];
     const budgets = [
       { id: 1, name: 'Bulk Budget', repeatingFk: 1, description: 'Main Budget.', startDate: new Date(), endDate: new Date(), balanceFk: 1, typeFk: "bulk", amountStart: 3563.52, amountLeft:2963.52, monthFk: 6, isPast: 0},

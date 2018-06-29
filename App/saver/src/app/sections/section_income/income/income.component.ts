@@ -160,7 +160,8 @@ export class IncomeComponent implements OnInit {
   }
 
 
-
-
+  selectionChange(value: string, value2: string) {
+    console.log(value+"   --  "+value2)
+  }
 }
 

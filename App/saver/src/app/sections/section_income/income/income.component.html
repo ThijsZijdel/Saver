@@ -6,14 +6,14 @@
     <div class="col-md-6 viewing-options">
       <Label class="label small view">Viewing</Label>
       <span class="selections">
-        <select class="selection" name="frequency">
+        <select class="selection" name="frequency" #frequency (change)="selectionChange(frequency.value, interval.value)">
           <option value="monthly">Monthly</option>
           <option value="weekly">Weekly</option>
           <option value="daily">Daily</option>
         </select>
       </span>
       <span class="selections">
-        <select class="selection" name="interval">
+        <select class="selection" name="interval" #interval (change)="selectionChange(frequency.value, interval.value)">
           <option value="12mnths">Last 12 Months</option>
           <option value="6mnths">Last 6 Months</option>
           <option value="3mnths">Last 3 Months</option>
