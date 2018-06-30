@@ -9,32 +9,15 @@ import * as $ from "jquery"
 })
 export class BalancesComponent implements OnInit {
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService) {
+  constructor() {
 
   }
 
-  public data:any=[];
 
   ngOnInit() {
-    $('.jqLoaded').css('color','blue');
+
   }
 
 
-
-  saveInLocal(key, val): void {
-    this.storage.set(key, val);
-
-
-    this.data[key]= this.storage.get(key);
-  }
-
-
-
-
-
-  getFromLocal(key): void {
-    this.data[key]= this.storage.get(key);
-
-    console.log(this.data[key]+"< this.data[key]   || this.storage.get(key)> "+this.storage.get(key))
-  }
+  
 }
