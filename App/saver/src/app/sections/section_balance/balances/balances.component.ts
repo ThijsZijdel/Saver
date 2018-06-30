@@ -19,5 +19,5 @@ export class BalancesComponent implements OnInit {
   }
 
 
-  
+
 }
