@@ -47,6 +47,7 @@ import {AngularFontAwesomeComponent, AngularFontAwesomeModule, AngularFontAwesom
 
 import {LocalStorageDatabase} from "@ngx-pwa/local-storage";
 import {OfflineProvidersConfig} from "@ngx-pwa/offline";
+import {CalendarComponent} from "./sections/section_bills/calendar/calendar.component";
 
 
 import {SettingsService} from "./views/personal/settings.service";
@@ -73,7 +74,9 @@ import {SettingsService} from "./views/personal/settings.service";
     AddIncomeComponent,
     AddBudgetComponent,
     MessageComponent,
-    BusinessComponent
+    BusinessComponent,
+
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
