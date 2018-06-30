@@ -25,7 +25,15 @@ export class BillsComponent implements OnInit {
   overBtnAlternative: string = "Less Overdue bills ";
   overBtnNormal: string = "More Overdue bills "
 
+
+  paidShown:number = 2;
+  paidBtnText: string = "More Paid bills ";
+  paidBtnAlternative: string = "Less Paid bills ";
+  paidBtnNormal: string = "More Paid bills "
+
+
   constructor(private expenseService: ExpenseService) { }
+
 
   ngOnInit() {
     this.getBills();

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {JSONSchema, LocalStorage} from "@ngx-pwa/local-storage";
+import {SettingsService} from "./settings.service";
 
 @Component({
   selector: 'app-personal',
@@ -8,30 +9,45 @@ import {JSONSchema, LocalStorage} from "@ngx-pwa/local-storage";
 })
 export class PersonalComponent implements OnInit {
 
-  constructor(protected localStorage: LocalStorage) { }
+  constructor(protected localStorage: LocalStorage,
+              public settingService: SettingsService) { }
 
-  ngOnInit() {
-    let user: User = { name: 'Henris', pas: '123' };
+  addExpenseBox: boolean = false;
 
-    this.localStorage.setItem('user', user).subscribe(() => {});
+  ngOnInit(){
 
-    // delete 1
-    // this.localStorage.removeItem('user').subscribe(() => {});
 
-    // delete all
-    // this.localStorage.clear().subscribe(() => {});
 
-    // get item
-      this.localStorage.getItem<User>('user').subscribe((user) => {
-        console.log(user.name); // should be 'Henris'
 
-    //optional
-        // Done
-      }, () => {
-        // Error
-    //optional
 
-      });
+
+
+
+
+
+
+
+    // let user: User = { name: 'Henris', pas: '123' };
+    //
+    // this.localStorage.setItem('user', user).subscribe(() => {});
+    //
+    // // delete 1
+    // // this.localStorage.removeItem('user').subscribe(() => {});
+    //
+    // // delete all
+    // // this.localStorage.clear().subscribe(() => {});
+    //
+    // // get item
+    //   this.localStorage.getItem<User>('user').subscribe((user) => {
+    //     console.log(user.name); // should be 'Henris'
+    //
+    // //optional
+    //     // Done
+    //   }, () => {
+    //     // Error
+    // //optional
+    //
+    //   });
   }
 
   jsonSchem(){
@@ -55,7 +71,7 @@ export class User {
   name: string;
   pas: string;
 
-  constructor(name: string, pas: string){
+  constructor(name: string, pas: string) {
     this.name = name;
     this.pas = pas;
   }
