@@ -25,21 +25,6 @@ export class BillsComponent implements OnInit {
   overBtnAlternative: string = "Less Overdue bills ";
   overBtnNormal: string = "More Overdue bills "
 
-  constructor(private expenseService: ExpenseService) { }
-  overdueBills: Expense[] = [];
-  billBills: Expense[] = [];
-  paidBills: Expense[] = [];
-
-  overdueShown:number = 2;
-  overBtnText: string = "More Overdue bills ";
-  overBtnAlternative: string = "Less Overdue bills ";
-  overBtnNormal: string = "More Overdue bills "
-
-
-  billsShown:number = 2;
-  billsBtnText: string = "More bills ";
-  billsBtnAlternative: string = "Less bills ";
-  billsBtnNormal: string = "More bills "
 
   paidShown:number = 2;
   paidBtnText: string = "More Paid bills ";
@@ -48,7 +33,7 @@ export class BillsComponent implements OnInit {
 
 
   constructor(private expenseService: ExpenseService) { }
-  constructor() { }
+
 
   ngOnInit() {
     this.getBills();

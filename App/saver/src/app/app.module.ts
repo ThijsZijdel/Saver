@@ -43,15 +43,11 @@ import {StorageServiceModule} from "angular-webstorage-service";
 import { ChartModule } from 'angular-highcharts';
 
 
-import {AngularFontAwesomeModule, AngularFontAwesomeService} from "angular-font-awesome";
-import {LocalStorageDatabase} from "@ngx-pwa/local-storage";
-import {OfflineProvidersConfig} from "@ngx-pwa/offline";
 import {AngularFontAwesomeComponent, AngularFontAwesomeModule, AngularFontAwesomeService} from "angular-font-awesome";
-import {AngularFontAwesomeModule, AngularFontAwesomeService} from "angular-font-awesome";
+
 import {LocalStorageDatabase} from "@ngx-pwa/local-storage";
 import {OfflineProvidersConfig} from "@ngx-pwa/offline";
 
-import {SettingsService} from "./views/personal/settings.service";
 
 import {SettingsService} from "./views/personal/settings.service";
 
@@ -105,7 +101,8 @@ import {SettingsService} from "./views/personal/settings.service";
     ExpenseService,
     MessageService,
     CategoryService,
-    LocalStorageDatabase
+    LocalStorageDatabase,
+    SettingsService
   ],
   bootstrap: [AppComponent]
 })
