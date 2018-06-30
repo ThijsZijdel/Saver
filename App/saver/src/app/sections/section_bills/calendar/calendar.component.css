@@ -1,47 +1,83 @@
-table#calendarTbl {
+@import "../../../../assets/css/fonts.css";
+
+
+.calender-component #calender-box div table.calendarTbl {
   display: inline-block  !important;
   vertical-align: top !important;
   border-collapse: collapse !important;
   width: 80% !important;
   margin: 0 auto !important;
-  height: 200px !important;
 }
 
-table#calendarTbl tbody tr:hover {
+.calender-component #calender-box div table.calendarTbl tbody tr:hover {
   background-color: #fff;
 }
 
-table#calendarTbl td {
+.calender-component #calender-box div table.calendarTbl td {
   text-align: center;
   line-height: 1.75rem;
   width: 1.75rem;
 }
 
-table#calendarTbl thead td {
+.calender-component #calender-box div table.calendarTbl thead td {
   color: #999;
   font-size: .75rem;
   text-transform: uppercase;
 }
 
-table#calendarTbl tbody td {
+.calender-component #calender-box div table.calendarTbl tbody td {
   font-size: .875rem;
   padding: 12px;
 }
-table#calendarTbl tbody td.before {
+.calender-component #calender-box div table.calendarTbl tbody td.before {
   color: #bdbdbd;
 }
-table#calendarTbl tbody td.currentDay{
+.calender-component #calender-box div table.calendarTbl tbody td.current{
   color: red;
 }
 
-table#calendarTbl tbody td:hover {
+.calender-component #calender-box div table.calendarTbl tbody td:hover {
   background-color: rgba(64, 64, 64, 0.35);
   color: #353535;
   cursor: pointer;
 }
-#calender-box table {
 
-}
-/*td.before, td.after {*/
+
+
+  /*td.before, td.after {*/
   /*color: #999;*/
 /*}*/
+
+
+
+
+
+
+.calender-component .calendar-container {
+  width:100%;
+  text-align: center;
+}
+
+.calender-component .row.correction {
+  text-align: center;
+}
+.calender-component button.prev{
+
+}
+.calender-component button.next {
+  position: absolute;
+  right: 25px;
+}
+
+.calender-component button.prev, button.next {
+  border-radius: 50%;
+  border: 2px solid #222;
+  background: none;
+  font-size: 9px;
+  height: 24px;
+  font-weight: 800;
+  margin: 3px 0 0 5px;
+}
+.calender-component .correction {
+  margin: 0;
+}
