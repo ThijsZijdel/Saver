@@ -35,6 +35,9 @@ export class SpendingService {
       );
   }
 
+  // TODO    get spendings normal -> see notes --> sum for each category
+  // TODO
+
   /**
    * get spending by id.
    * @author Thijs Zijdel

@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 
+select::-ms-value {background: none; color: #42413D;}
 
 * {
   font-family: 'Lato', sans-serif;

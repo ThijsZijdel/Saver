@@ -29,16 +29,17 @@ export class BudgetComponent implements OnInit {
   }
 
 
-
+  totalBudgetSpend: number = 0;
 
   private getBudgets(): Budget[] {
+    this.totalBudgetSpend = 0;
     let data: Budget[] = [];
 
     this.serviceBudgets.getBudgets().subscribe(budgets => {
       // loop trough all the expenes
       for (let budget of budgets) {
         data.push(budget);
-
+        this.totalBudgetSpend += (budget.amountStart-budget.amountLeft);
         //incomeDataC.push(income.amount);
       }
     });
@@ -65,4 +66,5 @@ export class BudgetComponent implements OnInit {
   protected reload():void {
     this.budgets = this.getBudgets();
   }
+
 }

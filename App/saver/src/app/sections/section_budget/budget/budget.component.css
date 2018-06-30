@@ -1,7 +1,7 @@
 
 
 @import "../../../../assets/css/fonts.css";
-
+@import "../../../../assets/css/tooltip.css";
 
 .clickable {
   cursor: pointer;
@@ -10,56 +10,6 @@
 .progress-bar {
   width: 100%;
   background-color: #EDEDED;
-  position:relative;
-}
-.tooltipPerc {
-  display: none;
-  position: relative;
-  color: #333;
-  font-weight: 300;
-  top: 15px;
-  font-size: 14px;
-  text-align: center;
-  width: 100px;
-  height: auto;
-  padding: 5px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid rgba(205,205,205,0.8);
-  margin: 0 auto;
-  left: 10px;
-
-
-  transition: all ease-in-out 200ms;
-  transition-delay: 5s;
-
-  opacity: 0;
-}
-.tooltipPerc:before,
-.tooltipPerc:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border: 10px solid transparent;
-  border-top: 0;
-  margin-left: -10px;
-}
-.tooltipPerc:after {
-  border-bottom-color: rgba(205,205,205,0.8);
-  margin-top: -10px;
-}
-.tooltipPerc:before {
-  border-bottom-color: #fff;
-  margin-top: -8px;
-  z-index: 3;
-}
-
-.progress-bar:hover .tooltipPerc {
-  display: block;
-  position: absolute !important;
-  opacity: 1 !important;
 }
 
 .progress {

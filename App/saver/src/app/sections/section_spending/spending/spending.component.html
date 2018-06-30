@@ -1,12 +1,73 @@
-<h1 class="clickable" (click)="init()">Spending</h1>
 
+<div class="row correction">
+  <h1 class="clickable" (click)="init()">Spending</h1>
+
+  <button class="prev"> &#9664; </button> <button class="next"> &#9654; </button>
+
+  <h1 class="bulkBudgetLeft">&euro;{{totalBudgetSpend}}</h1>
+</div>
 
 <div class="row">
   <div class="col-md-6">
-    <div [chart]="chart"></div>
+    <div [chart]="chart" id="chart-spending"></div>
   </div>
+
+
   <div class="col-md-6">
-    <h4>List</h4>
+
+
+
+    <ul class="sub-cat mgtp">
+      <div class="expense" *ngFor="let category of spendings">
+
+
+        <div class="sub-layer {{category.name+'-'+category.name+'-'+category.subcategoryFk}}">
+
+
+          <li>
+
+                <span class="icon-subcat" [ngStyle]="{'border-color':getColor(category)}">
+
+                </span>
+
+            <h2 class="clickable subLabel parent-tooltip subCategoryLbl"
+                (click)="setShowStateSubLayer(category.subcategoryFk, category.name);
+                         toggleTooltipSub(category.name+'-'+category.name+'-'+category.subcategoryFk)">
+              {{getPercentage(category)}}
+              <span class="amount">
+                      &euro;{{category.amount}}
+                    </span>
+              <span class="tooltipPerc">
+                    {{getExpensesOf(category.subcategoryFk).length}} expenses
+                    </span>
+            </h2>
+
+            <div>
+                  <span class="info">
+                    <span class="date">
+                      {{category.name}}
+                    </span>
+                  </span>
+            </div>
+
+
+
+            <ul class="expenses-seperate hiddenNow" id="{{category.subcategoryFk.toString()+category.name.substr(0,4)}}">
+
+              <li class="forloop" *ngFor="let expense of getExpensesOf(category.subcategoryFk)">
+                <span>{{expense.name}} - {{expense.amount}}</span> <br>
+                <span class="info">Shopping Mall on {{formatDate(expense.date)}}</span>
+              </li>
+            </ul>
+
+          </li>
+        </div>
+
+      </div>
+    </ul>
+
+
+
   </div>
 </div>
 

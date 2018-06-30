@@ -12,9 +12,7 @@ export class Spending {
   subcategoryFk: number;
 
   balanceFk: number;
-  companyFk: number;
 
-  alreadyPaid: boolean;
 
 
   constructor(id: number,
@@ -26,9 +24,7 @@ export class Spending {
               monthName: string,
               monthFk: number,
               subcategoryFk: number,
-              balanceFk: number,
-              companyFk: number,
-              alreadyPaid: number) {
+              balanceFk: number) {
     this.id = id;
     this.name = name;
     this.amount = amount;
@@ -39,9 +35,7 @@ export class Spending {
     this.subcategoryFk = subcategoryFk;
 
     this.balanceFk = balanceFk;
-    this.companyFk = companyFk;
 
-    this.alreadyPaid = alreadyPaid == 0;
 
     this.monthFk = monthFk;
     this.repeatingFk = repeatingFk;
