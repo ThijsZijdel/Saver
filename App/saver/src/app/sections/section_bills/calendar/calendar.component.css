@@ -1,6 +1,10 @@
 @import "../../../../assets/css/fonts.css";
 
 
+.clickable{
+  cursor: pointer;
+}
+
 .calender-component #calender-box div table.calendarTbl {
   display: inline-block  !important;
   vertical-align: top !important;

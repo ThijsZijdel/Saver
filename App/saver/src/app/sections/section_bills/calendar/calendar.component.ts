@@ -14,6 +14,7 @@ export class CalendarComponent implements OnInit {
   month: string;
   year: number = new Date().getFullYear();
   currentMonth: number = new Date().getMonth() ;
+  displayedMonth: number = new Date().getMonth() ;
 
   ngOnInit() {
     this.setUpCalendar(this.currentMonth);
@@ -152,10 +153,14 @@ export class CalendarComponent implements OnInit {
 
 
   changeMonth(number: number) {
-    //todo check year
-    this.currentMonth = this.currentMonth + number;
+    if (number == null){
+      this.displayedMonth = this.currentMonth;
+    } else {
+      //todo check year
+      this.displayedMonth = this.displayedMonth + number;
+    }
 
-    this.setUpCalendar(this.currentMonth);
+    this.setUpCalendar(this.displayedMonth);
   }
 }
 // display: inline-block;
