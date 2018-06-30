@@ -80,6 +80,14 @@ export class BillsComponent implements OnInit {
         this.overBtnText = this.overBtnAlternative;
         this.overdueShown = 10;
       }
+    } else if (varn == "paidShown"){
+      if (this.paidBtnText == this.paidBtnAlternative) {
+        this.paidBtnText = this.paidBtnNormal;
+        this.paidShown = 2;
+      } else {
+        this.paidBtnText = this.paidBtnAlternative;
+        this.paidShown = 10;
+      }
     }
 
   }
