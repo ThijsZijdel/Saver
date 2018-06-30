@@ -1,0 +1,125 @@
+<div class="row correction">
+  <h1 class="clickable">Balances</h1>
+
+
+  <h1 class="bulkBudgetLeft">&euro;{{balancesTotal}}</h1>
+</div>
+
+
+
+
+
+
+
+
+<div class="sections-container">
+     <!--style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;"-->
+     <!--unselectable="on"-->
+     <!--onselectstart="return false;"-->
+     <!--onmousedown="return false;">-->
+
+
+  <div class="category-box main-category-box" *ngFor="let category of balances">
+    <div class="check" >
+
+      <section class="category {{category.name.split(' ').join('_')+'-'+category.id}}">
+
+        <h3 (click)="setShowStateSubLayer('category' ,category.name.split(' ').join('_'), category.id);"
+            class="clickable mainCategoryLbl parent-tooltip">
+
+          Type {{category.type}} - {{category.name.substring(4, category.name.length)}}
+
+          <span class="tooltipPerc">
+            <!--{{ getSumSubCats(balance.id) }} subcats. <br>-->
+            <!--{{ getAmountExpensesMain(balance.id) }} expenses-->
+          </span>
+        </h3>
+
+        <span class="amount-box">
+        &euro;{{  category.amount }}
+        </span>
+
+        <hr>
+
+
+        <ul class="sub-cat  hiddenNow">
+          <div class="expense" *ngFor="let balance of balances">
+
+
+
+
+
+            <li *ngIf="balance.id == category.id" >
+
+              <div class="sub-layer subcategory {{balance.name.split(' ').join('_')+'-'+balance.id}}">
+
+                  <span class="icon-subcat down" style="background: red;">
+                    <!--[ngStyle]="{'background':getColor(category)}"-->
+                    <fa name="{{balance.icon}}"></fa>
+                  </span>
+
+                <h2 class="clickable subLabel parent-tooltip subCategoryLbl"
+                    (click)="setShowStateSubLayer('subcategory' ,balance.name.split(' ').join('_'), balance.id);">
+
+
+                  {{balance.name}}
+                  <span class="amount">
+                        &euro;{{balance.amount}}
+                      </span>
+                  <span class="tooltipPerc">
+                      <!--{{ getAmountExpensesSub(category.id) }} expenses-->
+                      </span>
+                </h2>
+
+               <div>
+                    <span class="info">
+                      <span class="date">
+                        {{category.name.substring(0, 4)}}
+                      </span>
+
+                      <span class="dot">&middot;</span>
+
+                      <span class="company">
+                        {{balance.bankFk}}
+                      </span>
+                    </span>
+                </div>
+                <!--<div *ngIf="getLastExpenseOf(category.id).length == 0">-->
+                    <!--<span class="info clickable">-->
+                      <!--<span class="date">-->
+                        <!--No expenses in this category-->
+                      <!--</span>-->
+                    <!--</span>-->
+                <!--</div>-->
+
+
+                <ul class="expenses-seperate hiddenNow">
+                  <li class="forloop" *ngFor="let transaction of getTransactionOf(category.id, true)">
+                    <span>{{transaction.name}} - &euro;{{transaction.amount}}</span> <br>
+                    <span class="info">in Shopping Mall on {{formatDate(transaction.date)}}</span>
+                  </li>
+                </ul>
+
+
+
+              </div>
+            </li>
+
+
+
+
+
+          </div>
+        </ul>
+
+
+      </section>
+    </div>
+  </div>
+
+
+
+</div>
+
+
+

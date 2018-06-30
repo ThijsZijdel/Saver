@@ -2,3 +2,167 @@
 @import "../../../../assets/css/fonts.css";
 
 
+
+
+/* Loop trough main ... */
+div.main-category-box {
+
+}
+
+div.main-category-box section.category {
+
+}
+
+div.main-category-box section.category h3.clickable.mainCategoryLbl {
+  /* default styling from fonts.css */
+}
+
+span.tooltipPerc {
+  /* external styling */
+}
+
+
+div.main-category-box section.category hr {
+
+}
+
+
+
+/*           GENERAL       */
+ul li {
+  list-style-type: none;
+  padding: 5px 0;
+
+}
+ul, li, .category-box {
+  -webkit-transition: opacity 150ms ease-in-out, top 400ms ease-in-out;
+  transition: opacity 150ms ease-in-out, top  400ms ease-in-out;
+}
+/*          / GENERAL      */
+
+
+
+
+
+
+div.main-category-box section.category ul.sub-cat li {
+  padding-left: 25px;
+}
+div.main-category-box section.category ul.sub-cat li .icon-subcat {
+  position: absolute;
+  left: 25px;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  font-size: 24px;
+  color: #fff;
+}
+div.main-category-box section.category ul.sub-cat li .icon-subcat:before{
+  content: '';
+  background-size: cover;
+  background: url("../../../../assets/icns/next.svg") no-repeat center;
+
+  width: 35px;
+  height: 35px;
+  margin-left: -30px;
+
+  -webkit-transition: all 150ms ease-in-out, top 400ms ease-in-out;
+  transition: all 150ms ease-in-out, top  400ms ease-in-out;
+
+}
+div.main-category-box section.category ul.sub-cat li .icon-subcat.down:before {
+  transform: rotate(90deg);
+  transform: rotate(90deg);
+
+}
+
+div.main-category-box section.category ul.sub-cat li .icon-subcat::before {
+  /*content: '>';*/
+  position: absolute;
+  left: 0;
+  color: #666;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/*div.main-category-box section.category ul.sub-cat li::before > ul.expenses-seperate.show {*/
+/*content: '\/';*/
+/*}*/
+
+div.main-category-box section.category ul.sub-cat li ul{
+  padding: 0;
+}
+div.main-category-box section.category ul.sub-cat li ul li {
+  list-style-type: none;
+  font-size: 15px;
+  font-weight: 300;
+}
+/*div.main-category-box section.category ul.sub-cat li ul li::before {*/
+/*content: '>';*/
+/*position: absolute;*/
+/*left: 0;*/
+/*color: #666;*/
+/*font-weight: 500;*/
+/*cursor: pointer;*/
+/*}*/
+div.main-category-box section.category ul.sub-cat li ul li span {
+  margin-bottom: -5px;
+}
+div.main-category-box section.category ul.sub-cat li ul li span.info {
+  font-size: 12px;
+}
+
+div.main-category-box section.category ul.sub-cat li ul li:last-child {
+  margin-bottom: 25px;
+}
+
+h1.bulkBudgetLeft {
+  right: 10px;
+  position: absolute;
+  color: #127BE0;
+}
+
+.hiddenNow  {
+  opacity: 0;
+  -webkit-transition: opacity 150ms ease-in-out, top 400ms ease-in-out;
+  transition: opacity 150ms ease-in-out, top  400ms ease-in-out;
+  position: absolute;
+  z-index: -10;
+}
+
+
+.show {
+  opacity: 1 !important;
+  z-index: 1;
+}
+.relative  {
+  position: relative;
+}
+
+
+.info {
+  margin-top: -10px;
+}
+span.dot {
+  font-weight: 600;
+  font-size: 25px;
+  position: absolute;
+  top: 13px;
+  padding-left: 3px;
+
+}
+
+span.company {
+  margin-left: 15px;
+}
+
+
+.tooltipPerc {
+  top: 26px;
+  left: 0px;
+  z-index: 9;
+}
+.tooltipPerc:before,
+.tooltipPerc:after {
+  left: 15%;
+}

@@ -11,21 +11,21 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 5, name: 'Salary', amount: 750.20, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "May", monthFk: 5, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
       { id: 6, name: 'Salary', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 6, balanceFk: 1, companyFk: 1, alreadyPaid: 1  },
       { id: 7, name: 'Salary', amount: 300.40, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Jul", monthFk: 7, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
-      { id: 8, name: 'Salary', amount: 500,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Aug", monthFk: 8, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
+      { id: 8, name: 'Salary', amount: 500,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Aug", monthFk: 8, balanceFk: 2, companyFk: 1, alreadyPaid: 0  },
       { id: 9, name: 'Salary', amount: 600.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Sep", monthFk: 9, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
       { id: 10, name: 'Salary', amount: 400.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Oct", monthFk: 10, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
       { id: 11, name: 'Salary', amount: 600.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Nov", monthFk: 11, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
-      { id: 12, name: 'Salary', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Dec", monthFk: 12, balanceFk: 1, companyFk: 1, alreadyPaid: 0  }
+      { id: 12, name: 'Salary', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Dec", monthFk: 12, balanceFk: 2, companyFk: 1, alreadyPaid: 0  }
     ];
     const spendings = [
-      { id: 1, name: 'Household', amount: 230.20,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 1, balanceFk: 1},
+      { id: 1, name: 'Household', amount: 230.20,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 1, balanceFk: 3},
       { id: 2, name: 'Utilities', amount: 100.40,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 2, balanceFk: 1  },
       { id: 3, name: 'Groceries', amount: 700.10,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 3, balanceFk: 1  },
       { id: 4, name: 'Transportation', amount: 50.30,   description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 4, balanceFk: 1  },
-      { id: 5, name: 'Personal', amount: 350.20,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 5, balanceFk: 1  },
+      { id: 5, name: 'Personal', amount: 350.20,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 5, balanceFk: 2  },
       { id: 6, name: 'Mobile Phone', amount: 100,     description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 6, balanceFk: 1  },
       { id: 7, name: 'Clothing', amount: 200.40,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 7, balanceFk: 1  },
-      { id: 8, name: 'Festivals', amount: 700,     description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 8, balanceFk: 1  },
+      { id: 8, name: 'Festivals', amount: 700,     description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 8, balanceFk: 2  },
       { id: 9, name: 'Insurances', amount: 300.50,  description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 9, balanceFk: 1  },
       { id: 10, name: 'Scooter costs', amount: 500.50,description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 10, balanceFk: 1  },
       { id: 11, name: 'Rent', amount: 650.50,description: 'desc.', date: new Date(), monthName: "Jun", monthFk: 1, subcategoryFk: 11, balanceFk: 1  },
@@ -45,7 +45,13 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 11, name: 'Mysteryland', amount: 600.50, repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Nov", monthFk: 11, subCategoryFk: 8, balanceFk: 1, companyFk: 1, alreadyPaid: 0  },
       { id: 12, name: 'Athome', amount: 900,    repeatingFk: null, description: 'desc.', date: new Date(), monthName: "Dec", monthFk: 12, subCategoryFk: 1, balanceFk: 1, companyFk: 1, alreadyPaid: 0  }
     ];
-    const balances = [];
+
+    // id: number, name: string, amount: number, description: string, type: string, bankFk: number
+    const balances = [
+      { id: 1, name: 'ING Main', amount: 1453.50, description: 'Main on demand balance account.', icon: "dollar-sign", type:"bank", bankFk: 0, maxDebt: -2000},
+      { id: 2, name: 'ING Savings', amount: 4453.50, description: 'Main savings balance account.', icon: "hand-holding-usd", type:"savings", bankFk: 0, maxDebt: 0},
+      { id: 3, name: 'ING Credit Card', amount: 0, description: 'Credit card account.', icon: "credit-card", type:"credit", bankFk: 0, maxDebt: -2000}
+    ];
     const categories = [
       { id: 1, name: 'Home', description: 'home related expenses.', color: "#EB7092", icon:"home", subCategoryFk: 0},
       { id: 2, name: 'Utilities', description: 'Mostly monthly expenses.', color: "#D23556",icon:"cogs", subCategoryFk: 0},
@@ -64,7 +70,7 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 1, name: 'Bulk Budget', repeatingFk: 1, description: 'Main Budget.', startDate: new Date(), endDate: new Date(), balanceFk: 1, typeFk: "bulk", amountStart: 3563.52, amountLeft:2963.52, monthFk: 6, isPast: 0},
       { id: 2, name: 'Dinner Budget', repeatingFk: 1, description: 'Saving some cash.', startDate: new Date(), endDate: new Date(), balanceFk: 1, typeFk: "save", amountStart: 500.50, amountLeft:50, monthFk: 6, isPast: 0}
     ];
-    return {incomes, spendings, expenses, categories, budgets};
+    return {incomes, spendings, expenses, categories, budgets, balances};
   }
 }
 
