@@ -28,6 +28,8 @@ export class IncomeComponent implements OnInit {
 
   savedData: number[] = [];
 
+  monthly: String[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
   constructor(private serviceIncome: IncomeService,
               private serviceSpending: SpendingService) { }
 
@@ -105,7 +107,7 @@ export class IncomeComponent implements OnInit {
         text: ''
       },
       xAxis: {
-        categories: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+        categories: this.monthly
       },
       plotOptions: {
         column: {

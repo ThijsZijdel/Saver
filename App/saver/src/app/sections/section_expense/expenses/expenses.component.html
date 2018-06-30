@@ -7,13 +7,12 @@
      onmousedown="return false;">
 
 
-  <div class="category-box" *ngFor="let categoryMain of categories">
+  <div class="category-box main-category-box" *ngFor="let categoryMain of categories">
     <div class="check" *ngIf="categoryMain.subCategoryFk == 0">
 
       <section class="category {{categoryMain.name+'-'+categoryMain.id}}">
 
-        <h3 (click)="setShowStateSubLayer(categoryMain.id, categoryMain.name);
-                     toggleTooltip(categoryMain.name+'-'+categoryMain.id)"
+        <h3 (click)="setShowStateSubLayer('category' ,categoryMain.name, categoryMain.id);"
             class="clickable mainCategoryLbl parent-tooltip">
 
           {{categoryMain.name}}
@@ -26,67 +25,72 @@
 
         <span class="amount-box">&euro;
         {{  getSumAmounts(getExpensesOf(categoryMain.id))  }}
-      </span>
+        </span>
 
         <hr>
 
 
-        <ul class="sub-cat  hiddenNow" id="{{categoryMain.id.toString()+categoryMain.name.substr(0,4)}}">
+        <ul class="sub-cat  hiddenNow">
           <div class="expense" *ngFor="let category of categories">
 
 
-            <div class="sub-layer {{category.name+'-'+category.id}}">
+
 
 
               <li *ngIf="category.subCategoryFk == categoryMain.id" >
+                <div class="sub-layer subcategory {{category.name+'-'+category.id}}">
 
-                <span class="icon-subcat" [ngStyle]="{'background':getColor(category)}">
-                  <fa name="{{category.icon}}"></fa>
-                </span>
-
-                  <h2 class="clickable subLabel parent-tooltip subCategoryLbl"
-                      (click)="setShowStateSubLayer(category.id, category.name);
-                               toggleTooltipSub(category.name+'-'+category.id)">
-                    {{category.name}}
-                    <span class="amount">
-                      &euro;{{getSumAmounts(getExpensesOf(category.id))}}
-                    </span>
-                    <span class="tooltipPerc">
-                    {{ getAmountExpensesSub(category.id) }} expenses
-                    </span>
-                  </h2>
-
-                <div *ngFor="let expenseDisplay of getLastExpenseOf(category.id)">
-                  <span class="info">
-                    <span class="date">
-                      {{formatDate(expenseDisplay.date)}}
-                    </span>
-
-                    <span class="dot">&middot;</span>
-
-                    <span class="company">
-                      {{expenseDisplay.companyFk}}
-                    </span>
+                  <span class="icon-subcat down" [ngStyle]="{'background':getColor(category)}">
+                    <fa name="{{category.icon}}"></fa>
                   </span>
-                </div>
-                <div *ngIf="getLastExpenseOf(category.id).length == 0">
-                  <span class="info clickable">
-                    <span class="date">
-                      No expenses in this category
+
+                    <h2 class="clickable subLabel parent-tooltip subCategoryLbl"
+                        (click)="setShowStateSubLayer('subcategory' ,category.name, category.id);">
+
+                      {{category.name}}
+                      <span class="amount">
+                        &euro;{{getSumAmounts(getExpensesOf(category.id))}}
+                      </span>
+                      <span class="tooltipPerc">
+                      {{ getAmountExpensesSub(category.id) }} expenses
+                      </span>
+                    </h2>
+
+                  <div *ngFor="let expenseDisplay of getLastExpenseOf(category.id)">
+                    <span class="info">
+                      <span class="date">
+                        {{formatDate(expenseDisplay.date)}}
+                      </span>
+
+                      <span class="dot">&middot;</span>
+
+                      <span class="company">
+                        {{expenseDisplay.companyFk}}
+                      </span>
                     </span>
-                  </span>
+                  </div>
+                  <div *ngIf="getLastExpenseOf(category.id).length == 0">
+                    <span class="info clickable">
+                      <span class="date">
+                        No expenses in this category
+                      </span>
+                    </span>
+                  </div>
+
+
+                  <ul class="expenses-seperate hiddenNow">
+                      <li class="forloop" *ngFor="let expense of getExpensesOf(category.id)">
+                        <span>{{expense.name}} - {{expense.amount}}</span> <br>
+                        <span class="info">in Shopping Mall on {{formatDate(expense.date)}}</span>
+                      </li>
+                  </ul>
+
                 </div>
-
-
-                <ul class="expenses-seperate hiddenNow" id="{{category.id.toString()+category.name.substr(0,4)}}">
-                    <li class="forloop" *ngFor="let expense of getExpensesOf(category.id)">
-                      <span>{{expense.name}} - {{expense.amount}}</span> <br>
-                      <span class="info">in Shopping Mall on {{formatDate(expense.date)}}</span>
-                    </li>
-                </ul>
-
               </li>
-            </div>
+
+
+
+
 
           </div>
         </ul>

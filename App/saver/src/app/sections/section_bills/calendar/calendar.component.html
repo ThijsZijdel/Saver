@@ -1,0 +1,20 @@
+
+<div class="calender-component">
+
+
+
+  <div class="row correction">
+    <button class="prev" (click)="changeMonth(-1)"> &#9664; </button>
+    <h2 class="clickable"(click)="changeMonth(null)">{{month}} {{year}}</h2>
+    <button class="next" (click)="changeMonth(+1)"> &#9654; </button>
+  </div>
+
+  <div class="calendar-container">
+
+    <div id="calender-box"></div>
+
+  </div>
+
+
+
+</div>

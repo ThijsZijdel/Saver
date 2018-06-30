@@ -86,19 +86,25 @@ export class ExpensesComponent implements OnInit {
     return data;
   }
 
-  setShowStateSubLayer(id: number, name: string) {
-    let element: string = 'section.category #'+id.toString()+name.substr(0,4);
+  setShowStateSubLayer(mainClasse:string, name: string, id: number) {
 
-    $(element).toggleClass("show");
+    // ".mainClasse  .id-name"
+    let element: string = '.'+mainClasse+'.'+name+'-'+id;
+    console.log(element+" el")
+
+    $(element+' ul').first().toggleClass("show");
+
+
+    $(element+' .icon-subcat').toggleClass("down");
 
     let time = 0;
 
-    if ($(element).hasClass('relative')){
+    if ($(element+' ul').first().hasClass('relative')){
       time = 100;
     }
 
     setTimeout(()=>{
-      $(element).toggleClass("relative");
+      $(element+' ul').first().toggleClass("relative");
     }, time);
 
 

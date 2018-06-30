@@ -1,6 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
 import * as $ from "jquery"
+import {BalanceService} from "../service_balance/balance.service";
+import {Balance} from "../../../models/Balance";
+import {ExpenseService} from "../../section_expense/service_expense/expense.service";
+import {Expense} from "../../../models/Expense";
+import {IncomeService} from "../../section_income/service_income/income.service";
+import {Income} from "../../../models/Income";
 
 @Component({
   selector: 'app-balances',
@@ -9,32 +15,133 @@ import * as $ from "jquery"
 })
 export class BalancesComponent implements OnInit {
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService) {
+  balances: Balance[] = [];
+  expenses: Expense[] = [];
+  incomes: Income[] = [];
+
+  balancesTotal: number = 0;
+
+  constructor(private balanceService: BalanceService,
+              private expenseService: ExpenseService,
+              private incomeServie: IncomeService) {
 
   }
 
-  public data:any=[];
 
   ngOnInit() {
-    $('.jqLoaded').css('color','blue');
+    this.getBalances();
+    this.getExpenses();
+  }
+
+
+  private getBalances() {
+    this.balancesTotal = 0;
+
+    this.balanceService.getBalances().subscribe(balances => {
+      // loop trough all the incomes
+      for (let balance of balances) {
+
+
+          this.balances.push(balance);
+          this.balancesTotal += balance.amount;
+      }
+    });
+  }
+
+  private getExpenses() {
+    this.expenseService.getExpenses().subscribe(expenses => {
+      // loop trough all the incomes
+      for (let expense of expenses) {
+
+
+        this.expenses.push(expense);
+
+      }
+    });
+  }
+
+  private getIncomes() {
+    this.incomeServie.getIncomes().subscribe(incomes => {
+      // loop trough all the incomes
+      for (let income of incomes) {
+
+
+        this.incomes.push(income);
+
+      }
+    });
+  }
+
+  getTransactionOf(balanceId: number, expenses: boolean): object[] {
+    //todo sorting on date..
+    let dataIncomes: object[] = [];
+    let dataExpenses: object[] = [];
+
+    for (let income of this.incomes){
+      if (income.balanceFk = balanceId){
+        dataIncomes.push(income);
+      }
+    }
+
+    for (let expense of this.expenses){
+      if (expense.balanceFk = balanceId){
+        dataExpenses.push(expense);
+
+      }
+
+    }
+
+
+
+    if (expenses)
+      return dataExpenses;
+    else
+      return dataIncomes;
+  }
+
+  setShowStateSubLayer(mainClasse:string, name: string, id: number) {
+
+    // ".mainClasse  .id-name"
+    let element: string = '.'+mainClasse+'.'+name+'-'+id;
+    console.log(element+" el")
+
+    $(element+' ul').first().toggleClass("show");
+
+
+    $(element+' .icon-subcat').toggleClass("down");
+
+    let time = 0;
+
+    if ($(element+' ul').first().hasClass('relative')){
+      time = 100;
+    }
+
+    setTimeout(()=>{
+      $(element+' ul').first().toggleClass("relative");
+    }, time);
+
+
   }
 
 
 
-  saveInLocal(key, val): void {
-    this.storage.set(key, val);
+  //
+  // getColor(category: Category): string {
+  //   return category.color;
+  // }
 
 
-    this.data[key]= this.storage.get(key);
+  monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  formatDate(dateI: Date): string {
+    let date = new Date(dateI);
+    let curr_date = date.getDay();
+    let curr_month = date.getMonth();
+    let curr_year = date.getFullYear();
+    return(this.monthnames[curr_month] + " " + curr_date + ", " + curr_year);
   }
 
-
-
-
-
-  getFromLocal(key): void {
-    this.data[key]= this.storage.get(key);
-
-    console.log(this.data[key]+"< this.data[key]   || this.storage.get(key)> "+this.storage.get(key))
+  getForamatted(name: string) {
+  return name.replace(/\s+/g, '');
   }
 }

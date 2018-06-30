@@ -1,5 +1,12 @@
+
 @import "../../../../assets/css/fonts.css";
 
+
+.calendar-container {
+  width:100%;
+  height:300px;
+  text-align: center;
+}
 div.bill-labels ul {
   list-style-type: none;
   margin: 0;
@@ -74,3 +81,5 @@ button.prev, button.next {
 .correction {
   margin: 0;
 }
+
+
