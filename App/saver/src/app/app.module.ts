@@ -50,6 +50,8 @@ import {AngularFontAwesomeComponent, AngularFontAwesomeModule, AngularFontAwesom
 
 import {SettingsService} from "./views/personal/settings.service";
 
+import {SettingsService} from "./views/personal/settings.service";
+
 
 
 
