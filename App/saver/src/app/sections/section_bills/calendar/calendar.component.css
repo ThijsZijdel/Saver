@@ -33,7 +33,8 @@
   font-size: .875rem;
   padding: 12px;
 }
-.calender-component #calender-box div table.calendarTbl tbody td.before {
+.calender-component #calender-box div table.calendarTbl tbody td.before,
+.calender-component #calender-box div table.calendarTbl tbody td.after{
   color: #bdbdbd;
 }
 .calender-component #calender-box div table.calendarTbl tbody td.current{
@@ -46,7 +47,11 @@
   cursor: pointer;
 }
 
-
+.calender-component h2.clickable {
+  text-align: center;
+  width: 200px;
+  margin: 0 auto;
+}
 
   /*td.before, td.after {*/
   /*color: #999;*/
