@@ -29,6 +29,7 @@
     "angular-webstorage-service": "^1.0.2",
     "bootstrap": "^4.1.1",
     "core-js": "^2.5.4",
+    "express": "^4.16.3",
     "highcharts": "^6.1.0",
     "jquery": "^3.3.1",
     "npm": "^6.1.0",
