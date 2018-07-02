@@ -141,19 +141,20 @@ h1.bulkBudgetLeft {
 
 
 .info {
-  margin-top: -10px;
+  position: absolute;
+  top: 24px;
 }
 span.dot {
   font-weight: 600;
-  font-size: 25px;
-  position: absolute;
-  top: 13px;
+  /*font-size: 25px;*/
   padding-left: 3px;
+
+  padding-top: 25px;
 
 }
 
 span.company {
-  margin-left: 15px;
+  margin-left: 5px;
 }
 
 

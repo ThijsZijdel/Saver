@@ -48,8 +48,8 @@ export class InMemoryDataService implements InMemoryDbService {
 
     // id: number, name: string, amount: number, description: string, type: string, bankFk: number
     const balances = [
-      { id: 1, name: 'ING Main', amount: 1453.50, description: 'Main on demand balance account.', icon: "dollar-sign", type:"bank", bankFk: 0, maxDebt: -2000},
-      { id: 2, name: 'ING Savings', amount: 4453.50, description: 'Main savings balance account.', icon: "hand-holding-usd", type:"savings", bankFk: 0, maxDebt: 0},
+      { id: 1, name: 'ING Main', amount: 1453.50, description: 'Main on demand balance account.', icon: "credit-card", type:"bank", bankFk: 0, maxDebt: -2000},
+      { id: 2, name: 'ING Savings', amount: 4453.50, description: 'Main savings balance account.', icon: "credit-card", type:"savings", bankFk: 0, maxDebt: 0},
       { id: 3, name: 'ING Credit Card', amount: 0, description: 'Credit card account.', icon: "credit-card", type:"credit", bankFk: 0, maxDebt: -2000}
     ];
     const categories = [
