@@ -96,7 +96,8 @@
                 <ul class="expenses-seperate hiddenNow">
                   <li class="forloop" *ngFor="let transaction of getTransactionOf(category.id, true)">
                     <span>{{transaction.name}} - &euro;{{transaction.amount}}</span> <br>
-                    <span class="info">in Shopping Mall on {{formatDate(transaction.date)}}</span>
+                    <span class="info">in Shopping Mall on {{formatDate(transaction.date)}}</span><br>
+                    <hr>
                   </li>
                 </ul>
 
