@@ -138,11 +138,13 @@ h1.bulkBudgetLeft {
 .relative  {
   position: relative;
 }
-
+.forloop {
+  margin-bottom: 25px;
+}
 
 .info {
   position: absolute;
-  top: 24px;
+  margin-top: -5px;
 }
 span.dot {
   font-weight: 600;
