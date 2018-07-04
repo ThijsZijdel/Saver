@@ -49,13 +49,18 @@ app.use((req, res, next) => {
     next();
 })
 
+/**
+ * Create an api express router.
+ */
+var api = express.router();
+
 
 /**
  * Http listener for categories
  * @param req = ?action=getAll
  * @param res = all categories
  */
-app.get('/categories' , (req, res) => {
+api.get('/categories' , (req, res) => {
     // TODO implement ?action=getAll specific
     res.json(categories);
 
@@ -67,13 +72,17 @@ app.get('/categories' , (req, res) => {
  * @param req = json object: category
  * @param res = status: ok
  */
-app.post('/categorie' , (req, res) => {
+api.post('/categories' , (req, res) => {
     categories.push(req.body)
     res.sendStatus(200);
 
 });
 
 
+/**
+ * Let the express app server use the api routing
+ */
+app.use('/api',api);
 
 /**
  * Start and listen node.js express server
