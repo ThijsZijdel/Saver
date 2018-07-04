@@ -50,10 +50,12 @@ app.use((req, res, next) => {
 })
 
 /**
- * Create an api express router.
+ * Create the express routers.
+ * - api        data
+ * - auth       authentication
  */
 var api = express.router();
-
+var auth = express.router();
 
 /**
  * Http listener for categories
@@ -78,11 +80,17 @@ api.post('/categories' , (req, res) => {
 
 });
 
+auth.post('/register' , (req, res) => {
+    categories.push(req.body)
+    res.sendStatus(200);
+
+});
 
 /**
  * Let the express app server use the api routing
  */
 app.use('/api',api);
+app.use('/auth',auth);
 
 /**
  * Start and listen node.js express server
