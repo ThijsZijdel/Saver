@@ -28,3 +28,6 @@ function getConnection(){
 
 
 connection.end();
+
+
+// module.exports = getConnection();
