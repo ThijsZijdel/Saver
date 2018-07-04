@@ -32,8 +32,8 @@ app.use((req, res, next) => {
 })
 
 // app.use(require('./middlewares'));
-// app.use(require('./connection'));
-app.use(require('./controllers'));
+app.use('/db', require('./connection/connection.js'));
+app.use('/api', require('./controllers/categoriesController'));
 
 
 
