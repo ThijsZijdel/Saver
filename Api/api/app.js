@@ -4,7 +4,7 @@ const express = require('express');
 
 let bodyParser = require('body-parser');
 
-import conn from 'connection.js';
+import conn from './controllers/connection';
 
 const http = require('http');
 
@@ -68,7 +68,7 @@ let api = express.router();
  * @param req = ?action=getAll
  * @param res = all categories
  */
-api.get('/categories' , (req, res) => {
+api.get('/categories?action=getAll' , (req, res) => {
     // TODO implement ?action=getAll specific
     res.json(categories);
 
