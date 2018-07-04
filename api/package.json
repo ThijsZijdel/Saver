@@ -11,6 +11,8 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "npm": "^6.1.0"
+    "mysql": "^2.15.0",
+    "npm": "^6.1.0",
+    "sql": "^0.78.0"
   }
 }

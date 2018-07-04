@@ -1,8 +1,10 @@
 // Import express package for node.js
+
 const express = require('express');
 
-var bodyParser = require('body-parser');
+let bodyParser = require('body-parser');
 
+import conn from 'connection.js';
 
 const http = require('http');
 
@@ -25,6 +27,12 @@ const categories = [
     { id: 11, name: 'Rent', description: 'Home costs.', color: "#FFBB28", icon:"home", subCategoryFk: 1},
     { id: 12, name: 'Study', description: 'desc.', color: "#B8E986",icon:"graduation-cap", subCategoryFk: 0}
 ];
+
+
+
+
+
+
 
 
 /**
@@ -52,7 +60,7 @@ app.use((req, res, next) => {
 /**
  * Create an api express router.
  */
-var api = express.router();
+let api = express.router();
 
 
 /**
@@ -88,6 +96,13 @@ app.use('/api',api);
  * Start and listen node.js express server
  */
 app.listen(8124, "127.0.0.1");
-console.log('Server running at http://127.0.0.1:8124/');
+console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 
 
+
+
+
+conn.getConnection().query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+    if (err) throw err;
+    console.log('The solution is: ', rows[0].solution);
+});
