@@ -3,9 +3,14 @@ const express = require('express');
 
 let bodyParser = require('body-parser');
 
-const http = require('http');
+// const http = require('http');
 
-//Create the express application
+let db = require('./connection/db')
+
+
+/**
+ * Create the express application
+ */
 const app = express();
 
 
@@ -32,15 +37,30 @@ app.use((req, res, next) => {
 })
 
 // app.use(require('./middlewares'));
-app.use('/db', require('./connection/connection.js'));
 app.use('/api', require('./controllers/categoriesController'));
 
-
-
 /**
- * Start and listen node.js express server
+ * Connect to db an get the routes
  */
-app.listen(8124, "127.0.0.1");
-console.log("Express server listening on port 8124, 127.0.0.1");
+app.use('/db', require('./connection/db.js'));
+
+
+
+
+
+
+// Connect to MySQL on start
+db.connect(db.MODE_PRODUCTION, (err) => {
+    if (err) {
+        console.log('Unable to create an connection to the database: MySQL.');
+        process.exit(1);
+    } else {
+        //start application
+        app.listen(8124, function() {
+            console.log("Express server started on port 8124, 127.0.0.1");
+        })
+    }
+});
+
 
 
