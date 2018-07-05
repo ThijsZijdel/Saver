@@ -46,9 +46,6 @@ app.use('/db', require('./connection/db.js'));
 
 
 
-
-
-
 // Connect to MySQL on start
 db.connect(db.MODE_PRODUCTION, (err) => {
     if (err) {
