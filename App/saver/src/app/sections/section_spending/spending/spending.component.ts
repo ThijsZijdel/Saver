@@ -214,26 +214,50 @@ export class SpendingComponent implements OnInit {
     $(parent).find('.subCategoryLbl span.tooltipPerc').fadeToggle();
   }
 
-  /**
-   * show sub layer state
-   * @param {number} id
-   * @param {string} name
-   */
-  setShowStateSubLayer(id: number, name: string) {
-    // todo --> state sub layer   cleanup --> classes !
+  // /**
+  //  * show sub layer state
+  //  * @param {number} id
+  //  * @param {string} name
+  //  */
+  // setShowStateSubLayer(id: number, name: string) {
+  //   // todo --> state sub layer   cleanup --> classes !
+  //
+  //   let element: string = 'ul.expenses-seperate#'+id.toString()+name.substr(0,4);
+  //
+  //   $(element).toggleClass("show");
+  //
+  //   let time = 0;
+  //
+  //   if ($(element).hasClass('relative')){
+  //     time = 100;
+  //   }
+  //
+  //   setTimeout(()=>{
+  //     $(element).toggleClass("relative");
+  //   }, time);
+  //
+  //
+  // }
 
-    let element: string = 'ul.expenses-seperate#'+id.toString()+name.substr(0,4);
+  setShowStateSubLayer(mainClasse:string, name: string, id: number) {
 
-    $(element).toggleClass("show");
+    // ".mainClasse  .id-name"
+    let element: string = '.'+mainClasse+'.'+name+'-'+id;
+    console.log(element+" el")
+
+    $(element+' ul').first().toggleClass("show");
+
+
+    $(element+' .icon-subcat').toggleClass("down");
 
     let time = 0;
 
-    if ($(element).hasClass('relative')){
+    if ($(element+' ul').first().hasClass('relative')){
       time = 100;
     }
 
     setTimeout(()=>{
-      $(element).toggleClass("relative");
+      $(element+' ul').first().toggleClass("relative");
     }, time);
 
 

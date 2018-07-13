@@ -21,7 +21,7 @@
       <div class="expense" *ngFor="let category of spendings">
 
 
-        <div class="sub-layer {{category.name+'-'+category.name+'-'+category.subcategoryFk}}">
+        <div class="sub-layer {{category.name.split(' ').join('_')+'-'+category.id}}">
 
 
           <li>
@@ -31,8 +31,8 @@
                 </span>
 
             <h2 class="clickable subLabel parent-tooltip subCategoryLbl"
-                (click)="setShowStateSubLayer(category.subcategoryFk, category.name);
-                         toggleTooltipSub(category.name+'-'+category.name+'-'+category.subcategoryFk)">
+                (click)="setShowStateSubLayer('sub-layer' ,category.name.split(' ').join('_'), category.id);"
+                         >
               {{getPercentage(category)}}
               <span class="amount">
                       &euro;{{category.amount}}
@@ -52,7 +52,7 @@
 
 
 
-            <ul class="expenses-seperate hiddenNow" id="{{category.subcategoryFk.toString()+category.name.substr(0,4)}}">
+            <ul class="expenses-seperate hiddenNow">
 
               <li class="forloop" *ngFor="let expense of getExpensesOf(category.subcategoryFk)">
                 <span>{{expense.name}} - {{expense.amount}}</span> <br>

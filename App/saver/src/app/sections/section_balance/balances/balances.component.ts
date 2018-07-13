@@ -72,7 +72,7 @@ export class BalancesComponent implements OnInit {
     });
   }
 
-  getTransactionOf(balanceId: number, expenses: boolean): object[] {
+  getTransactionOf(balanceId: number): object[] {
     //todo sorting on date..
     let dataIncomes: object[] = [];
     let dataExpenses: object[] = [];
@@ -85,17 +85,12 @@ export class BalancesComponent implements OnInit {
 
     for (let expense of this.expenses){
       if (expense.balanceFk = balanceId){
-        dataExpenses.push(expense);
+        dataIncomes.push(expense);
 
       }
 
     }
 
-
-
-    if (expenses)
-      return dataExpenses;
-    else
       return dataIncomes;
   }
 
@@ -134,11 +129,10 @@ export class BalancesComponent implements OnInit {
   monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
   formatDate(dateI: Date): string {
+    console.log(dateI);
     let date = new Date(dateI);
-    let curr_date = date.getDay();
-    let curr_month = date.getMonth();
-    let curr_year = date.getFullYear();
-    return(this.monthnames[curr_month] + " " + curr_date + ", " + curr_year);
+
+    return(this.monthnames[date.getMonth()] + " " + date.getDay() + ", " + date.getFullYear());
   }
 
   getForamatted(name: string) {

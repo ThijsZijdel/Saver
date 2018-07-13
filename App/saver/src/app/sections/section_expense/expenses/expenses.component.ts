@@ -27,6 +27,8 @@ export class ExpensesComponent implements OnInit {
     this.expenses = this.getExpenses();
 
     console.log(this.network.online+" network")
+
+
   }
 
   private getExpenses(): Expense[] {
