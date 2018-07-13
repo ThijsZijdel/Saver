@@ -88,7 +88,7 @@ export class BalancesComponent implements OnInit {
 
     for (let income of this.incomes){
       console.log("income came by")
-      if (income.balanceFk = balanceId){
+      if (income.balanceFk === balanceId){
 
         transactions.push(new Transaction(income.id, income.name,
           income.amount, income.description,
@@ -100,7 +100,7 @@ export class BalancesComponent implements OnInit {
     }
 
     for (let expense of this.expenses){
-      if (expense.balanceFk = balanceId){
+      if (expense.balanceFk === balanceId){
 
         transactions.push(new Transaction(expense.id, expense.name,
           expense.amount, expense.description,
