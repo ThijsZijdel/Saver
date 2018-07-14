@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 })
 
 // app.use(require('./middlewares'));
-app.use('/db', require('./connection/connection.js'));
+// app.use('/db', require('./connection/db.js'));
 app.use('/api', require('./controllers/categoriesController'));
 
 

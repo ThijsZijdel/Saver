@@ -1,7 +1,7 @@
 
 let express = require('express'),
     router = express.Router();
-   // Categorie = require('../models/categorie');
+   Categorie = require('../models/categorie');
 
 
 
@@ -33,7 +33,9 @@ const categories = [
  */
 router.get('/categories' , (req, res) => {
     // TODO implement ?action=getAll specific
-    res.json(categories);
+
+        console.log(" test> "+Categorie.getTest);
+    res.json({" test ":Categorie.getTest});
 
 });
 
@@ -65,6 +67,9 @@ router.post('/categories' , (req, res) => {
     res.sendStatus(200);
 
 });
+
+
+// router.delete
 
 
 
