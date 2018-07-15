@@ -31,13 +31,24 @@ const categories = [
  * @param req = ?action=getAll
  * @param res = all categories
  */
-router.get('/categories' , (req, res) => {
+router.get('/categories' , (async function(req, res)  {
     // TODO implement ?action=getAll specific
+    let response = await Categorie.getTest;
+        await console.log(response +" waited for it");
+        await console.log(Categorie.getTest +" called it");
 
-        console.log(" test> "+Categorie.getTest);
-    res.json({" test ":Categorie.getTest});
 
-});
+        // console.log(" test not await> "+Categorie.getTest);
+        await res.json({" test ": response});
+
+})
+
+);
+
+
+
+
+
 
 
 
@@ -63,7 +74,7 @@ router.get('/test' , (req, res) => {
  * @param res = status: ok
  */
 router.post('/categories' , (req, res) => {
-    categories.push(req.body)
+    categories.push(req.body);
     res.sendStatus(200);
 
 });

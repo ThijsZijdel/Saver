@@ -4,7 +4,6 @@ let connection = require('../connection/db');
 
 
 
-
 // TODO connect from models to connection --> database
 
 // connection.connectDatabase.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
@@ -15,20 +14,19 @@ let connection = require('../connection/db');
 // });
 
 
-function getTest() {
-    let answer = 0;
+async function getTest() {
+    let answer = null;
 
-    connection.connectDatabase.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+    await connection.connectDatabase.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
         if (err){
             throw err
         };
-
+        console.log("connected and quered:"+rows[0].solution);
         answer = (rows[0].solution+" huh");
 
     });
 
-    return answer;
-
+     return answer;
 }
 
 
