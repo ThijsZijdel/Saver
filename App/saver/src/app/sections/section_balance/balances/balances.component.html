@@ -12,22 +12,22 @@
 
 
 
-<div class="sections-container">
-     <!--style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;"-->
-     <!--unselectable="on"-->
-     <!--onselectstart="return false;"-->
-     <!--onmousedown="return false;">-->
+<div class="sections-container"
+     style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;"
+     unselectable="on"
+     onselectstart="return false;"
+     onmousedown="return false;">
 
 
-  <div class="category-box main-category-box" *ngFor="let category of balances">
-    <div class="check" >
+  <div class="category-box main-category-box" *ngFor="let category of balanceCategories">
+
 
       <section class="category {{category.name.split(' ').join('_')+'-'+category.id}}">
 
         <h3 (click)="setShowStateSubLayer('category' ,category.name.split(' ').join('_'), category.id);"
             class="clickable mainCategoryLbl parent-tooltip">
 
-          Type {{category.type}} - {{category.name.substring(4, category.name.length)}}
+          {{category.name}}
 
           <span class="tooltipPerc">
             <!--{{ getSumSubCats(balance.id) }} subcats. <br>-->
@@ -36,7 +36,7 @@
         </h3>
 
         <span class="amount-box">
-        &euro;{{  category.amount }}
+        &euro;{{  getSumOfCategorie(category.id) }}
         </span>
 
         <hr>
@@ -49,13 +49,13 @@
 
 
 
-            <li *ngIf="balance.id == category.id" >
+            <li *ngIf="balance.type === category.id" >
 
               <div class="sub-layer subcategory {{balance.name.split(' ').join('_')+'-'+balance.id}}">
 
                   <span class="icon-subcat down" style="background: #8268BD;">
                     <!--[ngStyle]="{'background':getColor(category)}"-->
-                    <fa name="{{balance.icon}}"></fa>
+                    <fa name="{{category.icon}}"></fa>
                   </span>
 
                 <h2 class="clickable subLabel parent-tooltip subCategoryLbl"
@@ -80,7 +80,7 @@
                       <span class="dot">&middot;</span>
 
                       <span class="company">
-                        {{balance.bankFk}}
+                        {{balance.bankFk}} - {{balance.id}}
                       </span>
                     </span>
                 </div>
@@ -94,9 +94,21 @@
 
 
                 <ul class="expenses-seperate hiddenNow">
-                  <li class="forloop" *ngFor="let transaction of getTransactionOf(category.id)">
-                    <span>{{transaction.name}} - &euro;{{transaction.amount}}</span> <br>
-                    <span class="info">in Shopping Mall on {{formatDate(transaction.date)}}</span>
+                  <li class="forloop" *ngFor="let transaction of getTransactionOf(balance.id)">
+                    <span>
+
+                      {{transaction.name}}
+
+                      <span class="amount" [ngStyle]="{'color':getColor(transaction.isExpense)}">
+                        <span *ngIf="transaction.isExpense">-</span>
+                        <span *ngIf="!transaction.isExpense">+</span>
+
+                        &euro;{{transaction.amount}}
+                      </span>
+
+
+                    </span> <br>
+                    <span class="info">in {{transaction.companyFk}} on {{formatDate(transaction.date)}} -- {{transaction.balanceFk}}</span>
                   </li>
                 </ul>
 
@@ -114,7 +126,7 @@
 
 
       </section>
-    </div>
+
   </div>
 
 

@@ -7,6 +7,8 @@ import {ExpenseService} from "../../section_expense/service_expense/expense.serv
 import {Expense} from "../../../models/Expense";
 import {IncomeService} from "../../section_income/service_income/income.service";
 import {Income} from "../../../models/Income";
+import {Transaction} from "../../../models/Transaction";
+import {Spending} from "../../../models/Spending";
 
 @Component({
   selector: 'app-balances',
@@ -21,9 +23,16 @@ export class BalancesComponent implements OnInit {
 
   balancesTotal: number = 0;
 
+  balanceCategories = [
+    { id: 1, name: 'On Demand', description: 'Money that is ready to be spend.', color: "#EB7092", icon:"credit-card"},
+    { id: 2, name: 'Savings', description: 'Money that is saving up.', color: "#EB7092", icon:"credit-card"},
+    { id: 3, name: 'Credit', description: 'Credit card.', color: "#EB7092", icon:"credit-card"}
+
+  ];
+
   constructor(private balanceService: BalanceService,
               private expenseService: ExpenseService,
-              private incomeServie: IncomeService) {
+              private incomeService: IncomeService) {
 
   }
 
@@ -31,6 +40,7 @@ export class BalancesComponent implements OnInit {
   ngOnInit() {
     this.getBalances();
     this.getExpenses();
+    this.getIncomes();
   }
 
 
@@ -61,7 +71,7 @@ export class BalancesComponent implements OnInit {
   }
 
   private getIncomes() {
-    this.incomeServie.getIncomes().subscribe(incomes => {
+    this.incomeService.getIncomes().subscribe(incomes => {
       // loop trough all the incomes
       for (let income of incomes) {
 
@@ -72,26 +82,38 @@ export class BalancesComponent implements OnInit {
     });
   }
 
-  getTransactionOf(balanceId: number): object[] {
+  getTransactionOf(balanceId: number): Transaction[] {
     //todo sorting on date..
-    let dataIncomes: object[] = [];
-    let dataExpenses: object[] = [];
+    let transactions: Transaction[] = [];
 
     for (let income of this.incomes){
-      if (income.balanceFk = balanceId){
-        dataIncomes.push(income);
+      console.log("income came by")
+      if (income.balanceFk === balanceId){
+
+        transactions.push(new Transaction(income.id, income.name,
+          income.amount, income.description,
+          income.date, income.monthName, income.monthFk,
+          income.balanceFk, income.companyFk, false)
+        );
+
       }
     }
 
     for (let expense of this.expenses){
-      if (expense.balanceFk = balanceId){
-        dataIncomes.push(expense);
+      if (expense.balanceFk === balanceId){
+
+        transactions.push(new Transaction(expense.id, expense.name,
+          expense.amount, expense.description,
+          expense.date, expense.monthName, expense.monthFk,
+          expense.balanceFk, expense.companyFk, true)
+        );
+
 
       }
 
     }
 
-      return dataIncomes;
+      return transactions;//.sort((a, b) => b.date.getDay() - a.date.getDay());
   }
 
   setShowStateSubLayer(mainClasse:string, name: string, id: number) {
@@ -120,10 +142,18 @@ export class BalancesComponent implements OnInit {
 
 
 
-  //
-  // getColor(category: Category): string {
-  //   return category.color;
-  // }
+  /**
+   * Get the color of an spending based on the id
+   *
+   * @param
+   * @returns {string}
+   */
+  getColor(isExpense: boolean): string {
+    if (isExpense)
+      return "grey";
+    else
+      return "green";
+  }
 
 
   monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -137,5 +167,16 @@ export class BalancesComponent implements OnInit {
 
   getForamatted(name: string) {
   return name.replace(/\s+/g, '');
+  }
+
+  getSumOfCategorie(id: number): number {
+    let sum: number = 0;
+
+    for (let balance of this.balances) {
+      if (balance.type === id){
+        sum+=balance.amount;
+      }
+    }
+    return sum;
   }
 }

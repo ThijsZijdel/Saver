@@ -48,10 +48,18 @@ export class InMemoryDataService implements InMemoryDbService {
 
     // id: number, name: string, amount: number, description: string, type: string, bankFk: number
     const balances = [
-      { id: 1, name: 'ING Main', amount: 1453.50, description: 'Main on demand balance account.', icon: "credit-card", type:"bank", bankFk: 0, maxDebt: -2000},
-      { id: 2, name: 'ING Savings', amount: 4453.50, description: 'Main savings balance account.', icon: "credit-card", type:"savings", bankFk: 0, maxDebt: 0},
-      { id: 3, name: 'ING Credit Card', amount: 0, description: 'Credit card account.', icon: "credit-card", type:"credit", bankFk: 0, maxDebt: -2000}
+      { id: 1, name: 'ING Main', amount: 2453.50, description: 'Main on demand balance account.', type:1, bankFk: 0, maxDebt: -2000},
+      { id: 2, name: 'ING Savings', amount: 7453.50, description: 'Main savings balance account.',  type:2 , bankFk: 0, maxDebt: 0},
+      { id: 3, name: 'ING Credit Card', amount: 0, description: 'Credit card account.', type: 3, bankFk: 0, maxDebt: -2000},
+      { id: 4, name: 'ING Savings Holiday', amount: 453.50, description: 'Holiday savings balance account.', type:2, bankFk: 0, maxDebt: 0},
     ];
+    const balanceCategories = [
+      { id: 1, name: 'On Demand', description: 'Money that is ready to be spend.', color: "#EB7092", icon:"credit-card"},
+      { id: 2, name: 'Savings', description: 'Money that is saving up.', color: "#EB7092", icon:"credit-card"},
+      { id: 3, name: 'Credit', description: 'Credit card.', color: "#EB7092", icon:"credit-card"}
+
+    ];
+
     const categories = [
       { id: 1, name: 'Home', description: 'home related expenses.', color: "#EB7092", icon:"home", subCategoryFk: 0},
       { id: 2, name: 'Utilities', description: 'Mostly monthly expenses.', color: "#D23556",icon:"cogs", subCategoryFk: 0},
@@ -71,6 +79,7 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 2, name: 'Dinner Budget', repeatingFk: 1, description: 'Saving some cash.', startDate: new Date(), endDate: new Date(), balanceFk: 1, typeFk: "save", amountStart: 500.50, amountLeft:50, monthFk: 6, isPast: 0}
     ];
     return {incomes, spendings, expenses, categories, budgets, balances};
+    //TODO export balance categories
   }
 }
 
