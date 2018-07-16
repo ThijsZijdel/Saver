@@ -3,7 +3,7 @@ let express = require('express'),
     router = express.Router();
    Categorie = require('../models/categorie');
 
-
+   async = require('async');
 
 // Note: temporary -> will be replaced by connection to db
 const categories = [
@@ -24,6 +24,7 @@ const categories = [
 
 
 
+let connection = require('../connection/db');
 
 
 /**
@@ -31,19 +32,36 @@ const categories = [
  * @param req = ?action=getAll
  * @param res = all categories
  */
-router.get('/categories' , (async function(req, res)  {
+router.get('/categories' ,  (req, res) => {
     // TODO implement ?action=getAll specific
-    let response = await Categorie.getTest;
-        await console.log(response +" waited for it");
-        await console.log(Categorie.getTest +" called it");
 
 
-        // console.log(" test not await> "+Categorie.getTest);
-        await res.json({" test ": response});
 
-})
+    async.parallel(
+        [
+            function (callback) {
+                connection.connectDatabase.query('SELECT * FROM Category;', function (errors, results, fields) {
+                    callback(errors, results);
+                })
+            }
+        ],
+        function(err, results) {
 
-);
+            let data = {categories: results[0]}
+            console.log(results[0]+"  <<<<<<<><><<<<<<<")
+
+
+            res.json(data);
+        }
+    );
+
+    //let response =  Categorie.getTest;
+
+
+   // res.json({" test ": response});
+
+});
+
 
 
 
@@ -76,7 +94,6 @@ router.get('/test' , (req, res) => {
 router.post('/categories' , (req, res) => {
     categories.push(req.body);
     res.sendStatus(200);
-
 });
 
 
