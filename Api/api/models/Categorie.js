@@ -14,19 +14,23 @@ let connection = require('../connection/db');
 // });
 
 
-async function getTest() {
+function getTest() {
     let answer = null;
 
-    await connection.connectDatabase.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+     connection.connectDatabase.query('SELECT 1 + 1 AS solution', function (err, rows, fields) {
         if (err){
             throw err
-        };
+        }
         console.log("connected and quered:"+rows[0].solution);
-        answer = (rows[0].solution+" huh");
+         answer = (rows[0].solution);
 
     });
+    console.log("returned:"+answer);
+    return answer;
 
-     return answer;
+
+
+
 }
 
 

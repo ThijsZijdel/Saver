@@ -2,11 +2,27 @@
 let express = require('express'),
     router = express.Router();
 
+
+let connection = require('../connection/db');
+
+
+
 router.post('/register' , (req, res) => {
+
+
     categories.push(req.body)
     res.sendStatus(200);
 
 });
 
+
+connection.connectDatabase.query('SELECT 1 + 1 AS solution', function (err, rows, fields) {
+    if (err){
+        throw err
+    }
+    console.log("connected and quered:"+rows[0].solution);
+    answer = (rows[0].solution);
+
+});
 
 module.exports = router;
