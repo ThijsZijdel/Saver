@@ -2,6 +2,11 @@ let mysql = require('mysql');
 let settings = require('../settings.json');
 let db;
 
+
+let
+    express    = require('express'),
+    router     = express.Router();
+
 function connectDatabase() {
     if (!db) {
         db = mysql.createConnection(settings);
@@ -16,23 +21,6 @@ function connectDatabase() {
     }
     return db;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-let
-    express    = require('express'),
-    router     = express.Router();
-
-
 
 
 // TODO seperate file for: router create + insert dummy data
@@ -53,20 +41,6 @@ let
 
 
 
-// db.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
-//     if (err){
-//         throw err
-//     };
-//     console.log('The solution is: ', rows[0].solution);
-// });
-
-// db.end();
-
-
-
 module.exports = {
-    // router,
     connectDatabase: connectDatabase()
 };
-
-// module.exports = getConnection();
