@@ -33,8 +33,10 @@ import {ExpenseService} from "./sections/section_expense/service_expense/expense
 import {MessageComponent} from "./message/message.component";
 import {MessageService} from "./data/service_message/message.service";
 import {InMemoryDataService} from "./data/in-memory-data.service";
-import {CategoryService} from "./data/service/service_category/category.service";
 
+
+import {CategoryService} from "./data/service/service_category/category.service";
+import { AuthService } from "./data/service/service_auth/auth.service";
 
 import {StorageServiceModule} from "angular-webstorage-service";
 
@@ -105,7 +107,8 @@ import {SettingsService} from "./views/personal/settings.service";
     MessageService,
     CategoryService,
     LocalStorageDatabase,
-    SettingsService
+    SettingsService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
