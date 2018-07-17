@@ -8,15 +8,15 @@ let express = require('express'),
 
 
 /**
- * Http GET route for categories
+ * Http GET route for spendings
  * @param req = ?action=getAll
- * @param res = all categories
+ * @param res = all spendings
  */
-router.get('/categories' ,  (req, res) => {
+router.get('/spendings' ,  (req, res) => {
     async.parallel(
         [
              (callback) => {
-                connection.connectDatabase.query('SELECT * FROM Category;',
+                connection.connectDatabase.query('SELECT * FROM Expense;',
                     (errors, results, fields) => {
                     callback(errors, results);
                 })
@@ -26,7 +26,7 @@ router.get('/categories' ,  (req, res) => {
 
 
             //Get the data from the initial call
-            let data = {categories: results[0]}
+            let data = results[0];
 
 
             res.statusCode = 200;
@@ -37,9 +37,9 @@ router.get('/categories' ,  (req, res) => {
 });
 
 /**
- * HTTP Post route for categories
+ * HTTP Post route for spendings
  */
-router.post('/categories' ,  (req, res) => {
+router.post('/spendings' ,  (req, res) => {
     async.parallel(
         [
              (callback) => {
@@ -67,7 +67,7 @@ router.post('/categories' ,  (req, res) => {
  * @param :id of category
  * @res json confirmation
  */
-router.delete('/categories/delete/:id' ,  (req, res) => {
+router.delete('/spendings/delete/:id' ,  (req, res) => {
     async.parallel(
         [
             (callback) => {
@@ -91,7 +91,7 @@ router.delete('/categories/delete/:id' ,  (req, res) => {
  * @param :id of category
  * @res json category object
  */
-router.get('/categories/get/:id' ,  (req, res) => {
+router.get('/spendings/get/:id' ,  (req, res) => {
     async.parallel(
         [
              (callback) => {
@@ -103,7 +103,7 @@ router.get('/categories/get/:id' ,  (req, res) => {
         ],
         (err, results) => {
             //Get the data from the initial call
-            let data = {categories: results[0]}
+            let data = results[0];
 
             res.statusCode = 200;
             res.json(data);

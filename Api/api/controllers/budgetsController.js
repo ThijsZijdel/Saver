@@ -26,7 +26,7 @@ router.get('/budgets' ,  (req, res) => {
 
 
             //Get the data from the initial call
-            let data = {budgets: results[0]}
+            let data = results[0];
 
 
             res.statusCode = 200;
@@ -103,7 +103,7 @@ router.get('/budgets/get/:id' ,  (req, res) => {
         ],
         (err, results) => {
             //Get the data from the initial call
-            let data = {budgets: results[0]}
+            let data = results[0];
 
             res.statusCode = 200;
             res.json(data);

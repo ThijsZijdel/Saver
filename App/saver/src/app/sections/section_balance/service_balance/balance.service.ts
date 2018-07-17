@@ -16,7 +16,7 @@ const httpOptions = {
 @Injectable()
 export class BalanceService {
 
-  private balanceUrl = 'api/balances';  // URL to web api
+  private balanceUrl = 'http://127.0.0.1:8124/api/balances';  // URL to web api
 
   constructor(
     private http: HttpClient,
@@ -27,7 +27,7 @@ export class BalanceService {
    * @author Thijs Zijdel
    */
   getBalances(): Observable<Balance[]> {
-    const url = `${this.balanceUrl}?action=getAll`;
+    const url = `${this.balanceUrl}`;
     return this.http.get<Balance[]>(this.balanceUrl)
       .pipe(
         tap(balances => this.log(`fetched balances`)),
@@ -40,7 +40,7 @@ export class BalanceService {
    * @author Thijs Zijdel
    */
   getBalance(id: number): Observable<Balance> {
-    const url = `${this.balanceUrl}?action=get&id=${id}`;
+    const url = `${this.balanceUrl}/get/${id}`;
 
     return this.http.get<Balance>(url).pipe(
       tap(_ => this.log(`fetched balance id=${id}`)),

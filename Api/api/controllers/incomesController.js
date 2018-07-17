@@ -26,7 +26,7 @@ router.get('/incomes' ,  (req, res) => {
 
 
             //Get the data from the initial call
-            let data = {incomes: results[0]}
+            let data = results[0];
 
 
             res.statusCode = 200;
@@ -103,7 +103,7 @@ router.get('/incomes/get/:id' ,  (req, res) => {
         ],
         (err, results) => {
             //Get the data from the initial call
-            let data = {incomes: results[0]}
+            let data = results[0];
 
             res.statusCode = 200;
             res.json(data);

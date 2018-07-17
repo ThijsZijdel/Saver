@@ -16,7 +16,7 @@ const httpOptions = {
 @Injectable()
 export class IncomeService {
 
-  private incomeUrl = 'api/incomes';  // URL to web api
+  private incomeUrl = 'http://127.0.0.1:8124/api/incomes';  // URL to web api
 
   constructor(
     private http: HttpClient,
@@ -40,7 +40,7 @@ export class IncomeService {
    * @author Thijs Zijdel
    */
   getIncome(id: number): Observable<Income> {
-    const url = `${this.incomeUrl}?action=get&id=${id}`;
+    const url = `${this.incomeUrl}/get/${id}`;
 
     return this.http.get<Income>(url).pipe(
       tap(_ => this.log(`fetched income id=${id}`)),
