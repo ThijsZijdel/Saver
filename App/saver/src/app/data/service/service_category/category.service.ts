@@ -16,7 +16,7 @@ const httpOptions = {
 @Injectable()
 export class CategoryService {
                           //http://127.0.0.1:8124
-  private categoryUrl = '/api/categories';  // URL to web api
+  private categoryUrl = 'api/categories';  // URL to web api
 
   constructor(
     private http: HttpClient,

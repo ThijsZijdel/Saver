@@ -27,7 +27,7 @@ export class IncomeService {
    * @author Thijs Zijdel
    */
   getIncomes(): Observable<Income[]> {
-    const url = `${this.incomeUrl}?action=getAll`;
+    const url = `${this.incomeUrl}`; //?action=getAll;
     return this.http.get<Income[]>(this.incomeUrl)
       .pipe(
         tap(incomes => this.log(`fetched incomes`)),

@@ -27,7 +27,7 @@ export class ExpenseService {
    * @author Thijs Zijdel
    */
   getExpenses(): Observable<Expense[]> {
-    const url = `${this.expensUrl}?action=getAll`;
+    const url = `${this.expensUrl}`; // ?action=getAll;
     return this.http.get<Expense[]>(url)
       .pipe(
         tap(expenses => this.log(`fetched expenses`)),

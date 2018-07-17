@@ -94,7 +94,7 @@
 
 
                 <ul class="expenses-seperate hiddenNow">
-                  <li class="forloop" *ngFor="let transaction of null">
+                  <li class="forloop" *ngFor="let transaction of getTransactionOf(balance.id)">
                     <!--getTransactionOf(balance.id-->
                     <span>
 

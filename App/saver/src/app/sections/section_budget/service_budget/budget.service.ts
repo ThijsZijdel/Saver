@@ -27,7 +27,7 @@ export class BudgetService {
    * @author Thijs Zijdel
    */
   getBudgets(): Observable<Budget[]> {
-    const url = `${this.budgetUrl}?action=getAll`;
+    const url = `${this.budgetUrl}`; //?action=getAll;
     return this.http.get<Budget[]>(this.budgetUrl)
       .pipe(
         tap(budgets => this.log(`fetched budgets`)),

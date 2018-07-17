@@ -87,7 +87,7 @@ export class BalancesComponent implements OnInit {
     let transactions: Transaction[] = [];
 
     for (let income of this.incomes){
-      console.log("income came by")
+
       if (income.balanceFk === balanceId){
 
         transactions.push(new Transaction(income.id, income.name,
@@ -120,7 +120,7 @@ export class BalancesComponent implements OnInit {
 
     // ".mainClasse  .id-name"
     let element: string = '.'+mainClasse+'.'+name+'-'+id;
-    console.log(element+" el")
+
 
     $(element+' ul').first().toggleClass("show");
 
@@ -159,7 +159,6 @@ export class BalancesComponent implements OnInit {
   monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
   formatDate(dateI: Date): string {
-    console.log(dateI);
     let date = new Date(dateI);
 
     return(this.monthnames[date.getMonth()] + " " + date.getDay() + ", " + date.getFullYear());
