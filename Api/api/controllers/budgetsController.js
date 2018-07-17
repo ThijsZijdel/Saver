@@ -8,15 +8,15 @@ let express = require('express'),
 
 
 /**
- * Http GET route for categories
+ * Http GET route for budgets
  * @param req = ?action=getAll
- * @param res = all categories
+ * @param res = all budgets
  */
-router.get('/categories' ,  (req, res) => {
+router.get('/budgets' ,  (req, res) => {
     async.parallel(
         [
              (callback) => {
-                connection.connectDatabase.query('SELECT * FROM Category;',
+                connection.connectDatabase.query('SELECT * FROM Budget;',
                     (errors, results, fields) => {
                     callback(errors, results);
                 })
@@ -26,7 +26,7 @@ router.get('/categories' ,  (req, res) => {
 
 
             //Get the data from the initial call
-            let data = {categories: results[0]}
+            let data = {budgets: results[0]}
 
 
             res.statusCode = 200;
@@ -37,16 +37,16 @@ router.get('/categories' ,  (req, res) => {
 });
 
 /**
- * HTTP Post route for categories
+ * HTTP Post route for budgets
  */
-router.post('/categories' ,  (req, res) => {
+router.post('/budgets' ,  (req, res) => {
     async.parallel(
         [
              (callback) => {
             //todo impliment changes
                 connection.connectDatabase.query(
 
-                    'INSERT INTO Category(idCategory, name, description) VALUES(?,?,?)',
+                    'INSERT INTO Budget(idCategory, name, description) VALUES(?,?,?)',
                     [req.body.idCategory, req.body.name, req.body.description],
                      (errors, results, fields) => {
 
@@ -63,16 +63,16 @@ router.post('/categories' ,  (req, res) => {
 });
 
 /**
- * HTTP Delete route for category
- * @param :id of category
+ * HTTP Delete route for budget
+ * @param :id of budget
  * @res json confirmation
  */
-router.delete('/categories/delete/:id' ,  (req, res) => {
+router.delete('/budgets/delete/:id' ,  (req, res) => {
     async.parallel(
         [
             (callback) => {
                 connection.connectDatabase.query(
-                    'DELETE FROM Category WHERE id = ?;', req.params.id,
+                    'DELETE FROM Budget WHERE id = ?;', req.params.id,
                      (errors, results) => {
                         callback(errors);
                     })
@@ -87,15 +87,15 @@ router.delete('/categories/delete/:id' ,  (req, res) => {
 });
 
 /**
- * HTTP Get route for category
- * @param :id of category
- * @res json category object
+ * HTTP Get route for budget
+ * @param :id of budget
+ * @res json budget object
  */
-router.get('/categories/get/:id' ,  (req, res) => {
+router.get('/budgets/get/:id' ,  (req, res) => {
     async.parallel(
         [
              (callback) => {
-                connection.connectDatabase.query('SELECT * FROM Category WHERE id = '+req.params.id+';',
+                connection.connectDatabase.query('SELECT * FROM Budget WHERE id = '+req.params.id+';',
                     (errors, results, fields) => {
                     callback(errors, results);
                 })
@@ -103,7 +103,7 @@ router.get('/categories/get/:id' ,  (req, res) => {
         ],
         (err, results) => {
             //Get the data from the initial call
-            let data = {categories: results[0]}
+            let data = {budgets: results[0]}
 
             res.statusCode = 200;
             res.json(data);
