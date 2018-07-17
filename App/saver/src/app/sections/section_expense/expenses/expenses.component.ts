@@ -40,8 +40,8 @@ export class ExpensesComponent implements OnInit {
     // TODO  --> --> when click: show last 5 expenses in that subc.
     this.serviceExpenses.getExpenses().pipe(catchOffline()).subscribe(expenses => {
       // loop trough all the expenes
-      for (let income of expenses) {
-        data.push(income);
+      for (let expense of expenses) {
+        data.push(expense);
 
         //incomeDataC.push(income.amount);
       }
@@ -52,7 +52,7 @@ export class ExpensesComponent implements OnInit {
   protected getExpensesOf(categoryId: number):Expense[]{
     let data: Expense[] = [];
     for (let expense of this.expenses) {
-      if(expense.subCategoryFk == categoryId && expense.subCategoryFk != 0){
+      if(expense.subcategoryFk == categoryId && expense.subcategoryFk != 0){
         data.push(expense);
       }
     }
@@ -92,7 +92,6 @@ export class ExpensesComponent implements OnInit {
 
     // ".mainClasse  .id-name"
     let element: string = '.'+mainClasse+'.'+name+'-'+id;
-    console.log(element+" el")
 
     $(element+' ul').first().toggleClass("show");
 
@@ -115,7 +114,7 @@ export class ExpensesComponent implements OnInit {
   protected getLastExpenseOf(categoryId: Number): Expense[] {
     let data: Expense[] = [];
     for (let expense of this.expenses) {
-      if(expense.subCategoryFk == categoryId){
+      if(expense.subcategoryFk == categoryId){
         data.push(expense);
       }
 
@@ -181,7 +180,7 @@ export class ExpensesComponent implements OnInit {
     for (let expense of this.expenses) {
 
       //todo check for recursive call?
-      if (this.getMainCategoryId(expense.subCategoryFk) == id || expense.subCategoryFk == id){
+      if (this.getMainCategoryId(expense.subcategoryFk) == id || expense.subcategoryFk == id){
         sum++;
       }
     }
@@ -193,7 +192,7 @@ export class ExpensesComponent implements OnInit {
     for (let expense of this.expenses) {
 
       //todo check for recursive call?
-      if(expense.subCategoryFk == id){
+      if(expense.subcategoryFk == id){
         sum++;
       }
     }

@@ -67,10 +67,9 @@ export class IncomeComponent implements OnInit {
     this.spendings = [];
 
     this.serviceSpending.getSpendings().subscribe(spendings => {
-      // loop trough all the incomes
+
       for (let spending of spendings) {
         this.spendings.push(spending);
-
         spendingDataC.push(-Math.abs(spending.amount));
 
       }
@@ -80,6 +79,7 @@ export class IncomeComponent implements OnInit {
   }
 
   private calculateSaved() {
+
     for(let i = 0; i < this.incomeData.length; i++){
 
       // if(this.spendings[i].monthName == this.incomes[i].monthName) {
@@ -94,8 +94,6 @@ export class IncomeComponent implements OnInit {
 
     this.calculateAvg();
     this.calculateSaved();
-
-    console.log(this.incomeData.length+": income |"+this.spendingData.length+": spend |"+this.savedData.length+": saved");
 
     let chartIncomed = new Chart({
       chart: {
