@@ -54,7 +54,7 @@ Angular Web Application for monitoring your expenses.
 * [ngx-pwa](https://www.npmjs.com/package/@ngx-pwa/local-storage) - For handling the local storage.
 * [ng Font Awsome](https://www.npmjs.com/package/angular-font-awesome) - For easy use of icons.
 * [ng highcharts](https://www.npmjs.com/package/angular-highcharts) - For all the charts and graphs.
-* [jQuery](https://jquery.com) - For Document traversal and manipulation, event handlining and more animations.
+* [jQuery](https://jquery.com) - For Document traversal and manipulation, event handling and more animations.
 * [async](https://www.npmjs.com/package/async) - Tool for handling asynchronous JavaScript in node.js.
 
 # Managers 
