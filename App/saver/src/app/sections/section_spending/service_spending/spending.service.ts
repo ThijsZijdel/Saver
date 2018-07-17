@@ -16,7 +16,7 @@ const httpOptions = {
 @Injectable()
 export class SpendingService {
 
-  private spendingUrl = 'api/spendings';  // URL to web api
+  private spendingUrl = 'http://127.0.0.1:8124/api/spendings';  // URL to web api
 
   constructor(
     private http: HttpClient,
@@ -27,7 +27,7 @@ export class SpendingService {
    * @author Thijs Zijdel
    */
   getSpendings(): Observable<Spending[]> {
-    const url = `${this.spendingUrl}?action=getAll`;
+    const url = `${this.spendingUrl}`;
     return this.http.get<Spending[]>(this.spendingUrl)
       .pipe(
         tap(spendings => this.log(`fetched spendings`)),
@@ -43,7 +43,7 @@ export class SpendingService {
    * @author Thijs Zijdel
    */
   getSpending(id: number): Observable<Spending> {
-    const url = `${this.spendingUrl}?action=get&id=${id}`;
+    const url = `${this.spendingUrl}/get/${id}`;
 
     return this.http.get<Spending>(url).pipe(
       tap(_ => this.log(`fetched spending id=${id}`)),

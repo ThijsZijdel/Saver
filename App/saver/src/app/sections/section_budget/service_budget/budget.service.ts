@@ -16,7 +16,7 @@ const httpOptions = {
 @Injectable()
 export class BudgetService {
 
-  private budgetUrl = 'api/budgets';  // URL to web api
+  private budgetUrl = 'http://127.0.0.1:8124/api/budgets';  // URL to web api
 
   constructor(
     private http: HttpClient,
@@ -40,7 +40,7 @@ export class BudgetService {
    * @author Thijs Zijdel
    */
   getBudget(id: number): Observable<Budget> {
-    const url = `${this.budgetUrl}?action=get&id=${id}`;
+    const url = `${this.budgetUrl}/get/${id}`;
 
     return this.http.get<Budget>(url).pipe(
       tap(_ => this.log(`fetched budget id=${id}`)),

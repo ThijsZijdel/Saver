@@ -9,7 +9,7 @@ export class Expense {
   date: Date;
   monthName: string;  // TODO add monthName field to API
   monthFk: number;
-  subCategoryFk: number;
+  subcategoryFk: number;
 
   balanceFk: number;
   companyFk: number;
@@ -25,7 +25,7 @@ export class Expense {
               date: Date,
               monthName: string,
               monthFk: number,
-              subCategoryFk: number,
+              subcategoryFk: number,
               balanceFk: number,
               companyFk: number,
               alreadyPaid: number) {
@@ -36,7 +36,7 @@ export class Expense {
     this.date = date;
     this.monthName = monthName;
 
-    this.subCategoryFk = subCategoryFk;
+    this.subcategoryFk = subcategoryFk;
 
     this.balanceFk = balanceFk;
     this.companyFk = companyFk;

@@ -15,8 +15,8 @@ const httpOptions = {
 
 @Injectable()
 export class CategoryService {
-                          //http://127.0.0.1:8124
-  private categoryUrl = 'api/categories';  // URL to web api
+
+  private categoryUrl = 'http://127.0.0.1:8124/api/categories';  // URL to web api
 
   constructor(
     private http: HttpClient,
@@ -40,7 +40,7 @@ export class CategoryService {
    * @author Thijs Zijdel
    */
   getCategory(id: number): Observable<Category> {
-    const url = `${this.categoryUrl}?action=get&id=${id}`;
+    const url = `${this.categoryUrl}/get/${id}`;
 
     return this.http.get<Category>(url).pipe(
       tap(_ => this.log(`fetched category id=${id}`)),

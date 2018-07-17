@@ -42,6 +42,13 @@ app.use((req, res, next) => {
 // app.use(require('./middlewares'));
 app.use('/api', require('./controllers/categoriesController'));
 
+app.use('/api', require('./controllers/expensesController'));
+app.use('/api', require('./controllers/incomesController'));
+
+app.use('/api', require('./controllers/budgetsController'));
+app.use('/api', require('./controllers/balancesController'));
+
+app.use('/api', require('./controllers/spendingsController'));
 
 
 /**

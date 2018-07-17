@@ -125,7 +125,7 @@ export class SpendingComponent implements OnInit {
     let data: Expense[] = [];
 
     for (let expense of this.expenses) {
-      if(expense.subCategoryFk == categoryFk && expense.subCategoryFk != 0) {
+      if(expense.subcategoryFk == categoryFk && expense.subcategoryFk != 0) {
         data.push(expense);
       }
     }
@@ -210,7 +210,7 @@ export class SpendingComponent implements OnInit {
     // todo 'Class..."   is to abstract
     let parent = 'div.sub-layer.'+classe;
 
-    console.log('div.sub-layer.'+classe)
+
     $(parent).find('.subCategoryLbl span.tooltipPerc').fadeToggle();
   }
 
@@ -243,7 +243,7 @@ export class SpendingComponent implements OnInit {
 
     // ".mainClasse  .id-name"
     let element: string = '.'+mainClasse+'.'+name+'-'+id;
-    console.log(element+" el")
+
 
     $(element+' ul').first().toggleClass("show");
 

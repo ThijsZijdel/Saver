@@ -8,15 +8,14 @@ let express = require('express'),
 
 
 /**
- * Http GET route for categories
- * @param req = ?action=getAll
- * @param res = all categories
+ * Http GET route for expense
+ * @param res = all expense
  */
-router.get('/categories' ,  (req, res) => {
+router.get('/expenses' ,  (req, res) => {
     async.parallel(
         [
              (callback) => {
-                connection.connectDatabase.query('SELECT * FROM Category;',
+                connection.connectDatabase.query('SELECT * FROM Expense;',
                     (errors, results, fields) => {
                     callback(errors, results);
                 })
@@ -37,15 +36,13 @@ router.get('/categories' ,  (req, res) => {
 });
 
 /**
- * HTTP Post route for categories
+ * HTTP Post route for expenses
  */
-router.post('/categories' ,  (req, res) => {
+router.post('/expenses' ,  (req, res) => {
     async.parallel(
         [
              (callback) => {
-            //todo impliment changes
                 connection.connectDatabase.query(
-
                     'INSERT INTO Category(idCategory, name, description) VALUES(?,?,?)',
                     [req.body.idCategory, req.body.name, req.body.description],
                      (errors, results, fields) => {
@@ -56,23 +53,23 @@ router.post('/categories' ,  (req, res) => {
         ],
         (err, results) => {
 
-            res.json({"Added cat with id:":req.body.idCategory});
+            res.json({"Added expense with id:":req.body.idCategory});
         }
     );
 
 });
 
 /**
- * HTTP Delete route for category
- * @param :id of category
+ * HTTP Delete route for expense
+ * @param :id of expense
  * @res json confirmation
  */
-router.delete('/categories/delete/:id' ,  (req, res) => {
+router.delete('/expenses/delete/:id' ,  (req, res) => {
     async.parallel(
         [
             (callback) => {
                 connection.connectDatabase.query(
-                    'DELETE FROM Category WHERE id = ?;', req.params.id,
+                    'DELETE FROM Expense WHERE id = ?;', req.params.id,
                      (errors, results) => {
                         callback(errors);
                     })
@@ -80,22 +77,22 @@ router.delete('/categories/delete/:id' ,  (req, res) => {
         ],
         (err, results) => {
 
-            res.json({"Deleted cat with id:":req.params.id});
+            res.json({"Deleted expense with id:":req.params.id});
         }
     );
 
 });
 
 /**
- * HTTP Get route for category
- * @param :id of category
- * @res json category object
+ * HTTP Get route for expense
+ * @param :id of expense
+ * @res json expense object
  */
-router.get('/categories/get/:id' ,  (req, res) => {
+router.get('/expenses/get/:id' ,  (req, res) => {
     async.parallel(
         [
              (callback) => {
-                connection.connectDatabase.query('SELECT * FROM Category WHERE id = '+req.params.id+';',
+                connection.connectDatabase.query('SELECT * FROM Expense WHERE id = '+req.params.id+';',
                     (errors, results, fields) => {
                     callback(errors, results);
                 })
