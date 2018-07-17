@@ -27,38 +27,25 @@ export class SpendingService {
    * @author Thijs Zijdel
    */
   getSpendings(): Observable<Spending[]> {
-    const url = `${this.spendingUrl}`;
-    return this.http.get<Spending[]>(this.spendingUrl)
-      .pipe(
-        tap(spendings => this.log(`fetched spendings`)),
-        catchError(this.handleError('getSpending', []))
-      );
+    let today = new Date();
+    return this.getSpending(today.getMonth(), today.getFullYear());
   }
 
-  // TODO    get spendings normal -> see notes --> sum for each category
-  // TODO
 
   /**
    * get spending by id.
    * @author Thijs Zijdel
    */
-  getSpending(id: number): Observable<Spending> {
-    const url = `${this.spendingUrl}/get/${id}`;
-
-    return this.http.get<Spending>(url).pipe(
-      tap(_ => this.log(`fetched spending id=${id}`)),
-      catchError(this.handleError<Spending>(`getSpending id=${id}`))
-    );
-  }
-
-  getSpendingsOf(month: number, year: number): Observable<Spending[]> {
-    const url = `${this.spendingUrl}?action=getSpendings&month=${month}&year=${year}`;
+  getSpending(month: number, year:number): Observable<Spending[]> {
+    const url = `${this.spendingUrl}/get/${month}/${year}`;
 
     return this.http.get<Spending[]>(url).pipe(
       tap(_ => this.log(`fetched Spendings month=${month} year=${year}`)),
       catchError(this.handleError<Spending[]>(`getSpendings month=${month} year=${year}`))
     );
   }
+
+
 
   /**
    * Log a spendingservice message with the MessageService

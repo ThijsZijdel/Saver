@@ -89,8 +89,8 @@ export class SpendingComponent implements OnInit {
 
         //this.getCatName(spending.subcategoryFk)
 
-        this.spendingData.push( new dataObj(spending.name, spending.amount, spending.subcategoryFk ) );
-        this.totalSpendAmout += spending.amount;
+        this.spendingData.push( new dataObj(spending.name, spending.count, spending.id ) );
+        this.totalSpendAmout += spending.count;
 
       }
     });
@@ -169,7 +169,7 @@ export class SpendingComponent implements OnInit {
    * @returns {string}
    */
   getPercentage(category: Spending):string {
-    let percentage: number = ((category.amount/this.totalSpendAmout)*100);
+    let percentage: number = ((category.count/this.totalSpendAmout)*100);
 
     return (percentage.toString()).substr(0,percentage.toString().indexOf('.')+2)+"%";
   }

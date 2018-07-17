@@ -35,10 +35,10 @@
                          >
               {{getPercentage(category)}}
               <span class="amount">
-                      &euro;{{category.amount}}
+                      &euro;{{category.count}}
                     </span>
               <span class="tooltipPerc">
-                    {{getExpensesOf(category.subcategoryFk).length}} expenses
+                    {{getExpensesOf(category.id).length}} expenses
                     </span>
             </h2>
 
@@ -54,7 +54,7 @@
 
             <ul class="expenses-seperate hiddenNow">
 
-              <li class="forloop" *ngFor="let expense of getExpensesOf(category.subcategoryFk)">
+              <li class="forloop" *ngFor="let expense of getExpensesOf(category.id)">
                 <span>{{expense.name}} - {{expense.amount}}</span> <br>
                 <span class="info">Shopping Mall on {{formatDate(expense.date)}}</span>
               </li>

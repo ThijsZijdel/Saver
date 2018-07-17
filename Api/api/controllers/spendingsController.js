@@ -87,15 +87,22 @@ router.delete('/spendings/delete/:id' ,  (req, res) => {
 });
 
 /**
- * HTTP Get route for category
- * @param :id of category
+ * HTTP Get route for spendings of month/ year
+ * @param :id of spending
  * @res json category object
  */
-router.get('/spendings/get/:id' ,  (req, res) => {
+router.get('/spendings/get/:month/:year' ,  (req, res) => {
     async.parallel(
         [
              (callback) => {
-                connection.connectDatabase.query('SELECT * FROM Category WHERE id = '+req.params.id+';',
+                connection.connectDatabase.query(
+                    'SELECT SUM(E.amount) AS Total, C.name, C.description, COUNT(E.name) AS count, M.name as month, M.shortName, C.id ' +
+                    'FROM Expense AS E ' +
+                    'INNER JOIN Category AS C on E.subcategoryFk = C.subCategoryFk ' +
+                    'INNER JOIN MonthTab AS M on E.monthFk = M.id ' +
+                    'WHERE E.monthFk = ? AND E.year = ? ' +
+                    'GROUP BY C.name ' +
+                    'ORDER BY SUM(E.amount)', [req.params.month, req.params.year],
                     (errors, results, fields) => {
                     callback(errors, results);
                 })
@@ -111,6 +118,14 @@ router.get('/spendings/get/:id' ,  (req, res) => {
     );
 
 });
+
+
+
+
+
+
+
+
 
 
 

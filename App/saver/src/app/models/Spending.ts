@@ -1,43 +1,27 @@
 export class Spending {
-  id: number;
+  total: number;
   name: string;
-  amount: number;
-
-  repeatingFk: number;
-
   description: string;
-  date: Date;
-  monthName: string;  // TODO add monthName field to API
-  monthFk: number;
-  subcategoryFk: number;
 
-  balanceFk: number;
+  count: number;
+  month :string;
+  shortName: string;
+
+  id: number;
 
 
 
-  constructor(id: number,
-              name: string,
-              amount: number,
-              repeatingFk: number,
-              description: string,
-              date: Date,
-              monthName: string,
-              monthFk: number,
-              subcategoryFk: number,
-              balanceFk: number) {
-    this.id = id;
+
+  constructor(total: number, name: string, description: string, count: number, month :string, shortName: string, id: number) {
+    this.total = total;
     this.name = name;
-    this.amount = amount;
     this.description = description;
-    this.date = date;
-    this.monthName = monthName;
+    this.count = count;
+    this.month = month;
 
-    this.subcategoryFk = subcategoryFk;
+    this.shortName = shortName;
+    this.id = id;
 
-    this.balanceFk = balanceFk;
 
-
-    this.monthFk = monthFk;
-    this.repeatingFk = repeatingFk;
   }
 }
