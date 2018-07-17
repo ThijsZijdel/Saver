@@ -19,15 +19,15 @@
      onmousedown="return false;">
 
 
-  <div class="category-box main-category-box" *ngFor="let category of balanceCategories">
+  <div class="category-box main-category-box" *ngFor="let balanceType of balanceTypes">
 
 
-      <section class="category {{category.name.split(' ').join('_')+'-'+category.id}}">
+      <section class="category {{balanceType.name.split(' ').join('_')+'-'+balanceType.id}}">
 
-        <h3 (click)="setShowStateSubLayer('category' ,category.name.split(' ').join('_'), category.id);"
+        <h3 (click)="setShowStateSubLayer('category' ,balanceType.name.split(' ').join('_'), balanceType.id);"
             class="clickable mainCategoryLbl parent-tooltip">
 
-          {{category.name}}
+          {{balanceType.name}}
 
           <span class="tooltipPerc">
             <!--{{ getSumSubCats(balance.id) }} subcats. <br>-->
@@ -36,7 +36,7 @@
         </h3>
 
         <span class="amount-box">
-        &euro;{{  getSumOfCategorie(category.id) }}
+        &euro;{{  getSumOfCategorie(balanceType.id) }}
         </span>
 
         <hr>
@@ -49,13 +49,13 @@
 
 
 
-            <li *ngIf="balance.type === category.id" >
+            <li *ngIf="balance.type == balanceType.id" >
 
               <div class="sub-layer subcategory {{balance.name.split(' ').join('_')+'-'+balance.id}}">
 
                   <span class="icon-subcat down" style="background: #8268BD;">
                     <!--[ngStyle]="{'background':getColor(category)}"-->
-                    <fa name="{{category.icon}}"></fa>
+                    <fa name="{{balanceType.icon}}"></fa>
                   </span>
 
                 <h2 class="clickable subLabel parent-tooltip subCategoryLbl"
@@ -74,7 +74,7 @@
                <div>
                     <span class="info">
                       <span class="date">
-                        {{category.name.substring(0, 4)}}
+                        {{balanceType.name.substring(0, 4)}}
                       </span>
 
                       <span class="dot">&middot;</span>

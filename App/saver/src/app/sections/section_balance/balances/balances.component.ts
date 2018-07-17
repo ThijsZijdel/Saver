@@ -9,6 +9,8 @@ import {IncomeService} from "../../section_income/service_income/income.service"
 import {Income} from "../../../models/Income";
 import {Transaction} from "../../../models/Transaction";
 import {Spending} from "../../../models/Spending";
+import {BalanceType} from "../../../models/BalanceType";
+import {BalanceTypeService} from "../service_balanceType/balanceType.service";
 
 @Component({
   selector: 'app-balances',
@@ -23,21 +25,18 @@ export class BalancesComponent implements OnInit {
 
   balancesTotal: number = 0;
 
-  balanceCategories = [
-    { id: 1, name: 'On Demand', description: 'Money that is ready to be spend.', color: "#EB7092", icon:"credit-card"},
-    { id: 2, name: 'Savings', description: 'Money that is saving up.', color: "#EB7092", icon:"credit-card"},
-    { id: 3, name: 'Credit', description: 'Credit card.', color: "#EB7092", icon:"credit-card"}
-
-  ];
+  balanceTypes: BalanceType[] = [];
 
   constructor(private balanceService: BalanceService,
               private expenseService: ExpenseService,
-              private incomeService: IncomeService) {
+              private incomeService: IncomeService,
+              private balanceTypeService: BalanceTypeService) {
 
   }
 
 
   ngOnInit() {
+    this.getBalanceTypes();
     this.getBalances();
     this.getExpenses();
     this.getIncomes();
@@ -46,6 +45,7 @@ export class BalancesComponent implements OnInit {
 
   private getBalances() {
     this.balancesTotal = 0;
+    this.balances = [];
 
     this.balanceService.getBalances().subscribe(balances => {
       // loop trough all the incomes
@@ -59,6 +59,7 @@ export class BalancesComponent implements OnInit {
   }
 
   private getExpenses() {
+    this.expenses = [];
     this.expenseService.getExpenses().subscribe(expenses => {
       // loop trough all the incomes
       for (let expense of expenses) {
@@ -71,6 +72,7 @@ export class BalancesComponent implements OnInit {
   }
 
   private getIncomes() {
+    this.incomes = [];
     this.incomeService.getIncomes().subscribe(incomes => {
       // loop trough all the incomes
       for (let income of incomes) {
@@ -145,10 +147,10 @@ export class BalancesComponent implements OnInit {
   /**
    * Get the color of an spending based on the id
    *
-   * @param
+   * @param isExpense: yes/ no
    * @returns {string}
    */
-  getColor(isExpense: boolean): string {
+  protected getColor(isExpense: boolean): string {
     if (isExpense)
       return "grey";
     else
@@ -165,7 +167,7 @@ export class BalancesComponent implements OnInit {
   }
 
   getForamatted(name: string) {
-  return name.replace(/\s+/g, '');
+    return name.replace(/\s+/g, '');
   }
 
   getSumOfCategorie(id: number): number {
@@ -177,5 +179,20 @@ export class BalancesComponent implements OnInit {
       }
     }
     return sum;
+  }
+
+  private getBalanceTypes() {
+    this.balanceTypes = [];
+    this.balanceTypeService.getBalanceTypes().subscribe(balanceTypes => {
+      // loop trough all the incomes
+
+
+      for (let type of balanceTypes) {
+        console.log(type)
+        console.log(type.id +" | "+type.description+" | "+type.icon)
+        this.balanceTypes.push(type);
+
+      }
+    });
   }
 }

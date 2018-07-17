@@ -53,6 +53,7 @@ import {CalendarComponent} from "./sections/section_bills/calendar/calendar.comp
 
 
 import {SettingsService} from "./views/personal/settings.service";
+import {BalanceTypeService} from "./sections/section_balance/service_balanceType/balanceType.service";
 
 
 
@@ -108,7 +109,9 @@ import {SettingsService} from "./views/personal/settings.service";
     CategoryService,
     LocalStorageDatabase,
     SettingsService,
-    AuthService
+    AuthService,
+
+    BalanceTypeService
   ],
   bootstrap: [AppComponent]
 })

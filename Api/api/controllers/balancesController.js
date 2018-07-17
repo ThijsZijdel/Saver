@@ -26,7 +26,7 @@ router.get('/balances' ,  (req, res) => {
 
 
             //Get the data from the initial call
-            let data = {balances: results[0]}
+            let data = results[0];
 
 
             res.statusCode = 200;
@@ -35,6 +35,37 @@ router.get('/balances' ,  (req, res) => {
     );
 
 });
+
+/**
+ * Http GET route for balance categories
+ * @param req = ?action=getAll
+ * @param res = all balances categories
+ */
+router.get('/balanceTypes' ,  (req, res) => {
+    async.parallel(
+        [
+            (callback) => {
+                connection.connectDatabase.query('SELECT * FROM balanceType;',
+                    (errors, results, fields) => {
+                        callback(errors, results);
+                    })
+            }
+        ],
+        (err, results) => {
+
+
+            //Get the data from the initial call
+            let data = results[0];
+
+
+            res.statusCode = 200;
+            res.json(data);
+        }
+    );
+
+});
+
+
 
 /**
  * HTTP Post route for balances
@@ -103,7 +134,7 @@ router.get('/balances/get/:id' ,  (req, res) => {
         ],
         (err, results) => {
             //Get the data from the initial call
-            let data = {balances: results[0]}
+            let data = results[0];
 
             res.statusCode = 200;
             res.json(data);

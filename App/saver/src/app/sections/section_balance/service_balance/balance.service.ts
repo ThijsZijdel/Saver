@@ -6,6 +6,8 @@ import {Observable, of} from 'rxjs/index';
 import {Balance} from "../../../models/Balance";
 import {MessageService} from "../../../data/service_message/message.service";
 
+import {BalanceType} from "../../../models/BalanceType";
+
 
 
 
@@ -145,5 +147,19 @@ export class BalanceService {
     );
   }
 
+  /**
+   * get balance types from the server
+   * @author Thijs Zijdel
+
+  getBalanceTypes(): Observable<BalanceType[]> {
+    const url = `${this.balanceUrl}/types`;
+    console.log(" beeing called -->"+`${this.balanceUrl}/types`)
+    return this.http.get<BalanceType[]>(this.balanceUrl)
+      .pipe(
+        tap(balances => this.log(`fetched balance types`)),
+        catchError(this.handleError('getBalance cats', []))
+      );
+  }
+   */
 }
 
