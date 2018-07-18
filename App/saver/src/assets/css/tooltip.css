@@ -16,7 +16,7 @@
   border: 2px solid rgba(205,205,205,0.8);
   margin: 0 auto;
   left: 10px;
-
+  box-shadow: #eee 2px 2px 20px;
 
   transition: all ease-in-out 200ms;
   transition-delay: 5s;
