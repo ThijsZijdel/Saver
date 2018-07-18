@@ -1,0 +1,28 @@
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+
+
+/*touched */
+/*.ng-touched.ng-invalid{*/
+  /*color: red;*/
+/*}*/
+
+
+/*ng-untouched*/
+
+
+/*changed */
+/*ng-dirty	ng-pristine*/
+
+.ng-dirty {
+  text-decoration: underline;
+}
+
+
+/*validation */
+/*ng-valid	ng-invalid*/

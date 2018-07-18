@@ -3,7 +3,7 @@ import {AddViewsService} from "../../../UI/addViews/service_addViews/addViews.se
 import {Expense} from "../../../models/Expense";
 import {Observable} from "rxjs/internal/Observable";
 import {Category} from "../../../models/Category";
-import {CategoryService} from "../../../data/service/service_category/category.service";
+import {CategoryService} from "../../../data/categories/service_category/category.service";
 
 @Component({
   selector: 'app-manage-expense',
@@ -41,6 +41,17 @@ export class ManageExpenseComponent implements OnInit {
       }
     });
     return data;
+  }
+
+  //TODO submit query
+  submitForm(){
+
+  }
+
+  newExpense() {
+    this.expense =new Expense(null, null, null, null, null, null, null, null, null, null, null, 0);
+
+    this.addView.isEdit(false);
   }
 
 }
