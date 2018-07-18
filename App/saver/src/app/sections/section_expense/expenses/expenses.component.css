@@ -188,7 +188,7 @@ span.company {
   top: 35px;
   font-size: 14px;
   text-align: center;
-  width: 100px;
+  width: 175px;
   height: auto;
   padding: 5px;
   background: rgba(255, 255, 255, 0.95);
@@ -227,21 +227,38 @@ span.company {
   display: block;
   border-top: solid 1px #eee;
   text-transform: uppercase;
-  text-align: center;
+  text-align: left;
+  /*padding-left: 20px;*/
 }
+
+
+/deep/.ngx-contextmenu .dropdown-menu:focus {
+  outline: -webkit-focus-ring-color none 5px;
+}
+
+
+
 /deep/.ngx-contextmenu li:first-child {
   border-top:none;
 }
+/deep/.ngx-contextmenu li:first-child a fa{
+  margin-left: -15px;
+  padding-right: 10px;
+}
+
 /deep/.ngx-contextmenu a {
+  text-transform: none;
   color: #777;
   display: block;
-  padding: 0.5em 1em;
+  padding: 0.5em 1em 0.5em 30px;
 }
+/deep/.ngx-contextmenu a fa {
+  margin-left: -20px;
+  padding-right: 5px;
+}
+
 /deep/.ngx-contextmenu a:hover {
   color: #999;
   background-color: #eee;
 }
 
-/deep/.ngx-contextmenu .dropdown-menu li ul {
-  background: red;
-}

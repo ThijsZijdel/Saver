@@ -4,7 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+/**
+ * Development in memory data api
+ */
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {InMemoryDataService} from "./data/in-memory-data.service";
+
+
 import {HttpClientModule} from '@angular/common/http';
 import {HttpModule} from "@angular/http";
 
@@ -32,7 +38,7 @@ import {ExpenseService} from "./sections/section_expense/service_expense/expense
 
 import {MessageComponent} from "./message/message.component";
 import {MessageService} from "./data/service_message/message.service";
-import {InMemoryDataService} from "./data/in-memory-data.service";
+
 
 
 import {CategoryService} from "./data/service/service_category/category.service";
@@ -45,16 +51,19 @@ import {StorageServiceModule} from "angular-webstorage-service";
 import { ChartModule } from 'angular-highcharts';
 
 
-import {AngularFontAwesomeComponent, AngularFontAwesomeModule, AngularFontAwesomeService} from "angular-font-awesome";
+import {AngularFontAwesomeComponent,
+        AngularFontAwesomeModule,
+        AngularFontAwesomeService} from "angular-font-awesome";
 
 import {LocalStorageDatabase} from "@ngx-pwa/local-storage";
 import {OfflineProvidersConfig} from "@ngx-pwa/offline";
+
 import {CalendarComponent} from "./sections/section_bills/calendar/calendar.component";
 
 
 import {SettingsService} from "./views/personal/settings.service";
 import {BalanceTypeService} from "./sections/section_balance/service_balanceType/balanceType.service";
-import {ContextMenuModule} from "ngx-contextmenu";
+import {ContextMenuComponent, ContextMenuModule} from "ngx-contextmenu";
 
 
 

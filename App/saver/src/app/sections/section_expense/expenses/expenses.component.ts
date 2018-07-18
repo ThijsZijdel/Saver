@@ -28,7 +28,11 @@ export class ExpensesComponent implements OnInit {
     { name: 'Joe', otherProperty: 'Bar' }
   ];
 
-  @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
+  // @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
+
+  @ViewChild(ContextMenuComponent) public categoryMenu: ContextMenuComponent;
+  @ViewChild(ContextMenuComponent) public expenseMenu: ContextMenuComponent;
+
 
   showMessage(mes: string){
     console.log(mes+" <test")

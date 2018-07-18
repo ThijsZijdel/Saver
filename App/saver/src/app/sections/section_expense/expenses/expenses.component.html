@@ -14,7 +14,7 @@
 
         <h3 (click)="setShowStateSubLayer('category' ,categoryMain.name, categoryMain.id);"
             class="clickable mainCategoryLbl parent-tooltip"
-            [contextMenu]="basicMenu" [contextMenuSubject]="categoryMain">
+            [contextMenu]="categoryMenu" [contextMenuSubject]="categoryMain">
 
           {{categoryMain.name}}
 
@@ -56,7 +56,7 @@
 
                     <h2 class="clickable subLabel parent-tooltip subCategoryLbl"
                         (click)="setShowStateSubLayer('subcategory' ,category.name, category.id);"
-                        [contextMenu]="basicMenu" [contextMenuSubject]="category">
+                        [contextMenu]="categoryMenu" [contextMenuSubject]="category">
 
                       {{category.name}}
                       <span class="amount">
@@ -91,7 +91,7 @@
 
 
                   <ul class="expenses-seperate hiddenNow">
-                      <li class="forloop" *ngFor="let expense of getExpensesOf(category)">
+                      <li class="forloop" *ngFor="let expense of getExpensesOf(category)" [contextMenu]="expenseMenu" [contextMenuSubject]="expense">
                         <span>{{expense.name}} - {{expense.amount}}</span> <br>
                         <span class="info">in Shopping Mall on {{formatDate(expense.date)}}</span>
                       </li>
@@ -119,7 +119,61 @@
 
 
 
-<context-menu>
+<context-menu #categoryMenu >
+  <ng-template contextMenuItem let-item (execute)="toggleTooltips()">
+    <fa name="info"></fa>
+    Toggle tooltips
+  </ng-template>
+
+
+
+  <ng-template let-item contextMenuItem
+               (execute)="showMessage('Hi, ' + $event.item.name)">
+    <fa name="{{item.icon}}"></fa>
+    <span>
+      Edit Category
+    </span>
+  </ng-template>
+
+
+  <ng-template contextMenuItem let-item
+               (execute)="showMessage($event.item.name + ' said: ' + $event.item.otherProperty)">
+    <fa name="edit"></fa>
+    Categories
+  </ng-template>
+
+  <ng-template contextMenuItem let-item
+               (execute)="showMessage($event.item.name + ' said: ' + $event.item.otherProperty)">
+    <fa name="plus-circle"></fa>
+    Add Expense
+  </ng-template>
+
+
+  <ng-template contextMenuItem divider="true"></ng-template>
+
+  <ng-template contextMenuItem [subMenu]="saySubMenu">
+    <fa name="share"></fa>
+    Share
+  </ng-template>
+  <context-menu #saySubMenu>
+    <ng-template contextMenuItem (execute)="showMessage('Hi, ' + $event.item.name)">
+      <fa name="bell"></fa>
+      Reminders
+    </ng-template>
+    <ng-template contextMenuItem (execute)="showMessage('Hola, ' + $event.item.name)">
+      <fa name="calendar-alt"></fa>
+      Agenda
+    </ng-template>
+    <ng-template contextMenuItem (execute)="showMessage('Salut, ' + $event.item.name)">
+      <fa name="envelope"></fa>
+      Mail
+    </ng-template>
+  </context-menu>
+
+</context-menu>
+
+
+<context-menu #expenseMenu>
   <ng-template contextMenuItem (execute)="toggleTooltips()">
     <button>Toggle tooltips</button>
   </ng-template>
@@ -128,7 +182,7 @@
 
   <ng-template let-item contextMenuItem (execute)="showMessage('Hi, ' + $event.item.name)">
     <span>
-      Edit Category
+      Edit Expense
     </span>
   </ng-template>
 
