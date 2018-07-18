@@ -179,3 +179,66 @@ span.company {
 
 
 
+
+
+
+/deep/.ngx-contextmenu .dropdown-menu {
+  color: #333;
+  font-weight: 300;
+  top: 35px;
+  font-size: 14px;
+  text-align: center;
+  width: 100px;
+  height: auto;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(205,205,205,0.8);
+  margin: 0 auto;
+  left: 10px;
+
+
+  transition: all ease-in-out 200ms;
+}
+
+
+/deep/.ngx-contextmenu .dropdown-menu:before,
+/deep/.ngx-contextmenu .dropdown-menu:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  width: auto;
+  height: 0;
+  border: 10px solid transparent;
+  border-top: 0;
+  margin-left: -10px;
+}
+/deep/.ngx-contextmenu .dropdown-menu:after {
+  border-bottom-color: rgba(205,205,205,0.8);
+  margin-top: -10px;
+}
+/deep/.ngx-contextmenu .dropdown-menu:before {
+  border-bottom-color: #fff;
+  margin-top: -8px;
+  z-index: 3;
+}
+
+/deep/.ngx-contextmenu li {
+  display: block;
+  border-top: solid 1px #eee;
+  text-transform: uppercase;
+  text-align: center;
+}
+/deep/.ngx-contextmenu li:first-child {
+  border-top:none;
+}
+/deep/.ngx-contextmenu a {
+  color: #777;
+  display: block;
+  padding: 0.5em 1em;
+}
+/deep/.ngx-contextmenu a:hover {
+  color: #999;
+  background-color: #eee;
+}
+

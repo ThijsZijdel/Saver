@@ -54,6 +54,7 @@ import {CalendarComponent} from "./sections/section_bills/calendar/calendar.comp
 
 import {SettingsService} from "./views/personal/settings.service";
 import {BalanceTypeService} from "./sections/section_balance/service_balanceType/balanceType.service";
+import {ContextMenuModule} from "ngx-contextmenu";
 
 
 
@@ -96,7 +97,9 @@ import {BalanceTypeService} from "./sections/section_balance/service_balanceType
     //   InMemoryDataService, { dataEncapsulation: false }
     // ),
 
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+
+    ContextMenuModule.forRoot()
   ],
   providers: [
     IncomeService,

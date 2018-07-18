@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^6.0.3",
+    "@angular/cdk": "^6.4.0",
     "@angular/common": "^6.0.3",
     "@angular/compiler": "^6.0.3",
     "@angular/core": "^6.0.3",
@@ -32,6 +33,7 @@
     "express": "^4.16.3",
     "highcharts": "^6.1.0",
     "jquery": "^3.3.1",
+    "ngx-contextmenu": "^5.0.2",
     "npm": "^6.1.0",
     "popper": "^1.0.1",
     "rxjs": "^6.0.0",

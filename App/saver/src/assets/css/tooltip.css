@@ -68,3 +68,7 @@
     display: block;
   }
 }
+
+.tooltipPerc.hidden {
+  display: none !important;
+}

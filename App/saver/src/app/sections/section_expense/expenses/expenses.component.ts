@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ExpenseService} from "../service_expense/expense.service";
 import {Expense} from "../../../models/Expense";
 import {CategoryService} from "../../../data/service/service_category/category.service";
@@ -7,6 +7,7 @@ import {Category} from "../../../models/Category";
 import {catchOffline, Network} from '@ngx-pwa/offline';
 
 import * as $ from "jquery"
+import {ContextMenuComponent} from "ngx-contextmenu";
 
 @Component({
   selector: 'app-expenses',
@@ -21,6 +22,21 @@ export class ExpensesComponent implements OnInit {
 
   expenses: Expense[] = [];
   categories: Category[] = [];
+
+  public items = [
+    { name: 'John', otherProperty: 'Foo' },
+    { name: 'Joe', otherProperty: 'Bar' }
+  ];
+
+  @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
+
+  showMessage(mes: string){
+    console.log(mes+" <test")
+  }
+
+
+
+
 
   ngOnInit() {
     this.categories = this.getCategories();
@@ -176,16 +192,7 @@ export class ExpensesComponent implements OnInit {
     return 0;
   }
 
-  protected toggleTooltip(classe: string) {
-    let parent = 'section.category.'+classe;
 
-    $(parent).find('.mainCategoryLbl span.tooltipPerc').fadeToggle();
-  }
-
-  protected toggleTooltipSub(classe: string) {
-    let parent = 'div.sub-layer.'+classe;
-    $(parent).find('.subCategoryLbl span.tooltipPerc').fadeToggle();
-  }
 
   getAmountExpensesMain(id: number):number {
     let sum: number = 0;
@@ -211,5 +218,11 @@ export class ExpensesComponent implements OnInit {
     }
     return sum;
   }
+
+  toggleTooltips(){
+    $('.tooltipPerc').toggleClass("hidden");
+  }
+
+
 }
 
