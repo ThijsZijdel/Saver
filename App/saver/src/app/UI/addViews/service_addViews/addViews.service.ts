@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Expense} from "../../../models/Expense";
-import {MessageService} from "../../../data/service_message/message.service";
+import {MessageService} from "../../../message/service_message/message.service";
+import {Category} from "../../../models/Category";
 
 
 
@@ -13,16 +14,20 @@ export class AddViewsService {
   addObj: boolean = false;
 
   private expense: Expense = null;
+  private category: Category = null;
 
   constructor(private messageService: MessageService){}
 
   clear() {
-    this.log("Cleared");
+    this.log("Cleared all");
 
     this.editObj = false;
     this.addObj = false;
 
     this.expense = null;
+    this.category = null;
+
+    this.showAddViewOverlay = false
   }
 
   show(){
@@ -30,15 +35,20 @@ export class AddViewsService {
   }
 
   getExpense(): Expense{
-    this.log("Expense returned");
     return this.expense;
   }
 
-  setExpense(expens: Expense) {
-    this.log("Expense set");
+  setExpense(expense: Expense) {
+    this.expense = expense;
+    this.show();
+  }
 
-    this.expense = expens;
+  getCategory(): Category{
+    return this.category;
+  }
 
+  setCategory(category: Category) {
+    this.category = category;
     this.show();
   }
 
@@ -51,5 +61,10 @@ export class AddViewsService {
    */
   private log(message: string) {
     this.messageService.add('Manage Overlay View: ' + message);
+  }
+
+  isEdit(bool: boolean) {
+    this.editObj = bool;
+    this.addObj = !bool;
   }
 }

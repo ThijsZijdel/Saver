@@ -1,7 +1,10 @@
 .parent-tooltip{
   position:relative;
 }
+
 .tooltipPerc {
+  pointer-events: none;
+
   display: none;
   position: relative;
   color: #333;

@@ -1,11 +1,15 @@
 
 <div *ngIf="addViews.showAddViewOverlay">
-  <div class="overlay" (click)="addViews.showAddViewOverlay = false"></div>
+  <div class="overlay" (click)="addViews.clear()"></div>
 
   <div class="add-component">
 
-    <div *ngIf="addViews.expense != null">
+    <div *ngIf="addViews.getExpense() != null">
       <app-manage-expense></app-manage-expense>
+    </div>
+
+    <div *ngIf="addViews.getCategory() != null">
+      <app-manage-category></app-manage-category>
     </div>
 
   </div>
