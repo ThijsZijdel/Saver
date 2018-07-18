@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ExpenseService} from "../service_expense/expense.service";
 import {Expense} from "../../../models/Expense";
-import {CategoryService} from "../../../data/service/service_category/category.service";
+import {CategoryService} from "../../../data/categories/service_category/category.service";
 import {Category} from "../../../models/Category";
 
 import {catchOffline, Network} from '@ngx-pwa/offline';
@@ -225,17 +225,41 @@ export class ExpensesComponent implements OnInit {
     return sum;
   }
 
+  /**
+   * Hide all the tooltips
+   */
   toggleTooltips(){
     $('.tooltipPerc').toggleClass("hidden");
   }
 
 
-  openNewAddView() {
-    this.addViewService.setExpense(new Expense(null, null, null, null, null, null,null,null,null,null,null,0))
+
+
+
+  manageExpense(expense: Expense) {
+    //Set add/ edit vars
+    this.addViewService.isEdit(expense !== null);
+
+    //manage new Expense
+    if (expense === null) {
+      expense = new Expense(null, null, null, null, null, null, null, null, null, null, null, 0);
+    }
+
+    //set the expense in the service
+    this.addViewService.setExpense(expense);
   }
 
-  openNewManageView(item: Expense) {
-    this.addViewService.setExpense(item);
+  manageCategory(category: Category) {
+    //Set add/ edit vars
+    this.addViewService.isEdit(category !== null);
+
+    //manage new Expense
+    if (category === null) {
+      category = new Category( null, null, null, null, null, null);
+    }
+
+    //set the expense in the service
+    this.addViewService.setCategory(category);
   }
 }
 

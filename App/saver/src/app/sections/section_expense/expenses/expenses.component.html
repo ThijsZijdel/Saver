@@ -91,7 +91,8 @@
 
 
                   <ul class="expenses-seperate hiddenNow">
-                      <li class="forloop" *ngFor="let expense of getExpensesOf(category)" [contextMenu]="expenseMenu" [contextMenuSubject]="expense">
+                      <li class="forloop clickable" *ngFor="let expense of getExpensesOf(category)"
+                          [contextMenu]="expenseMenu" [contextMenuSubject]="expense">
                         <span>{{expense.name}} - {{expense.amount}}</span> <br>
                         <span class="info">in Shopping Mall on {{formatDate(expense.date)}}</span>
                       </li>
@@ -128,7 +129,7 @@
 
 
   <ng-template let-item contextMenuItem
-               (execute)="showMessage('Hi, ' + $event.item.name)">
+               (execute)="manageCategory($event.item)">
     <fa name="{{item.icon}}"></fa>
     <span>
       Edit Category
@@ -137,13 +138,13 @@
 
 
   <ng-template contextMenuItem let-item
-               (execute)="showMessage($event.item.name + ' said: ' + $event.item.otherProperty)">
+               (execute)="manageCategory(null)">
     <fa name="edit"></fa>
-    Categories
+    Add Category
   </ng-template>
 
   <ng-template contextMenuItem let-item
-               (execute)="openNewAddView()">
+               (execute)="manageExpense(null)">
     <fa name="plus-circle"></fa>
     Add Expense
   </ng-template>
@@ -180,7 +181,7 @@
 
 
 
-  <ng-template let-item contextMenuItem (execute)="openNewManageView($event.item)">
+  <ng-template let-item contextMenuItem (execute)="manageExpense($event.item)">
     <span>
       Edit Expense
     </span>
@@ -206,7 +207,7 @@
   </context-menu>
 
   <ng-template contextMenuItem divider="true"></ng-template>
-  <ng-template contextMenuItem let-item (execute)="showMessage($event.item.name + ' said: ' + $event.item.otherProperty)">
+  <ng-template contextMenuItem let-item (execute)="manageExpense(null)">
     Add Expense
   </ng-template>
 
