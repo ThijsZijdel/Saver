@@ -63,10 +63,7 @@
                         &euro;{{getSumAmounts(getExpensesOf(category))}}
                       </span>
                       <span class="tooltipPerc">
-                      {{ getAmountExpensesSub(category.id) }} expenses <br>
-                        <div>
-                          <button class="btn btn-sm">Add Expense</button>
-                        </div>
+                      {{ getAmountExpensesSub(category.id) }} expenses
 
                       </span>
                     </h2>
@@ -127,30 +124,36 @@
     <button>Toggle tooltips</button>
   </ng-template>
 
-  <ng-template contextMenuItem (execute)="showMessage('Hi, ' + $event.item.name)">
-    Say hi!
+
+
+  <ng-template let-item contextMenuItem (execute)="showMessage('Hi, ' + $event.item.name)">
+    <span>
+      Edit Category
+    </span>
   </ng-template>
+
+
 
   <ng-template contextMenuItem divider="true"></ng-template>
 
   <ng-template contextMenuItem [subMenu]="saySubMenu">
-    Say...
+    Share
   </ng-template>
   <context-menu #saySubMenu>
     <ng-template contextMenuItem (execute)="showMessage('Hi, ' + $event.item.name)">
-      ...hi!
+      Reminders
     </ng-template>
     <ng-template contextMenuItem (execute)="showMessage('Hola, ' + $event.item.name)">
-      ...hola!
+      Agenda
     </ng-template>
     <ng-template contextMenuItem (execute)="showMessage('Salut, ' + $event.item.name)">
-      ...salut!
+      Mail
     </ng-template>
   </context-menu>
 
   <ng-template contextMenuItem divider="true"></ng-template>
   <ng-template contextMenuItem let-item (execute)="showMessage($event.item.name + ' said: ' + $event.item.otherProperty)">
-    Bye, {{item?.name}}
+    Add Expense
   </ng-template>
   <ng-template contextMenuItem passive="true">
     Input something: <input type="text">
