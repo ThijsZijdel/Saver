@@ -6,15 +6,22 @@
 }
 
 h2.subLabel {
-  margin-bottom: -5px;
+
+  margin-bottom: -30px;
+  padding-bottom: 25px;
 }
 
+.mainCategoryLbl {
+  margin-bottom: -25px;
+  padding-bottom: 25px;
+}
 
 
 /* Loop trough main ... */
 div.main-category-box {
 
 }
+
 
 div.main-category-box section.category {
 

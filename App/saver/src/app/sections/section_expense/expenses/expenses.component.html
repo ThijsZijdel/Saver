@@ -24,17 +24,26 @@
         </h3>
 
         <span class="amount-box">&euro;
-        {{  getSumAmounts(getExpensesOf(categoryMain.id))  }}
+        {{  getSumAmounts(getAllExpensesOfMain(categoryMain))  }}
         </span>
 
         <hr>
 
 
+
+
         <ul class="sub-cat  hiddenNow">
+
+
+          <!-- //TODO optional: implement show expenses of main cat.
+          <div *ngFor="let expens of getExpensesOf(categoryMain)">
+              <li>
+                {{expens.name}} - {{expens.amount}}
+              </li>
+          </div>
+          -->
+
           <div class="expense" *ngFor="let category of categories">
-
-
-
 
 
               <li *ngIf="category.subCategoryFk == categoryMain.id" >
@@ -49,10 +58,14 @@
 
                       {{category.name}}
                       <span class="amount">
-                        &euro;{{getSumAmounts(getExpensesOf(category.id))}}
+                        &euro;{{getSumAmounts(getExpensesOf(category))}}
                       </span>
                       <span class="tooltipPerc">
-                      {{ getAmountExpensesSub(category.id) }} expenses
+                      {{ getAmountExpensesSub(category.id) }} expenses <br>
+                        <div>
+                          <button class="btn btn-sm">Add Expense</button>
+                        </div>
+
                       </span>
                     </h2>
 
@@ -79,7 +92,7 @@
 
 
                   <ul class="expenses-seperate hiddenNow">
-                      <li class="forloop" *ngFor="let expense of getExpensesOf(category.id)">
+                      <li class="forloop" *ngFor="let expense of getExpensesOf(category)">
                         <span>{{expense.name}} - {{expense.amount}}</span> <br>
                         <span class="info">in Shopping Mall on {{formatDate(expense.date)}}</span>
                       </li>

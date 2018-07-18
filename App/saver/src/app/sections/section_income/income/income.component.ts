@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, ChartModule } from 'angular-highcharts';
 import {Income} from "../../../models/Income";
 import {IncomeService} from "../service_income/income.service";
-import {SpendingService} from "../../section_spending/service_spending/spending.service";
 import {Spending} from "../../../models/Spending";
 import * as $ from "jquery"
+import {ExpenseService} from "../../section_expense/service_expense/expense.service";
+import {Expense} from "../../../models/Expense";
 
 @Component({
   selector: 'app-income',
@@ -23,7 +24,7 @@ export class IncomeComponent implements OnInit {
   incomes: Income[] = [];
   incomeData: number[] = [];
 
-  spendings: Spending[] = [];
+  expenses: Expense[] = [];
   spendingData: number[] = [];
 
   savedData: number[] = [];
@@ -31,7 +32,7 @@ export class IncomeComponent implements OnInit {
   monthly: String[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
   constructor(private serviceIncome: IncomeService,
-              private serviceSpending: SpendingService) { }
+              private serviceExpense: ExpenseService) { }
 
 
 
@@ -64,13 +65,13 @@ export class IncomeComponent implements OnInit {
   }
   private getSpendings(): number[] {
     let spendingDataC: number[] = [];
-    this.spendings = [];
+    this.expenses = [];
 
-    this.serviceSpending.getSpendings().subscribe(spendings => {
+    this.serviceExpense.getExpensesInterval("monthly").subscribe(expenses => {
 
-      for (let spending of spendings) {
-        this.spendings.push(spending);
-        spendingDataC.push(-Math.abs(spending.amount));
+      for (let expense of expenses) {
+        this.expenses.push(expense);
+        spendingDataC.push(-Math.abs(expense.amount));
 
       }
     });

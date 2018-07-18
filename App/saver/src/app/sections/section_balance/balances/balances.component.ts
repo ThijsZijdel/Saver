@@ -188,8 +188,6 @@ export class BalancesComponent implements OnInit {
 
 
       for (let type of balanceTypes) {
-        console.log(type)
-        console.log(type.id +" | "+type.description+" | "+type.icon)
         this.balanceTypes.push(type);
 
       }

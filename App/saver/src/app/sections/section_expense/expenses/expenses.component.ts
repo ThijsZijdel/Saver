@@ -49,12 +49,25 @@ export class ExpensesComponent implements OnInit {
     return data;
   }
 
-  protected getExpensesOf(categoryId: number):Expense[]{
+  protected getExpensesOf(cat: Category):Expense[]{
     let data: Expense[] = [];
+
     for (let expense of this.expenses) {
-      if(expense.subcategoryFk == categoryId && expense.subcategoryFk != 0){
+      if(expense.subcategoryFk == cat.id && expense.subcategoryFk != 0){
         data.push(expense);
       }
+    }
+    return data;
+  }
+  protected getAllExpensesOfMain(cat: Category):Expense[]{
+    let data: Expense[] = [];
+
+    for (let expense of this.expenses) {
+      if (expense.subcategoryFk === cat.id  ||
+        expense.subcategoryFk === cat.subCategoryFk) {
+        data.push(expense);
+      }
+
     }
     return data;
   }
