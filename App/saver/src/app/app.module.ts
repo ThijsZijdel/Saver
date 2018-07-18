@@ -38,11 +38,11 @@ import {BalanceService} from "./sections/section_balance/service_balance/balance
 import {ExpenseService} from "./sections/section_expense/service_expense/expense.service";
 
 import {MessageComponent} from "./message/message.component";
-import {MessageService} from "./data/service_message/message.service";
+import {MessageService} from "./message/service_message/message.service";
 
 
 
-import {CategoryService} from "./data/service/service_category/category.service";
+import {CategoryService} from "./data/categories/service_category/category.service";
 import { AuthService } from "./data/service/service_auth/auth.service";
 
 import {StorageServiceModule} from "angular-webstorage-service";
@@ -68,6 +68,7 @@ import {ContextMenuComponent, ContextMenuModule} from "ngx-contextmenu";
 import {AddViewsService} from "./UI/addViews/service_addViews/addViews.service";
 import {AddViewsComponent} from "./UI/addViews/addViews.component";
 import {FormsModule} from "@angular/forms";
+import {ManageCategoryComponent} from "./data/categories/manage-category/manage-category.component";
 
 
 
@@ -88,6 +89,7 @@ import {FormsModule} from "@angular/forms";
 
     AddBillComponent,
     ManageExpenseComponent,
+    ManageCategoryComponent,
     AddBalanceComponent,
     AddIncomeComponent,
     AddBudgetComponent,

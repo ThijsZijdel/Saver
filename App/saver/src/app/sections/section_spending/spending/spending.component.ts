@@ -3,7 +3,7 @@ import {Chart} from "angular-highcharts";
 import {SpendingService} from "../service_spending/spending.service";
 import {Spending} from "../../../models/Spending";
 import {BehaviorSubject} from "rxjs/index";
-import {CategoryService} from "../../../data/service/service_category/category.service";
+import {CategoryService} from "../../../data/categories/service_category/category.service";
 import {BudgetService} from "../../section_budget/service_budget/budget.service";
 import {Category} from "../../../models/Category";
 import {Expense} from "../../../models/Expense";

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import {Observable, of} from 'rxjs/index';
 import {Budget} from "../../../models/Budget";
-import {MessageService} from "../../../data/service_message/message.service";
+import {MessageService} from "../../../message/service_message/message.service";
 
 
 
