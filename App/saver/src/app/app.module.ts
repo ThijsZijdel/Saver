@@ -64,6 +64,8 @@ import {CalendarComponent} from "./sections/section_bills/calendar/calendar.comp
 import {SettingsService} from "./views/personal/settings.service";
 import {BalanceTypeService} from "./sections/section_balance/service_balanceType/balanceType.service";
 import {ContextMenuComponent, ContextMenuModule} from "ngx-contextmenu";
+import {AddViewsService} from "./UI/addViews/service_addViews/addViews.service";
+import {AddViewsComponent} from "./UI/addViews/addViews.component";
 
 
 
@@ -89,7 +91,9 @@ import {ContextMenuComponent, ContextMenuModule} from "ngx-contextmenu";
     MessageComponent,
     BusinessComponent,
 
-    CalendarComponent
+    CalendarComponent,
+
+    AddViewsComponent
   ],
   imports: [
     BrowserModule,
@@ -123,7 +127,9 @@ import {ContextMenuComponent, ContextMenuModule} from "ngx-contextmenu";
     SettingsService,
     AuthService,
 
-    BalanceTypeService
+    BalanceTypeService,
+
+    AddViewsService
   ],
   bootstrap: [AppComponent]
 })
