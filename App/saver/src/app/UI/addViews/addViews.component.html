@@ -1,4 +1,14 @@
 
+<div *ngIf="addViews.showAddViewOverlay">
+  <div class="overlay" (click)="addViews.showAddViewOverlay = false"></div>
+
+  <div class="add-component">
+
+    <div *ngIf="addViews.expense != null">
+      <app-manage-expense></app-manage-expense>
+    </div>
+
+  </div>
+</div>
 
 
-<app-add-income></app-add-income>

@@ -17,6 +17,7 @@ export class AddViewsComponent implements OnInit {
 
 
   ngOnInit() {
+
   }
 
 }
