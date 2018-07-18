@@ -56,6 +56,7 @@ router.post('/categories' ,  (req, res) => {
         ],
         (err, results) => {
 
+            res.statusCode = 201;
             res.json({"Added cat with id:":req.body.idCategory});
         }
     );
@@ -80,6 +81,7 @@ router.delete('/categories/delete/:id' ,  (req, res) => {
         ],
         (err, results) => {
 
+            res.statusCode = 204;
             res.json({"Deleted cat with id:":req.params.id});
         }
     );
