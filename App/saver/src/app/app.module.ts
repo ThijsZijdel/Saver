@@ -22,8 +22,9 @@ import { BalancesComponent } from './sections/section_balance/balances/balances.
 import { IncomeComponent } from './sections/section_income/income/income.component';
 import { PersonalComponent } from './views/personal/personal.component';
 import { NavigationComponent } from './UI/navigation/navigation.component';
+
 import { AddBillComponent } from './sections/section_bills/add-bill/add-bill.component';
-import { AddExpenseComponent } from './sections/section_expense/add-expense/add-expense.component';
+import { ManageExpenseComponent } from './sections/section_expense/manage-expense/manage-expense.component';
 import { AddBalanceComponent } from './sections/section_balance/add-balance/add-balance.component';
 import { AddIncomeComponent } from './sections/section_income/add-income/add-income.component';
 import { AddBudgetComponent } from './sections/section_budget/add-budget/add-budget.component';
@@ -66,6 +67,7 @@ import {BalanceTypeService} from "./sections/section_balance/service_balanceType
 import {ContextMenuComponent, ContextMenuModule} from "ngx-contextmenu";
 import {AddViewsService} from "./UI/addViews/service_addViews/addViews.service";
 import {AddViewsComponent} from "./UI/addViews/addViews.component";
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -83,11 +85,13 @@ import {AddViewsComponent} from "./UI/addViews/addViews.component";
     IncomeComponent,
     PersonalComponent,
     NavigationComponent,
+
     AddBillComponent,
-    AddExpenseComponent,
+    ManageExpenseComponent,
     AddBalanceComponent,
     AddIncomeComponent,
     AddBudgetComponent,
+
     MessageComponent,
     BusinessComponent,
 
@@ -112,7 +116,9 @@ import {AddViewsComponent} from "./UI/addViews/addViews.component";
 
     AngularFontAwesomeModule,
 
-    ContextMenuModule.forRoot()
+    ContextMenuModule.forRoot(),
+
+    FormsModule
   ],
   providers: [
     IncomeService,
