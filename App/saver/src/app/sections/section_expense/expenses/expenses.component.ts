@@ -8,6 +8,7 @@ import {catchOffline, Network} from '@ngx-pwa/offline';
 
 import * as $ from "jquery"
 import {ContextMenuComponent} from "ngx-contextmenu";
+import {AddViewsService} from "../../../UI/addViews/service_addViews/addViews.service";
 
 @Component({
   selector: 'app-expenses',
@@ -18,7 +19,8 @@ export class ExpensesComponent implements OnInit {
 
   constructor(private serviceExpenses: ExpenseService,
               private serviceCategories: CategoryService,
-              protected network: Network) { }
+              protected network: Network,
+              protected addViewService: AddViewsService) { }
 
   expenses: Expense[] = [];
   categories: Category[] = [];
@@ -228,5 +230,12 @@ export class ExpensesComponent implements OnInit {
   }
 
 
+  openNewAddView() {
+    this.addViewService.setExpense(new Expense(null, null, null, null, null, null,null,null,null,null,null,0))
+  }
+
+  openNewManageView(item: Expense) {
+    this.addViewService.setExpense(item);
+  }
 }
 

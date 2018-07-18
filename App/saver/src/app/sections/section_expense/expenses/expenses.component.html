@@ -143,7 +143,7 @@
   </ng-template>
 
   <ng-template contextMenuItem let-item
-               (execute)="showMessage($event.item.name + ' said: ' + $event.item.otherProperty)">
+               (execute)="openNewAddView()">
     <fa name="plus-circle"></fa>
     Add Expense
   </ng-template>
@@ -180,7 +180,7 @@
 
 
 
-  <ng-template let-item contextMenuItem (execute)="showMessage('Hi, ' + $event.item.name)">
+  <ng-template let-item contextMenuItem (execute)="openNewManageView($event.item)">
     <span>
       Edit Expense
     </span>
