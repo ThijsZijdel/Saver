@@ -108,7 +108,36 @@ router.get('/expenses/get/:id' ,  (req, res) => {
     );
 
 });
+/**
+ * HTTP Get route for expense
+ * @param :id of expense
+ * @res json expense object
+ */
+router.get('/expenses/monthly' ,  (req, res) => {
+    async.parallel(
+        [
+            (callback) => {
+                connection.connectDatabase.query(
+                    'SELECT SUM(amount) as amount, monthFk ' +
+                    'FROM Expense ' +
+                    'WHERE date BETWEEN "2017/07/01" and "2018/07/01" ' +
+                    'GROUP BY  monthFk ' +
+                    'ORDER BY monthFk;',
+                    (errors, results, fields) => {
+                        callback(errors, results);
+                    })
+            }
+        ],
+        (err, results) => {
+            //Get the data from the initial call
+            let data = results[0];
 
+            res.statusCode = 200;
+            res.json(data);
+        }
+    );
+
+});
 
 
 

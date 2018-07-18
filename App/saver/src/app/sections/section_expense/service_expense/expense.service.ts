@@ -36,6 +36,19 @@ export class ExpenseService {
   }
 
   /**
+   * get expenses from the server
+   * @author Thijs Zijdel
+   */
+  getExpensesInterval(interval: string): Observable<Expense[]> {
+    const url = `${this.expensUrl}/`+interval; // ?action=getAll;
+    return this.http.get<Expense[]>(url)
+      .pipe(
+        tap(expenses => this.log(`fetched `+interval+` expenses`)),
+        catchError(this.handleError('getExpenses with interval of '+interval, []))
+      );
+  }
+
+  /**
    * get expense by id.
    * @author Thijs Zijdel
    */
