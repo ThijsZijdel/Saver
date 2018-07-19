@@ -31,10 +31,7 @@ export class BudgetComponent implements OnInit {
 
   ngOnInit() {
 
-    let today = new Date();
 
-    this.reloadService.month = today.getMonth();
-    this.reloadService.year = today.getFullYear();
 
     this.budgets = this.getBudgets();
 

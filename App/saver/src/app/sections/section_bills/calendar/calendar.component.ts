@@ -11,10 +11,11 @@ export class CalendarComponent implements OnInit {
 
   constructor() { }
 
+  today = new Date();
   month: string;
-  year: number = new Date().getFullYear();
-  currentMonth: number = new Date().getMonth() ;
-  displayedMonth: number = new Date().getMonth() ;
+  year: number = this.today.getFullYear();
+  currentMonth: number = this.today.getMonth() ;
+  displayedMonth: number = this.today.getMonth() ;
 
   ngOnInit() {
     this.setUpCalendar(this.currentMonth);
