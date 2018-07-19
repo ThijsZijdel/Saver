@@ -45,6 +45,35 @@ router.get('/expenses' ,  (req, res) => {
 
 });
 
+router.get('/expenses/get/:month/:year' ,  (req, res) => {
+    async.parallel(
+        [
+            (callback) => {
+                connection.connectDatabase.query(
+                    'SELECT E.* ' +
+                    'FROM Expense AS E ' +
+                    'INNER JOIN MonthTab AS M on E.monthFk = M.id '+
+                    'WHERE E.monthFk = ? AND E.year = ? ;',
+                    [req.params.month, req.params.year],
+                    (errors, results, fields) => {
+                        callback(errors, results);
+                    })
+            }
+        ],
+        (err, results) => {
+
+
+            //Get the data from the initial call
+            let data = results[0];
+
+
+            res.statusCode = 200;
+            res.json(data);
+        }
+    );
+
+});
+
 /**
  * HTTP Post route for expenses
  */
