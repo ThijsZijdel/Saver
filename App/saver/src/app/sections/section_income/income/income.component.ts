@@ -163,7 +163,7 @@ export class IncomeComponent implements OnInit {
     this.chartIncome = chartIncomed;
 
 
-    chartIncomed.ref$.subscribe(console.log);
+    // chartIncomed.ref$.subscribe(console.log);
   }
 
 
@@ -188,6 +188,18 @@ export class IncomeComponent implements OnInit {
     setTimeout(()=>{
       this.init();
     }, 500);
+  }
+
+
+
+  toggleTooltips(){
+    $('.tooltipPerc').toggleClass("hidden");
+
+    $('.highcharts-tooltip').toggleClass("hidden");
+
+
+
+
   }
 }
 

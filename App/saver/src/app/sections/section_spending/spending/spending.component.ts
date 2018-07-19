@@ -348,7 +348,7 @@ export class SpendingComponent implements OnInit {
 
       this.chart = chart;
 
-      chart.ref$.subscribe(console.log);
+      // chart.ref$.subscribe(console.log);
   }
 
 }

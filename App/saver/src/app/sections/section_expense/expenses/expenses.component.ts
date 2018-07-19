@@ -240,6 +240,8 @@ export class ExpensesComponent implements OnInit {
    */
   toggleTooltips(){
     $('.tooltipPerc').toggleClass("hidden");
+
+    $('.highcharts-tooltip').toggleClass("hidden");
   }
 
 
