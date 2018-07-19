@@ -70,6 +70,7 @@ import {AddViewsComponent} from "./UI/addViews/addViews.component";
 import {FormsModule} from "@angular/forms";
 import {ManageCategoryComponent} from "./data/categories/manage-category/manage-category.component";
 import {ReloadService} from "./sections/section_budget/service_reload/reload.service";
+import {BulkAddViewComponent} from "./UI/bulkAddView/bulkAddView.component";
 
 
 
@@ -100,7 +101,8 @@ import {ReloadService} from "./sections/section_budget/service_reload/reload.ser
 
     CalendarComponent,
 
-    AddViewsComponent
+    AddViewsComponent,
+    BulkAddViewComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,63 @@
+<div class="container">
+  <h1>Csv</h1>
+
+
+  <div class="Block">
+    <label id="lbl">Code </label>
+    <input type='file' (change)="fileChanged($event)">
+    <button (click)="uploadDocument(file)">upload</button>
+    <button (click)="parse()">parse</button>
+  </div>
+
+
+  <form (ngSubmit)="submitForm()" #expenseForm="ngForm">
+    <h3>Expense</h3>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name"
+             [(ngModel)]="expense.name" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="amount">Amount</label>
+      <input type="text" class="form-control" id="amount"
+             [(ngModel)]="expense.amount" name="amount" required>
+    </div>
+
+    <div class="form-group">
+      <label for="power">Hero Power</label>
+      <select class="form-control" id="power" required>
+        <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
+      </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-success" [disabled]="!expenseForm.form.valid">Submit</button>
+  </form>
+
+  <form (ngSubmit)="submitForm()" #incomesForm="ngForm">
+    <h3>Expense</h3>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="nameIncome"
+             [(ngModel)]="expense.name" name="nameIncome" required>
+    </div>
+
+    <div class="form-group">
+      <label for="amount">Amount</label>
+      <input type="text" class="form-control" id="amountIncome"
+             [(ngModel)]="expense.amount" name="amountIncome" required>
+    </div>
+
+    <div class="form-group">
+      <label for="powerIncome">Hero Power</label>
+      <select class="form-control" id="powerIncome" required>
+        <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
+      </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-success" [disabled]="!incomesForm.form.valid">Submit</button>
+  </form>
+</div>
+
