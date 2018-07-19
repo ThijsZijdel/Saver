@@ -21,8 +21,8 @@ export class ReloadService {
    * @param {number} interval
    */
   changeMonth(interval: number) {
-    //If month === 11 (Dec) set year +1 and months = 0 (Jan)
-    if (this.month === 11){
+    //If month === 11 (Dec) set year +1 and months = 0 (Jan)  +
+    if (this.month === 11 && interval > 0){
       this.month = 0;
       interval = 0;
       this.changeYear(1);
@@ -33,7 +33,7 @@ export class ReloadService {
 
     }
 
-    //If month === 0 (Jan) set year -1 and months = 12 (Dec)
+    //If month === 0 (Jan) set year -1 and months = 12 (Dec)  -
     if (interval < 0 && (this.month === 0 ) ){
       this.month = 12;
       this.changeYear(-1);
