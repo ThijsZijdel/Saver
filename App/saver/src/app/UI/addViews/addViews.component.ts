@@ -10,7 +10,7 @@ export class AddViewsComponent implements OnInit {
 
   /**
    * Constructor with a connection to the addViews Service
-   * @param {MessageService} addViews, application messages
+   * @param {ReloadService} addViews, application messages
    * @author: Thijs Zijdel
    */
   constructor(public addViews: AddViewsService) {}

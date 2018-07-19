@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {Budget} from "../../../models/Budget";
 import {BudgetService} from "../service_budget/budget.service";
 import * as $ from "jquery"
+import {ReloadService} from "../service_reload/reload.service";
 
 @Component({
   selector: 'app-budget',
@@ -18,9 +19,20 @@ export class BudgetComponent implements OnInit {
 
   budgets: Budget[] = [];
 
-  constructor(private serviceBudgets: BudgetService) { }
+  constructor(private serviceBudgets: BudgetService,
+              protected reloadService: ReloadService) { }
+
+
+  changeMonth(interval: number) {
+    // this.reloadService.month = this.reloadService.month + 1;
+   this.reloadService.changeMonth(interval);
+
+  }
 
   ngOnInit() {
+
+
+
     this.budgets = this.getBudgets();
 
 

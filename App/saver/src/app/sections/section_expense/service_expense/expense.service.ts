@@ -39,12 +39,12 @@ export class ExpenseService {
    * get expenses from the server
    * @author Thijs Zijdel
    */
-  getExpensesInterval(interval: string): Observable<Expense[]> {
-    const url = `${this.expensUrl}/`+interval; // ?action=getAll;
+  getExpensesFiltered(frequency: string, months: number): Observable<Expense[]> {
+    const url = `${this.expensUrl}/${frequency}/${months}` // ?action=getAll;
     return this.http.get<Expense[]>(url)
       .pipe(
-        tap(expenses => this.log(`fetched `+interval+` expenses`)),
-        catchError(this.handleError('getExpenses with interval of '+interval, []))
+        tap(expenses => this.log(`fetched `+frequency+` - `+months+`months: expenses`)),
+        catchError(this.handleError('getExpenses with frequency of '+frequency+' - '+months, []))
       );
   }
 
@@ -61,8 +61,14 @@ export class ExpenseService {
     );
   }
 
+  /**
+   * get expenses of certain month
+   * @param {number} month
+   * @param {number} year
+   * @returns {Observable<Expense[]>}
+   */
   getExpensesOf(month: number, year: number): Observable<Expense[]> {
-    const url = `${this.expensUrl}?action=getExpenses&month=${month}&year=${year}`;
+    const url = `${this.expensUrl}/get/${month}/${year}`;
 
     return this.http.get<Expense[]>(url).pipe(
       tap(_ => this.log(`fetched Expenses month=${month} year=${year}`)),

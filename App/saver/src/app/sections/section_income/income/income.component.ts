@@ -14,7 +14,7 @@ import {Expense} from "../../../models/Expense";
 })
 export class IncomeComponent implements OnInit {
 
-  avgIncome: number = 5650.00;
+  avgIncome: number = 0.00;
   currentMonth: string = "JUL 2018";
   currentEarned: number = 66000;
   currentSpent: number = 53730;
@@ -31,14 +31,18 @@ export class IncomeComponent implements OnInit {
 
   monthly: String[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
+
+  showSavedSerie: boolean = false;
+
+
   constructor(private serviceIncome: IncomeService,
               private serviceExpense: ExpenseService) { }
 
 
 
   ngOnInit() {
-    this.incomeData = this.getIncomes();
-    this.spendingData = this.getSpendings();
+    this.getIncomes("monthly", 12);
+    this.getSpendings("monthly", 12);
     this.calculateSaved();
     this.calculateAvg();
 
@@ -49,34 +53,33 @@ export class IncomeComponent implements OnInit {
 
   }
 
-  private getIncomes(): number[] {
+  private getIncomes(frequency: string, months: number):void {
     this.incomes = [];
-    let incomeDataC: number[] = [];
+    this.incomeData = [];
 
-    this.serviceIncome.getIncomes().subscribe(incomes => {
+    this.serviceIncome.getIncomesFiltered(frequency, months).subscribe(incomes => {
       // loop trough all the incomes
       for (let income of incomes) {
         this.incomes.push(income);
 
-        incomeDataC.push(income.amount);
+        this.incomeData.push(income.amount);
       }
     });
-    return incomeDataC;
   }
-  private getSpendings(): number[] {
-    let spendingDataC: number[] = [];
+
+  private getSpendings(frequency: string, months: number): void {
+    this.spendingData = [];
     this.expenses = [];
 
-    this.serviceExpense.getExpensesInterval("monthly").subscribe(expenses => {
+    this.serviceExpense.getExpensesFiltered(frequency, months).subscribe(expenses => {
 
       for (let expense of expenses) {
         this.expenses.push(expense);
-        spendingDataC.push(-Math.abs(expense.amount));
+        this.spendingData.push(-Math.abs(expense.amount));
 
       }
     });
 
-    return spendingDataC;
   }
 
   private calculateSaved() {
@@ -135,7 +138,7 @@ export class IncomeComponent implements OnInit {
       }, {
         name: 'Saved',
         data: this.savedData,
-        visible: false
+        visible: this.showSavedSerie
       }, {
         name: 'Expenses',
         data: this.spendingData,
@@ -161,8 +164,16 @@ export class IncomeComponent implements OnInit {
   }
 
 
-  selectionChange(value: string, value2: string) {
-    console.log(value+"   --  "+value2)
+  selectionChange(frequency: string, months: number) {
+    this.getSpendings(frequency, months);
+    this.getIncomes(frequency, months);
+
+    this.calculateAvg();
+    this.calculateSaved();
+
+    setTimeout(()=>{
+      this.init();
+    }, 500);
   }
 }
 
