@@ -69,6 +69,7 @@ import {AddViewsService} from "./UI/addViews/service_addViews/addViews.service";
 import {AddViewsComponent} from "./UI/addViews/addViews.component";
 import {FormsModule} from "@angular/forms";
 import {ManageCategoryComponent} from "./data/categories/manage-category/manage-category.component";
+import {ReloadService} from "./sections/section_budget/service_reload/reload.service";
 
 
 
@@ -137,7 +138,9 @@ import {ManageCategoryComponent} from "./data/categories/manage-category/manage-
 
     BalanceTypeService,
 
-    AddViewsService
+    AddViewsService,
+
+    ReloadService
   ],
   bootstrap: [AppComponent]
 })

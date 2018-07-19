@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, HostBinding, OnInit, ViewChild} from '@angular/core';
 import {ExpenseService} from "../service_expense/expense.service";
 import {Expense} from "../../../models/Expense";
 import {CategoryService} from "../../../data/categories/service_category/category.service";
@@ -9,6 +9,7 @@ import {catchOffline, Network} from '@ngx-pwa/offline';
 import * as $ from "jquery"
 import {ContextMenuComponent} from "ngx-contextmenu";
 import {AddViewsService} from "../../../UI/addViews/service_addViews/addViews.service";
+import {ReloadService} from "../../section_budget/service_reload/reload.service";
 
 @Component({
   selector: 'app-expenses',
@@ -20,7 +21,8 @@ export class ExpensesComponent implements OnInit {
   constructor(private serviceExpenses: ExpenseService,
               private serviceCategories: CategoryService,
               protected network: Network,
-              protected addViewService: AddViewsService) { }
+              protected addViewService: AddViewsService,
+              protected reloadService: ReloadService) { }
 
   expenses: Expense[] = [];
   categories: Category[] = [];
@@ -46,29 +48,37 @@ export class ExpensesComponent implements OnInit {
 
   ngOnInit() {
     this.categories = this.getCategories();
-    this.expenses = this.getExpenses();
+    this.getExpenses();
 
-    console.log(this.network.online+" network")
+    console.log(this.network.online+" network");
+
+    this.reloadService.change.subscribe(month => {
+        this.refresh();
+    });
+    this.reloadService.change.subscribe(year => {
+      this.refresh();
+    });
 
 
   }
 
-  private getExpenses(): Expense[] {
-    let data: Expense[] = [];
+  private getExpenses()  {
+    this.expenses = [];
 
 
     // TODO  when importing all the expenses: sort them in categories and sub cats.
     // TODO  --> show only the sum of that category and subcategory
     // TODO  --> --> when click: show last 5 expenses in that subc.
-    this.serviceExpenses.getExpenses().pipe(catchOffline()).subscribe(expenses => {
+
+
+    this.serviceExpenses.getExpensesOf(this.reloadService.month, this.reloadService.year).pipe(catchOffline()).subscribe(expenses => {
       // loop trough all the expenes
       for (let expense of expenses) {
-        data.push(expense);
+        this.expenses.push(expense);
 
-        //incomeDataC.push(income.amount);
       }
     });
-    return data;
+
   }
 
   protected getExpensesOf(cat: Category):Expense[]{
@@ -260,6 +270,10 @@ export class ExpensesComponent implements OnInit {
 
     //set the expense in the service
     this.addViewService.setCategory(category);
+  }
+
+  private refresh() {
+    this.getExpenses();
   }
 }
 
