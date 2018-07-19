@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, of} from 'rxjs/index';
 import {Income} from "../../../models/Income";
 import {MessageService} from "../../../message/service_message/message.service";
+import {Expense} from "../../../models/Expense";
 
 
 
@@ -145,5 +146,13 @@ export class IncomeService {
     );
   }
 
+  getIncomesFiltered(frequency: string, months: number): Observable<Income[]> {
+    const url = `${this.incomeUrl}/`+frequency+`/`+months; // ?action=getAll;
+    return this.http.get<Income[]>(url)
+      .pipe(
+        tap(expenses => this.log(`fetched `+frequency+` - `+months+`months: incomes`)),
+        catchError(this.handleError('getIncomes with frequency of '+frequency+' - '+months, []))
+      );
+  }
 }
 
