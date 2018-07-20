@@ -3,9 +3,11 @@
   height: 65px;
   background: #0076DE;
   padding: 5px;
-  margin-bottom: 5px;
 }
-
+.sub-navigation {
+  background: #e6e6e6;
+  height: 30px;
+}
 .navigation .left,
 .navigation .center,
 .navigation .right{
@@ -27,4 +29,10 @@
 .navigation a {
   color: #fff;
   margin: 15px 20px;
+}
+.sub-navigation a {
+  color: #222222;
+}
+.cont {
+  margin-bottom: 5px;
 }

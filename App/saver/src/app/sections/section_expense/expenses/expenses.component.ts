@@ -27,11 +27,6 @@ export class ExpensesComponent implements OnInit {
   expenses: Expense[] = [];
   categories: Category[] = [];
 
-  public items = [
-    { name: 'John', otherProperty: 'Foo' },
-    { name: 'Joe', otherProperty: 'Bar' }
-  ];
-
   // @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
   @ViewChild(ContextMenuComponent) public categoryMenu: ContextMenuComponent;
@@ -254,6 +249,7 @@ export class ExpensesComponent implements OnInit {
 
     //manage new Expense
     if (expense === null) {
+      //todo get category if selected
       expense = new Expense(null, null, null, null, null, null, null, null, null, null, null, 0);
     }
 

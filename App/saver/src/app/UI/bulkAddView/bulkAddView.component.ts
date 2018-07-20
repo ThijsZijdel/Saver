@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CategoryService} from "../../data/categories/service_category/category.service";
 import {Category} from "../../models/Category";
 import {Expense} from "../../models/Expense";
+import {Income} from "../../models/Income";
 
 @Component({
   selector: 'app-bulkAddView',
@@ -10,13 +11,15 @@ import {Expense} from "../../models/Expense";
 })
 export class BulkAddViewComponent implements OnInit {
 
-   category: Category = null;
+  category: Category = null;
 
   categories: Category[] = null;
 
-  @Input() expense: Expense = new Expense(null,null,null,null,null,null,null,null,null,null,null,null)
+  @Input('expenses') expenses: Expense[] = [];
+  @Input('incomes') incomes: Income[] = [];
 
-  constructor(private serviceCategories: CategoryService) { }
+  constructor(private serviceCategories: CategoryService) {
+  }
 
   ngOnInit() {
     this.getCategories();
@@ -32,7 +35,7 @@ export class BulkAddViewComponent implements OnInit {
       for (let category of categories) {
         this.categories.push(category);
 
-        if(category.subCategoryFk != 0){
+        if (category.subCategoryFk != 0) {
 
         }
       }
@@ -40,9 +43,10 @@ export class BulkAddViewComponent implements OnInit {
 
   }
 
-  file:any;
+  file: any;
 
-  dataCSV: string;
+  data;
+  imports: Import[] = [];
 
   fileChanged($event) {
     this.file = $event.target.files[0];
@@ -53,29 +57,96 @@ export class BulkAddViewComponent implements OnInit {
     fileReader.onload = (e) => {
 
       console.log(fileReader.result);
-      this.dataCSV = fileReader.result;
+      this.data = fileReader.result;
     }
     fileReader.readAsText(this.file);
   }
 
-  fields: number = 7;
-  parse(){
-     let csvArray = this.dataCSV.split(';');
-     let count: number = 0;
-     let expenses: Expense[] = [];
+  // Datum; 0
+  // Naam / Omschrijving; 1
+  // Rekening; 2
+  // Tegenrekening; 3
+  // Code; 4
+  // Af Bij; 5
+  // Bedrag (EUR); 6
+  // MutatieSoort; 7
+  // Mededelingen 8
 
-     for(let atr of csvArray){
-       let strings: string[] = [];
-        if (count !== this.fields){
-          strings.push(atr);
-        } else {
-          expenses.push(new Expense(null,strings[1],null,null, null, null,null,null,null,null,null,null))
-        }
-     }
+  fields: number = 8;
+  monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  parse() {
+    this.data = JSON.parse(this.data);
+
+    for (let tst of this.data) {
+      if (this.isExpense(tst)) {
+        this.expenses.push(new Expense(null, tst.NaamOmschrijving.substr(0,6), tst.Bedrag, null, tst.NaamOmschrijving, this.getDate(tst), this.monthnames[this.getDate(tst).getMonth()-1],  this.getDate(tst).getMonth(), null, null, null, 1)
+        )
+      } else {
+        this.incomes.push(new Income(null, tst.NaamOmschrijving.substr(0,6), tst.Bedrag, null, tst.NaamOmschrijving, this.getDate(tst),  this.monthnames[this.getDate(tst).getMonth()-1],  this.getDate(tst).getMonth(), null, null,  1)
+        )
+      }
+    }
+
   }
 
 
-  submitForm(){
+  submitForm() {
+
+  }
+
+
+  isExpense(transaction: Import) {
+    return transaction.AfBij === "Af";
+  }
+
+  private getDate(tst: Import): Date {
+    let date = tst.Datum.toString();
+    console.log("date:"+new Date(
+      parseFloat(date.substr(0, 4)), //year
+      parseFloat(date.substr(4, 2)), //month
+      parseFloat(date.substr(6, 2))  //day
+    ))
+    return new Date(
+        parseFloat(date.substr(0, 4)), //year
+        parseFloat(date.substr(4, 2)), //month
+        parseFloat(date.substr(6, 2))  //day
+    )
+  }
+
+}
+export class Import{
+  Datum: number;
+  NaamOmschrijving: string;
+  Rekening: string;
+  Tegenrekening: string;
+  Code: string;
+  AfBij: string;
+  Bedrag;
+  MutatieSoort: string;
+  Mededelingen: string;
+
+
+  constructor(Datum: number,
+    NaamOmschrijving: string,
+    Rekening: string,
+    Tegenrekening: string,
+    Code: string,
+    AfBij: string,
+    Bedrag,
+    MutatieSoort: string,
+    Mededelingen: string
+  ){
+    this.Datum = Datum;
+    this.NaamOmschrijving = NaamOmschrijving;
+    this.Rekening = Rekening;
+    this.Tegenrekening = Tegenrekening;
+    this.Code = Code;
+    this.AfBij = AfBij;
+    this.Bedrag = Bedrag;
+    this.MutatieSoort = MutatieSoort;
+    this.Mededelingen = Mededelingen;
 
   }
 }
+

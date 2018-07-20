@@ -1,5 +1,4 @@
 <div class="container">
-  <h1>Csv</h1>
 
 
   <div class="Block">
@@ -7,10 +6,11 @@
     <input type='file' (change)="fileChanged($event)">
     <button (click)="uploadDocument(file)">upload</button>
     <button (click)="parse()">parse</button>
+
   </div>
 
 
-  <form (ngSubmit)="submitForm()" #expenseForm="ngForm">
+  <form (ngSubmit)="submitForm()" #expenseForm="ngForm" *ngFor="let expense of expenses">
     <h3>Expense</h3>
     <div class="form-group">
       <label for="name">Name</label>
@@ -25,8 +25,8 @@
     </div>
 
     <div class="form-group">
-      <label for="power">Hero Power</label>
-      <select class="form-control" id="power" required>
+      <label for="Category">Category</label>
+      <select class="form-control" id="Category" required>
         <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
       </select>
     </div>
@@ -35,22 +35,22 @@
     <button type="submit" class="btn btn-success" [disabled]="!expenseForm.form.valid">Submit</button>
   </form>
 
-  <form (ngSubmit)="submitForm()" #incomesForm="ngForm">
-    <h3>Expense</h3>
+  <form (ngSubmit)="submitForm()" #incomesForm="ngForm" *ngFor="let income of incomes">
+    <h3>Income</h3>
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control" id="nameIncome"
-             [(ngModel)]="expense.name" name="nameIncome" required>
+             [(ngModel)]="income.name" name="nameIncome" required>
     </div>
 
     <div class="form-group">
       <label for="amount">Amount</label>
       <input type="text" class="form-control" id="amountIncome"
-             [(ngModel)]="expense.amount" name="amountIncome" required>
+             [(ngModel)]="income.amount" name="amountIncome" required>
     </div>
 
     <div class="form-group">
-      <label for="powerIncome">Hero Power</label>
+      <label for="powerIncome">Category</label>
       <select class="form-control" id="powerIncome" required>
         <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
       </select>
@@ -61,3 +61,11 @@
   </form>
 </div>
 
+<div *ngFor="let expense of expenses">
+  <div *ngIf="expense.name != null">
+    {{ expense.amount }}
+  </div>
+
+</div>
+
+<!--<button (click)="showImported()">dl</button>-->
