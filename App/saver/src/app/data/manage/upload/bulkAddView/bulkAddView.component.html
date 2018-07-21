@@ -25,14 +25,47 @@
 
   <div class="Block">
 
-    <input type='file' (change)="fileChanged($event)">
-    <button (click)="uploadDocument(file)" disabled>upload</button>
+    <input type='file' #fileUpload (change)="fileChanged($event); fileUploadDisabled = true" [disabled]="fileUploadDisabled">
+    <!--<button (click)="uploadDocument(file)" disabled>upload</button>-->
     &nbsp;
-    <button (click)="parse()">parse</button>
+    <div class="parsing" *ngIf="file != null">
+      amountOfHeaderFields
+      <input type="text" [value]="amountOfHeaderFields">
+      <button #parser (click)="parse(); parserDisabled = true" [disabled]="parserDisabled">parse</button>
+    </div>
+
+    &nbsp;
+    <button #converter (click)="convert(); converter.disabled = true" [disabled]="converterDisabled"  *ngIf="parsedData != null">convert</button>
+    &nbsp;
+    <button class="btn-alert btn btn-sm"
+            (click)="fileUploadDisabled = false;  parserDisabled = false; converterDisabled = false;
+                      reset();">
+      reset
+    </button>
 
     <span style="float: right;" *ngIf="data !== null">
-      {{data.length}} {{lengthDataType}}
+      <!--{{parsedData.length}}-->
+      {{lengthDataType}}
     </span>
+
+    <div class="container-fluid" *ngIf="parsedData != null">
+      <div class="row">
+        <div class="col-md-6">
+          <h4>Keys Imported</h4>
+          <ul>
+            <li *ngFor="let key of keys">{{key}}</li>
+          </ul>
+        </div>
+
+        <div class="col-md-6">
+          <h4>Keys Transactions</h4>
+          <ul>
+            <li *ngFor="let key of transactionKeys">{{key}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 
@@ -69,6 +102,7 @@
         <br>
 
         {{transaction.expenseJson.Mededelingen}}
+        <!--more info-->
 
         <br>
 
@@ -129,12 +163,6 @@
                  [(ngModel)]="transaction.income.amount" name="amountIncome" required>
         </div>
 
-        <div class="form-group">
-          <label for="powerIncome">Category</label>
-          <select class="form-control" id="powerIncome" required>
-            <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
-          </select>
-        </div>
 
 
         <button type="submit" class="btn btn-success" [disabled]="!incomesForm.form.valid">Submit</button>
@@ -145,6 +173,7 @@
 
   </div>
   <button (click)="displayedTransactions=displayedTransactions+25;" *ngIf="(transactions.length - displayedTransactions) > 25">More transactions</button>
+  <button (click)="displayedTransactions=transactions.length;" *ngIf="(transactions.length - displayedTransactions) > 25">Show all transactions</button>
 
 
 </div>
