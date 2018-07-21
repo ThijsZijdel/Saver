@@ -41,7 +41,8 @@ export class BulkAddViewComponent implements OnInit {
   data = null;
   parsedData = null;
 
-  keys;
+  keys: keysOptions[] = [];
+
   transactionKeys = Object.keys(
     new Expense(null,null,null,null,
       null,null,null,null,
@@ -161,57 +162,21 @@ export class BulkAddViewComponent implements OnInit {
   fields: number = 8;
   monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
-   csvJSON(csv){
 
-    var lines = csv.split("\n")
-    var result = []
-    var headers = lines[0].split(";")
-
-     for (let header of headers){
-      header = header.toString().replace('"', '');
-       header = header.toString().replace('/', '');
-       header = header.toString().replace('\\', '');
-       header = header.toString().replace(/["]/g, '')
-     }
-     console.log("headers ___?")
-     console.log(headers)
-
-    lines.map(function(line, indexLine){
-      if (indexLine < 1) return // Jump header line
-
-      var obj = {}
-      var currentline = line.split(',"')
-      for(line of currentline){
-        line = line.toString().replace(/["]/g, '');
-        line = line.toString().replace(/g["]/, '');
-        line = line.toString().replace('"', '');
-      }
-
-      headers.map(function(header, indexHeader){
-        let line = currentline[indexHeader];
-
-
-        obj[header] = line
-      })
-
-      result.push(obj)
-    })
-
-    result.pop() // remove the last item because undefined values
-
-     console.log(result)
-    return result // JavaScript object
-  }
   parse() {
 
 
     // this.data = this.csvJSON(this.data);
     this.parsedData = JSON.parse(this.data);
 
-    this.keys = Object.keys(this.parsedData[0]);
+    let parsedKeys =  Object.keys(this.parsedData[0]);
+    for (let key of parsedKeys){
+      this.keys.push(new keysOptions(key,false,null,null,null))
+    }
 
     this.lengthDataType = "Transactions";
     this.message = "Json parsed."
+
 
   }
 
@@ -363,6 +328,25 @@ export class BulkAddViewComponent implements OnInit {
     return subCats;
   }
 
+}
+
+
+export class keysOptions {
+  name: string;
+  isClicked: boolean;
+
+  matchedAttribute: string;
+  matchedAttributeId: number;
+
+  isInfo: boolean;
+
+  constructor(name: string, isClicked: boolean, matchedAttribute: string, matchedAttributeId: number, isInfo: boolean){
+    this.name = name;
+    this.isClicked = isClicked;
+    this.matchedAttribute = matchedAttribute;
+    this.matchedAttributeId = matchedAttributeId;
+    this.isInfo = isInfo;
+  }
 }
 
 
