@@ -1,4 +1,3 @@
-import * as pool from "mysql";
 
 let express = require('express'),
     router = express.Router(),
