@@ -71,6 +71,7 @@ import {FormsModule} from "@angular/forms";
 import {ManageCategoryComponent} from "./data/categories/manage-category/manage-category.component";
 import {ReloadService} from "./sections/section_budget/service_reload/reload.service";
 import {BulkAddViewComponent} from "./data/manage/upload/bulkAddView/bulkAddView.component";
+import {CompanyService} from "./data/service/service_company/company.service";
 
 
 
@@ -134,6 +135,8 @@ import {BulkAddViewComponent} from "./data/manage/upload/bulkAddView/bulkAddView
     ExpenseService,
     MessageService,
     CategoryService,
+    CompanyService,
+
     LocalStorageDatabase,
     SettingsService,
     AuthService,
