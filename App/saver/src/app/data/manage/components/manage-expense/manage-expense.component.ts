@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AddViewsService} from "../../../UI/addViews/service_addViews/addViews.service";
-import {Expense} from "../../../models/Expense";
+import {AddViewsService} from "../../addViews/service_addViews/addViews.service";
+import {Expense} from "../../../../models/Expense";
 import {Observable} from "rxjs/internal/Observable";
-import {Category} from "../../../models/Category";
-import {CategoryService} from "../../../data/categories/service_category/category.service";
+import {Category} from "../../../../models/Category";
+import {CategoryService} from "../../../categories/service_category/category.service";
 
 @Component({
   selector: 'app-manage-expense',

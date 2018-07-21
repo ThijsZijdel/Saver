@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CategoryService} from "../../data/categories/service_category/category.service";
-import {Category} from "../../models/Category";
-import {Expense} from "../../models/Expense";
-import {Income} from "../../models/Income";
-import {JsonVal} from "../../models/json/JsonVal";
-import {TransactionBulk} from "../../models/json/TransactionBulk";
+import {CategoryService} from "../../../categories/service_category/category.service";
+import {Category} from "../../../../models/Category";
+import {Expense} from "../../../../models/Expense";
+import {Income} from "../../../../models/Income";
+import {JsonVal} from "../../../../models/bulkAdd/JsonVal";
+import {TransactionBulk} from "../../../../models/bulkAdd/TransactionBulk";
 
 @Component({
   selector: 'app-bulkAddView',

@@ -8,7 +8,7 @@ import {catchOffline, Network} from '@ngx-pwa/offline';
 
 import * as $ from "jquery"
 import {ContextMenuComponent} from "ngx-contextmenu";
-import {AddViewsService} from "../../../UI/addViews/service_addViews/addViews.service";
+import {AddViewsService} from "../../../data/manage/addViews/service_addViews/addViews.service";
 import {ReloadService} from "../../section_budget/service_reload/reload.service";
 
 @Component({

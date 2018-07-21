@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {PersonalComponent} from "./views/personal/personal.component";
-import {MessageComponent} from "./message/message.component";
+import {MessageComponent} from "./data/service/message/message.component";
 import {BusinessComponent} from "./views/business/business.component";
-import {BulkAddViewComponent} from "./UI/bulkAddView/bulkAddView.component";
+import {BulkAddViewComponent} from "./data/manage/upload/bulkAddView/bulkAddView.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
