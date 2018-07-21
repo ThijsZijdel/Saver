@@ -1,19 +1,46 @@
-<div class="container">
+<div class="sub-navigation navigation">
+  <div class="left">
+    <div class="tool" *ngFor="">
 
+    </div>
+    <a href="https://www.csvjson.com/csv2json" target="_blank">Csv > Json</a>
+    <a routerLink="/console">console</a>
+    <a routerLink="/bulkImport">import</a>
+  </div>
+
+  <div class="center">
+    {{message}} &nbsp;
+  </div>
+
+
+  <div class="right">
+    <a routerLink="/settings">settings</a>
+    <a routerLink="/account">account</a>
+  </div>
+</div>
+
+
+<div class="container">
+  <br>
 
   <div class="Block">
-    <label id="lbl">Code </label>
+
     <input type='file' (change)="fileChanged($event)">
-    <button (click)="uploadDocument(file)">upload</button>
+    <button (click)="uploadDocument(file)" disabled>upload</button>
+    &nbsp;
     <button (click)="parse()">parse</button>
+
+    <span style="float: right;" *ngIf="data !== null">
+      {{data.length}} {{lengthDataType}}
+    </span>
 
   </div>
 
 
-  <form (ngSubmit)="submitForm()" #expenseForm="ngForm" *ngFor="let expense of expenses">
+  <form (ngSubmit)="submitForm()" #expenseForm="ngForm" *ngFor="let expense of expenses; let i = index">
     <h3>Expense</h3>
     <div class="form-group">
-      <label for="name">Name</label>
+      <label for="name">Name: {{expense.name}}</label>
       <input type="text" class="form-control" id="name"
              [(ngModel)]="expense.name" name="name" required>
     </div>
@@ -25,12 +52,40 @@
     </div>
 
     <div class="form-group">
-      <label for="Category">Category</label>
-      <select class="form-control" id="Category" required>
-        <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
+      <label for="description">description</label>
+      <input type="text" class="form-control" id="description"
+             [(ngModel)]="expense.description" name="description" required>
+    </div>
+
+    {{imports[i].Rekening}}
+
+    <div class="form-group">
+      <label for="Category">Category</label>  <span class="catId">{{expense.subcategoryFk}}</span>
+      <select class="form-control" id="Category" required #categoryOptions
+              (change)="getSubCategories(parseFloat(categoryOptions.value))">
+
+        <option [value]="99">
+          All Categories
+        </option>
+        <option *ngFor="let cat of mainCategories"  [value]="cat.id">
+          {{cat.name}}
+        </option>
+
       </select>
     </div>
 
+    <div class="form-group">
+      <label for="subCategory">Sub Category</label>  <span class="catId">{{expense.subcategoryFk}}</span>
+      <select class="form-control" id="subCategory" required #subcatOptions
+              (change)="expense.subcategoryFk = parseFloat(subcatOptions.value) "
+              (click)="expense.subcategoryFk = parseFloat(subcatOptions.value);">
+
+        <option *ngFor="let cat of subCategories" [value]="cat.id">
+          {{cat.name}}
+        </option>
+
+      </select>
+    </div>
 
     <button type="submit" class="btn btn-success" [disabled]="!expenseForm.form.valid">Submit</button>
   </form>
@@ -44,7 +99,7 @@
     </div>
 
     <div class="form-group">
-      <label for="amount">Amount</label>
+      <label for="amountIncome">Amount</label>
       <input type="text" class="form-control" id="amountIncome"
              [(ngModel)]="income.amount" name="amountIncome" required>
     </div>

@@ -1,0 +1,38 @@
+.navigation {
+  width: 100%;
+  padding: 5px;
+  margin-top: -5px;
+  margin-bottom: 5px;
+}
+.sub-navigation {
+  background: #e6e6e6;
+  height: 30px;
+}
+.navigation .left,
+.navigation .center,
+.navigation .right{
+  width: 33%;
+  float: left;
+}
+.navigation .center {
+  text-align: center;
+}
+.navigation .right {
+  text-align: right;
+}
+
+.navigation img {
+  margin: 0 auto;
+  width: 75px;
+}
+
+.navigation a {
+  color: #fff;
+  margin: 15px 20px;
+}
+.sub-navigation a {
+  color: #222222;
+}
+.cont {
+  margin-bottom: 5px;
+}

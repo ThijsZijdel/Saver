@@ -3,6 +3,7 @@ import {CategoryService} from "../../data/categories/service_category/category.s
 import {Category} from "../../models/Category";
 import {Expense} from "../../models/Expense";
 import {Income} from "../../models/Income";
+import {IngJson} from "../../models/json/JsonVal";
 
 @Component({
   selector: 'app-bulkAddView',
@@ -15,6 +16,18 @@ export class BulkAddViewComponent implements OnInit {
 
   categories: Category[] = null;
 
+  mainCategories: Category[] = null;
+  subCategories: Category[] = null;
+
+  message: string = null;
+
+  lengthDataType: string;
+
+  file: any;
+
+  data = null;
+  imports: IngJson[] = [];
+
   @Input('expenses') expenses: Expense[] = [];
   @Input('incomes') incomes: Income[] = [];
 
@@ -23,6 +36,11 @@ export class BulkAddViewComponent implements OnInit {
 
   ngOnInit() {
     this.getCategories();
+
+    setTimeout(()=>{
+      this.filterCategories();
+    }, 100);
+
   }
 
 
@@ -35,31 +53,33 @@ export class BulkAddViewComponent implements OnInit {
       for (let category of categories) {
         this.categories.push(category);
 
-        if (category.subCategoryFk != 0) {
-
-        }
       }
     });
 
   }
 
-  file: any;
-
-  data;
-  imports: Import[] = [];
 
   fileChanged($event) {
     this.file = $event.target.files[0];
+    this.message = "File selected."
+
+    setTimeout(()=>{
+      this.uploadDocument(this.file);
+    }, 100);
+
+
   }
 
   uploadDocument(file) {
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
 
-      console.log(fileReader.result);
       this.data = fileReader.result;
     }
     fileReader.readAsText(this.file);
+
+    this.lengthDataType = "Atributes";
+    this.message = "File read."
   }
 
   // Datum; 0
@@ -75,18 +95,64 @@ export class BulkAddViewComponent implements OnInit {
   fields: number = 8;
   monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
+
   parse() {
     this.data = JSON.parse(this.data);
 
+    // Rekening
+
+    // Tegenrekening
+
+    // Mutatiesoort
+
+    let iteratorId: number = 0;
     for (let tst of this.data) {
       if (this.isExpense(tst)) {
-        this.expenses.push(new Expense(null, tst.NaamOmschrijving.substr(0,6), tst.Bedrag, null, tst.NaamOmschrijving, this.getDate(tst), this.monthnames[this.getDate(tst).getMonth()-1],  this.getDate(tst).getMonth(), null, null, null, 1)
-        )
+        this.expenses.push(
+          new Expense(
+            iteratorId,
+            tst.NaamOmschrijving.substr(0,6),
+            tst.Bedrag,
+            null,
+            tst.NaamOmschrijving,
+            this.getDate(tst),
+            this.monthnames[this.getDate(tst).getMonth()-1],
+            this.getDate(tst).getMonth(),
+            null,
+            null,
+            null,
+            1)
+        );
+
+        tst.code = iteratorId;
+        this.imports.push(tst);
+
       } else {
-        this.incomes.push(new Income(null, tst.NaamOmschrijving.substr(0,6), tst.Bedrag, null, tst.NaamOmschrijving, this.getDate(tst),  this.monthnames[this.getDate(tst).getMonth()-1],  this.getDate(tst).getMonth(), null, null,  1)
-        )
+        this.incomes.push(
+          new Income(
+            iteratorId,
+            tst.NaamOmschrijving.substr(0,6),
+            tst.Bedrag,
+            null,
+            tst.NaamOmschrijving,
+            this.getDate(tst),
+            this.monthnames[this.getDate(tst).getMonth()-1],
+            this.getDate(tst).getMonth(),
+            null,
+            null,
+            1)
+        );
+
+        tst.code = iteratorId;
+        this.imports.push(tst);
       }
+
+      iteratorId++;
     }
+
+
+    this.lengthDataType = "Transactions";
+    this.message = "Json parsed."
 
   }
 
@@ -96,17 +162,13 @@ export class BulkAddViewComponent implements OnInit {
   }
 
 
-  isExpense(transaction: Import) {
+  isExpense(transaction: IngJson) {
     return transaction.AfBij === "Af";
   }
 
-  private getDate(tst: Import): Date {
+  private getDate(tst: IngJson): Date {
     let date = tst.Datum.toString();
-    console.log("date:"+new Date(
-      parseFloat(date.substr(0, 4)), //year
-      parseFloat(date.substr(4, 2)), //month
-      parseFloat(date.substr(6, 2))  //day
-    ))
+
     return new Date(
         parseFloat(date.substr(0, 4)), //year
         parseFloat(date.substr(4, 2)), //month
@@ -114,39 +176,45 @@ export class BulkAddViewComponent implements OnInit {
     )
   }
 
-}
-export class Import{
-  Datum: number;
-  NaamOmschrijving: string;
-  Rekening: string;
-  Tegenrekening: string;
-  Code: string;
-  AfBij: string;
-  Bedrag;
-  MutatieSoort: string;
-  Mededelingen: string;
 
 
-  constructor(Datum: number,
-    NaamOmschrijving: string,
-    Rekening: string,
-    Tegenrekening: string,
-    Code: string,
-    AfBij: string,
-    Bedrag,
-    MutatieSoort: string,
-    Mededelingen: string
-  ){
-    this.Datum = Datum;
-    this.NaamOmschrijving = NaamOmschrijving;
-    this.Rekening = Rekening;
-    this.Tegenrekening = Tegenrekening;
-    this.Code = Code;
-    this.AfBij = AfBij;
-    this.Bedrag = Bedrag;
-    this.MutatieSoort = MutatieSoort;
-    this.Mededelingen = Mededelingen;
-
+  parseFloat(txt: string): number{
+    return parseFloat(txt);
   }
+
+  private filterCategories() {
+    this.mainCategories = [];
+    this.subCategories = [];
+
+
+    for (let cat of this.categories){
+      if (cat.subCategoryFk === 0) {
+        this.mainCategories.push(cat);
+      } else {
+        this.subCategories.push(cat);
+      }
+    }
+  }
+
+  getSubCategories(id: number) {
+    if (id == 99){
+      this.filterCategories();
+      return;
+    }
+    this.subCategories = [];
+    for (let cat of this.categories){
+      if (cat.subCategoryFk === id){
+        this.subCategories.push(cat);
+      }
+    }
+  }
+
+
 }
+
+
+
+
+
+
 
