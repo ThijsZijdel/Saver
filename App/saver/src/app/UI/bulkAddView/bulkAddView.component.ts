@@ -3,7 +3,8 @@ import {CategoryService} from "../../data/categories/service_category/category.s
 import {Category} from "../../models/Category";
 import {Expense} from "../../models/Expense";
 import {Income} from "../../models/Income";
-import {IngJson} from "../../models/json/JsonVal";
+import {JsonVal} from "../../models/json/JsonVal";
+import {TransactionBulk} from "../../models/json/TransactionBulk";
 
 @Component({
   selector: 'app-bulkAddView',
@@ -16,6 +17,10 @@ export class BulkAddViewComponent implements OnInit {
 
   categories: Category[] = null;
 
+
+  transactions: TransactionBulk[] = []
+  displayedTransactions: number = 50;
+
   mainCategories: Category[] = null;
   subCategories: Category[] = null;
 
@@ -26,7 +31,8 @@ export class BulkAddViewComponent implements OnInit {
   file: any;
 
   data = null;
-  imports: IngJson[] = [];
+  expenseVal: JsonVal[] = [];
+  incomesVal: JsonVal[] = [];
 
   @Input('expenses') expenses: Expense[] = [];
   @Input('incomes') incomes: Income[] = [];
@@ -99,38 +105,43 @@ export class BulkAddViewComponent implements OnInit {
   parse() {
     this.data = JSON.parse(this.data);
 
-    // Rekening
+    let expenseIteratorId: number = 0;
+    let incomeIteratorId: number = 0;
 
-    // Tegenrekening
-
-    // Mutatiesoort
-
-    let iteratorId: number = 0;
     for (let tst of this.data) {
-      if (this.isExpense(tst)) {
-        this.expenses.push(
-          new Expense(
-            iteratorId,
-            tst.NaamOmschrijving.substr(0,6),
-            tst.Bedrag,
-            null,
-            tst.NaamOmschrijving,
-            this.getDate(tst),
-            this.monthnames[this.getDate(tst).getMonth()-1],
-            this.getDate(tst).getMonth(),
-            null,
-            null,
-            null,
-            1)
-        );
+      tst.mainCategories = this.mainCategories;
+      tst.subCategories = this.subCategories;
 
-        tst.code = iteratorId;
-        this.imports.push(tst);
+      if (this.isExpense(tst)) {
+        let newExpense =
+          new Expense(
+          expenseIteratorId,
+          tst.NaamOmschrijving.substr(0,6),
+          tst.Bedrag,
+          null,
+          tst.NaamOmschrijving,
+          this.getDate(tst),
+          this.monthnames[this.getDate(tst).getMonth()-1],
+          this.getDate(tst).getMonth(),
+          null,
+          null,
+          null,
+          1);
+
+        this.expenses.push(newExpense);
+        tst.code = expenseIteratorId;
+        this.expenseVal.push(tst);
+
+        this.transactions.push(new TransactionBulk(null, newExpense, tst, null, null));
+
+
+
+        expenseIteratorId++;
 
       } else {
-        this.incomes.push(
-          new Income(
-            iteratorId,
+
+          let newIncome = new Income(
+            incomeIteratorId,
             tst.NaamOmschrijving.substr(0,6),
             tst.Bedrag,
             null,
@@ -140,14 +151,18 @@ export class BulkAddViewComponent implements OnInit {
             this.getDate(tst).getMonth(),
             null,
             null,
-            1)
-        );
+            1);
 
-        tst.code = iteratorId;
-        this.imports.push(tst);
+        this.incomes.push(newIncome);
+        tst.code = incomeIteratorId
+        this.incomesVal.push(tst);
+
+        this.transactions.push(new TransactionBulk(null, null, null, newIncome, tst));
+
+        incomeIteratorId++;
       }
 
-      iteratorId++;
+
     }
 
 
@@ -162,11 +177,11 @@ export class BulkAddViewComponent implements OnInit {
   }
 
 
-  isExpense(transaction: IngJson) {
+  isExpense(transaction: JsonVal) {
     return transaction.AfBij === "Af";
   }
 
-  private getDate(tst: IngJson): Date {
+  private getDate(tst: JsonVal): Date {
     let date = tst.Datum.toString();
 
     return new Date(
@@ -197,7 +212,7 @@ export class BulkAddViewComponent implements OnInit {
   }
 
   getSubCategories(id: number) {
-    if (id == 99){
+    if (id === 9999){
       this.filterCategories();
       return;
     }
@@ -210,10 +225,19 @@ export class BulkAddViewComponent implements OnInit {
   }
 
 
+  getSubCats(id: number): Category[] {
+    let subCats: Category[] = [];
+
+    for (let cat of this.categories){
+      if (cat.subCategoryFk === id){
+        subCats.push(cat);
+      } else if (id === 9999){
+        subCats.push(cat);
+      }
+    }
+    return subCats;
+  }
 }
-
-
-
 
 
 

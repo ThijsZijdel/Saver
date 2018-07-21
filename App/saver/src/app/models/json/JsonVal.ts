@@ -1,4 +1,6 @@
-export class IngJson{
+import {Category} from "../Category";
+
+export class JsonVal{
   Datum: number;
   NaamOmschrijving: string;
   Rekening: string;
@@ -9,6 +11,9 @@ export class IngJson{
   MutatieSoort: string;
   Mededelingen: string;
 
+  mainCategories: Category[];
+  subCategories: Category[];
+
 
   constructor(Datum: number,
               NaamOmschrijving: string,
@@ -18,7 +23,9 @@ export class IngJson{
               AfBij: string,
               Bedrag,
               MutatieSoort: string,
-              Mededelingen: string
+              Mededelingen: string,
+              mainCategories?: Category[],
+              subCategories? : Category[]
   ){
     this.Datum = Datum;
     this.NaamOmschrijving = NaamOmschrijving;
