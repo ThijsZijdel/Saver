@@ -72,6 +72,7 @@ import {ManageCategoryComponent} from "./data/categories/manage-category/manage-
 import {ReloadService} from "./sections/section_budget/service_reload/reload.service";
 import {BulkAddViewComponent} from "./data/manage/upload/bulkAddView/bulkAddView.component";
 import {CompanyService} from "./data/service/service_company/company.service";
+import {NgHttpLoaderModule} from "ng-http-loader";
 
 
 
@@ -123,6 +124,8 @@ import {CompanyService} from "./data/service/service_company/company.service";
     AngularFontAwesomeModule,
 
     ContextMenuModule.forRoot(),
+
+    NgHttpLoaderModule,
 
     FormsModule
   ],

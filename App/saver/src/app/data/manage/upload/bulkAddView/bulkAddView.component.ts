@@ -10,6 +10,7 @@ import {BalanceService} from "../../../../sections/section_balance/service_balan
 import {CompanyService} from "../../../service/service_company/company.service";
 import {Company} from "../../../../models/Company";
 import {AddViewsService} from "../../addViews/service_addViews/addViews.service";
+import {SpinnerVisibilityService} from "ng-http-loader";
 
 @Component({
   selector: 'app-bulkAddView',
@@ -61,7 +62,8 @@ export class BulkAddViewComponent implements OnInit {
   constructor(private serviceCategories: CategoryService,
               private serviceBalances: BalanceService,
               private serviceCompany: CompanyService,
-              private addViewService: AddViewsService) {
+              private addViewService: AddViewsService,
+              protected spinner: SpinnerVisibilityService) {
   }
 
   ngOnInit() {
