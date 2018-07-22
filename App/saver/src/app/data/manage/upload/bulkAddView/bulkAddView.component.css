@@ -63,3 +63,54 @@ button {
 .inputControls  .file-input > [type='file'] {
 
 }
+.form-group.select {
+  position: relative;
+}
+.form-group.select .selection {
+  margin-top: 5px;
+  text-transform: uppercase;
+  border: 1px solid #bababa;
+  background: #fff;
+  color: #127BE0;
+  font-size: 11px;
+
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  padding: 5px 25px 5px 15px;
+  border-radius: 30px;
+}
+
+.form-group.select .selections::after { /*  Custom dropdown arrow */
+  content: "\25BC";
+  height: 1em;
+  font-size: .625em;
+  line-height: 1;
+  right: 35px;
+  top: 0;
+  margin-top: 50px;
+  color: #127BE0;
+  position: absolute;
+}
+.form-group.select .selections::before { /*  Custom dropdown arrow cover */
+  width: 2em;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 0 3px 3px 0;
+}
+.form-group.select .selection option{
+  text-transform: uppercase;
+  background: #fff;
+}
+
+.details-col {
+
+}
+.category-col {
+  background: #f6f6f6;
+}
+
+form-group label {
+  font-size: 13px;
+  color: #333;
+}

@@ -9,6 +9,7 @@ import {Balance} from "../../../../models/Balance";
 import {BalanceService} from "../../../../sections/section_balance/service_balance/balance.service";
 import {CompanyService} from "../../../service/service_company/company.service";
 import {Company} from "../../../../models/Company";
+import {AddViewsService} from "../../addViews/service_addViews/addViews.service";
 
 @Component({
   selector: 'app-bulkAddView',
@@ -59,7 +60,8 @@ export class BulkAddViewComponent implements OnInit {
 
   constructor(private serviceCategories: CategoryService,
               private serviceBalances: BalanceService,
-              private serviceCompany: CompanyService) {
+              private serviceCompany: CompanyService,
+              private addViewService: AddViewsService) {
   }
 
   ngOnInit() {
@@ -177,6 +179,20 @@ export class BulkAddViewComponent implements OnInit {
     this.message = "Json parsed."
 
 
+  }
+
+  manageExpense(expense: Expense) {
+    //Set add/ edit vars
+    this.addViewService.isEdit(expense !== null);
+
+    //manage new Expense
+    if (expense === null) {
+      //todo get category if selected
+      expense = new Expense(null, null, null, null, null, null, null, null, null, null, null, 0);
+    }
+
+    //set the expense in the service
+    this.addViewService.setExpense(expense);
   }
 
   convert(){
