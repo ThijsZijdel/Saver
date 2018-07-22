@@ -43,11 +43,7 @@ export class BulkAddViewComponent implements OnInit {
 
   keys: keysOptions[] = [];
 
-  transactionKeys = Object.keys(
-    new Expense(null,null,null,null,
-      null,null,null,null,
-      null,null,null,null)
-  );
+  transactionKeys: string[] = [];
 
   expenseVal: JsonVal[] = [];
   incomesVal: JsonVal[] = [];
@@ -75,6 +71,7 @@ export class BulkAddViewComponent implements OnInit {
       this.filterCategories();
     }, 100);
 
+    this.getTransactionKeys();
   }
 
 
@@ -170,6 +167,8 @@ export class BulkAddViewComponent implements OnInit {
     this.parsedData = JSON.parse(this.data);
 
     let parsedKeys =  Object.keys(this.parsedData[0]);
+
+    this.keys = [];
     for (let key of parsedKeys){
       this.keys.push(new keysOptions(key,false,null,null,null))
     }
@@ -191,21 +190,21 @@ export class BulkAddViewComponent implements OnInit {
 
       if (this.isExpense(tst)) {
 
-        // let subcatFk = this.getCompanyCatFk(tst.companyFk);
+        let company = this.getCompany(tst.Tegenrekening);
 
         let newExpense =
           new Expense(
             expenseIteratorId,
-            tst.NaamOmschrijving.substr(0,6),
+            tst.NaamOmschrijving,
             tst.Bedrag,
             null,
-            tst.NaamOmschrijving,
+            tst.Mededelingen,
             this.getDate(tst),
             this.monthnames[this.getDate(tst).getMonth()-1],
             this.getDate(tst).getMonth(),
-            null,
-            null,
-            null,
+            company.subCategoryFk,
+            1,
+            company.id,
             1);
 
         this.expenses.push(newExpense);
@@ -248,14 +247,14 @@ export class BulkAddViewComponent implements OnInit {
     this.message = "Converted."
   }
 
-  private getCompanyCatFk(companyFk: number) {
-    let subcatFk = null;
+  private getCompany(iban: string) {
+    let companyG: Company = new Company(null,null,null,null,null,null,null);
     for (let company of this.companies){
-      if (companyFk === company.id){
-        subcatFk = company.subCategoryFk;
+      if (iban === company.iban){
+        companyG = company;
       }
     }
-    return subcatFk;
+    return companyG;
   }
 
   reset(){
@@ -341,6 +340,21 @@ export class BulkAddViewComponent implements OnInit {
 
   companySelected(company: number, expense: Expense) {
 
+  }
+
+  private getTransactionKeys() {
+    this.transactionKeys = [];
+
+    let keys = Object.keys(
+      new Expense(null,null,null,null,
+        null,null,null,null,
+        null,null,null,null)
+    );
+    for (let i = 0; i < keys.length; i++){
+      if (keys[i] !== "monthName" && keys[i] !== "monthFk" && keys[i] !== "alreadyPaid" && keys[i] !== "id"){
+        this.transactionKeys.push(keys[i]);
+      }
+    }
   }
 }
 

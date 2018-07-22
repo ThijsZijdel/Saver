@@ -1,3 +1,6 @@
+@import "../../../../../assets/css/fonts.css";
+
+
 .navigation {
   width: 100%;
   padding: 5px;
@@ -55,4 +58,8 @@ button {
 }
 .inputControls button {
   margin-top: -25px;
+}
+
+.inputControls  .file-input > [type='file'] {
+
 }
