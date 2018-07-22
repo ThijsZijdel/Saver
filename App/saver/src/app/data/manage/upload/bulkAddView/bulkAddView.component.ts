@@ -372,6 +372,15 @@ export class BulkAddViewComponent implements OnInit {
       }
     }
   }
+
+  getBalanceName(balanceFk: number): string {
+    for (let balance of this.balances){
+      if (balance.id = balanceFk){
+        return balance.name;
+      }
+    }
+
+  }
 }
 
 
