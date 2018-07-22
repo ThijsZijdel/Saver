@@ -41,3 +41,18 @@
 button {
   transition: all ease-in-out 0.5s;
 }
+
+
+.inputControls {
+  margin: 25px 0;
+}
+.inputControls button, .inputControls input {
+  margin-left: 25px;
+  float: left;
+}
+.inputControls input {
+  float-left: 0;
+}
+.inputControls button {
+  margin-top: -25px;
+}

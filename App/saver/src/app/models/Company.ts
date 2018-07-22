@@ -11,7 +11,9 @@ export class Company {
 
   subCategoryFk?: number;
 
-  constructor(id: number, name: string, description: string, website: string, telephone:string, email: string, subCategoryFk?: number){
+  iban: string;
+
+  constructor(id: number, name: string, description: string, website: string, telephone:string, email: string, iban:string, subCategoryFk?: number){
     this.id = id;
     this.name = name;
     this.subCategoryFk = subCategoryFk;
@@ -21,6 +23,7 @@ export class Company {
 
     this.telephone = telephone;
     this.email = email;
+    this.iban = iban;
   }
 
 

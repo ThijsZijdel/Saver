@@ -191,7 +191,8 @@ export class BulkAddViewComponent implements OnInit {
 
       if (this.isExpense(tst)) {
 
-        console.log(tst.bedrag);
+        // let subcatFk = this.getCompanyCatFk(tst.companyFk);
+
         let newExpense =
           new Expense(
             expenseIteratorId,
@@ -245,6 +246,16 @@ export class BulkAddViewComponent implements OnInit {
     }
 
     this.message = "Converted."
+  }
+
+  private getCompanyCatFk(companyFk: number) {
+    let subcatFk = null;
+    for (let company of this.companies){
+      if (companyFk === company.id){
+        subcatFk = company.subCategoryFk;
+      }
+    }
+    return subcatFk;
   }
 
   reset(){
@@ -328,6 +339,9 @@ export class BulkAddViewComponent implements OnInit {
     return subCats;
   }
 
+  companySelected(company: number, expense: Expense) {
+
+  }
 }
 
 
