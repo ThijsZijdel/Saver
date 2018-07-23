@@ -62,8 +62,7 @@ export class BulkAddViewComponent implements OnInit {
   constructor(private serviceCategories: CategoryService,
               private serviceBalances: BalanceService,
               private serviceCompany: CompanyService,
-              private addViewService: AddViewsService,
-              protected spinner: SpinnerVisibilityService) {
+              private addViewService: AddViewsService) {
   }
 
   ngOnInit() {

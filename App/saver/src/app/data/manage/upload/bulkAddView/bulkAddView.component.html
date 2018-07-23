@@ -19,7 +19,6 @@
   </div>
 </div>
 
-<button (click)="spinner.show()">spinner</button>
 
 <div class="container">
   <br>
@@ -89,7 +88,7 @@
       <div class="checkExpense" *ngIf="transaction.expense !== null && i < displayedTransactions">
 
         <form (ngSubmit)="submitForm()" #expenseForm="ngForm">
-          <h3>Expense</h3>
+          <h3 class="kind">Expense</h3>
 
           <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
             <span>
@@ -107,23 +106,20 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group input-group">
+                <div class="form-group">
                   <label for="amount">Amount</label>
-                  
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">&euro;</div>
-                  </div>
+
                   <input type="text" class="form-control" id="amount"
                          [(ngModel)]="transaction.expense.amount" name="amount" required>
                 </div>
               </div>
             </div>
 
-            <div class="row">
+            <div class="row" style="padding-top: 20px;">
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="description">Description</label>
-                  <textarea type="text" class="form-control" id="description"
+                  <textarea type="text" class="form-control textarea" id="description"
                             [(ngModel)]="transaction.expense.description" name="description" required>
 
                   </textarea>
@@ -232,22 +228,91 @@
 
 
         <form (ngSubmit)="submitForm()" #incomesForm="ngForm" >
-          <h3>Income</h3>
-          <div class="form-group">
-            <label for="nameIncome">Name</label>
-            <input type="text" class="form-control" id="nameIncome"
-                   [(ngModel)]="transaction.income.name" name="nameIncome" required>
+          <h3 class="kind">Income</h3>
+
+          <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
+            <span>
+              {{transaction.incomeJson.MutatieSoort}} - {{transaction.incomeJson.Code}}
+            </span>
+          </span>
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="nameIncome">Name</label>
+                <input type="text" class="form-control" id="nameIncome"
+                       [(ngModel)]="transaction.income.name" name="nameIncome" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="amountIncome">Amount</label>
+
+                <input type="text" class="form-control" id="amountIncome"
+                       [(ngModel)]="transaction.income.amount" name="amountIncome" required>
+              </div>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="amountIncome">Amount</label>
-            <input type="text" class="form-control" id="amountIncome"
-                   [(ngModel)]="transaction.income.amount" name="amountIncome" required>
+          <div class="row" style="padding-top: 20px;">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="descriptionIncome">Description</label>
+                <textarea type="text" class="form-control textarea" id="descriptionIncome"
+                          [(ngModel)]="transaction.income.description" name="descriptionIncome" required>
+
+                  </textarea>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="datumIncome">
+                <label for="datum">Date</label>
+                <input type="text" class="form-control" id="datumIncome"
+                       [(ngModel)]="transaction.income.date" name="datumIncome" required>
+              </div>
+            </div>
           </div>
 
 
 
-          <button type="submit" class="btn btn-success" [disabled]="!incomesForm.form.valid">Submit</button>
+          <div class="row">
+            <div class="col-md-6 details-col">
+
+
+              <div class="form-group select" >
+                <label for="balanceIncome">Balance</label>
+                <span class="selections">
+                    <select class="form-control selection" id="balanceIncome" required #balanceOptions [(ngModel)]="transaction.income.balanceFk" name="balanceIncome">
+
+
+                      <option *ngFor="let balance of balances"  selected="{{balance.id === 1}}" [value]="balance.id">
+                        {{balance.name}} &nbsp; - &nbsp;
+                        {{balance.description}}
+                      </option>
+
+                    </select>
+                  </span>
+
+              </div>
+            </div>
+            <div class="col-md-6">
+
+              <div class="form-group select" >
+                <label for="companiesIncome">Company</label>
+                <span class="selections">
+                    <select class="form-control selection" id="companiesIncome" #companiesOptions [(ngModel)]="transaction.income.companyFk" name="companiesIncome">
+
+                      <option *ngFor="let company of companies"  [value]="company.id">
+                        {{company.name}}
+                      </option>
+
+                    </select>
+                  </span>
+
+              </div>
+            </div>
+          </div>
 
         </form>
 
