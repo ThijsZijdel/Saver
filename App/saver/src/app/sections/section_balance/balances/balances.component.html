@@ -118,7 +118,7 @@
 
                         <td class="amount" *ngIf="displayedAmount[balance.id].val > i"
                             [ngStyle]="{'color':getColor(transaction.isExpense)}" style="text-align: right">
-                          
+
                           <span *ngIf="transaction.isExpense">-</span>
                           <span *ngIf="!transaction.isExpense">+</span>
 

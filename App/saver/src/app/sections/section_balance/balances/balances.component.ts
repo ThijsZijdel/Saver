@@ -116,7 +116,11 @@ export class BalancesComponent implements OnInit {
 
     }
 
-      return transactions;//.sort((a, b) => b.date.getDay() - a.date.getDay());
+      return transactions.sort((a, b) => {
+        if (a.date < b.date) return -1;
+        if (a.date > b.date) return 1;
+        return 0;
+      }).reverse();
   }
 
   setShowStateSubLayer(mainClasse:string, name: string, id: number) {
