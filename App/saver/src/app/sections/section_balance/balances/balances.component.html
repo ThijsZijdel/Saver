@@ -94,22 +94,53 @@
 
 
                 <ul class="expenses-seperate hiddenNow">
-                  <li class="forloop" *ngFor="let transaction of null">
+                  <li class="forloop transaction-box" >
                     <!--getTransactionOf(balance.id-->
-                    <span>
+                    <table style="width: 100%;">
+                    <tr *ngFor="let transaction of getTransactionOf(balance.id); let i = index;">
+                        <td *ngIf="displayedAmount[balance.id].val > i">
 
-                      {{transaction.name}}
+                          {{formatDate(transaction.date)}}
 
-                      <span class="amount" [ngStyle]="{'color':getColor(transaction.isExpense)}">
-                        <span *ngIf="transaction.isExpense">-</span>
-                        <span *ngIf="!transaction.isExpense">+</span>
+                        </td>
+                        <td *ngIf="displayedAmount[balance.id].val > i">
 
-                        &euro;{{transaction.amount}}
-                      </span>
+                          {{transaction.name}}
 
 
-                    </span> <br>
-                    <span class="info">in {{transaction.companyFk}} on {{formatDate(transaction.date)}} -- {{transaction.balanceFk}}</span>
+                        </td>
+
+                        <td *ngIf="displayedAmount[balance.id].val > i">
+
+                          {{transaction.companyFk}}
+
+                        </td>
+
+                        <td class="amount" *ngIf="displayedAmount[balance.id].val > i"
+                            [ngStyle]="{'color':getColor(transaction.isExpense)}" style="text-align: right">
+                          
+                          <span *ngIf="transaction.isExpense">-</span>
+                          <span *ngIf="!transaction.isExpense">+</span>
+
+                          &euro;{{transaction.amount}}
+                        </td>
+                    </tr>
+                    </table>
+                    <div>
+                      <button class="btn wide"
+                              (click)="displayedAmount[balance.id].val = displayedAmount[balance.id].val+5;">
+                        Show More
+                      </button>
+                      <!--<div *ngIf="displayedAmount[balance.id].val > 5">-->
+                        <button class="btn wide"
+                                (click)="displayedAmount[balance.id].val = displayedAmount[balance.id].val-5;">
+                          Show Less
+                        </button>
+                      <!--</div>-->
+                    </div>
+
+
+
                   </li>
                 </ul>
 

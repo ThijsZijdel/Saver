@@ -34,6 +34,7 @@ export class BalancesComponent implements OnInit {
 
   }
 
+  displayedAmount: val[] = [];
 
   ngOnInit() {
     this.getBalanceTypes();
@@ -51,7 +52,7 @@ export class BalancesComponent implements OnInit {
       // loop trough all the incomes
       for (let balance of balances) {
 
-
+          this.displayedAmount.push(new val(balance.id,5));
           this.balances.push(balance);
           this.balancesTotal += balance.amount;
       }
@@ -163,7 +164,7 @@ export class BalancesComponent implements OnInit {
   formatDate(dateI: Date): string {
     let date = new Date(dateI);
 
-    return(this.monthnames[date.getMonth()] + " " + date.getDay() + ", " + date.getFullYear());
+    return(this.monthnames[date.getMonth()] + " " + date.getDay());
   }
 
   getForamatted(name: string) {
@@ -192,5 +193,15 @@ export class BalancesComponent implements OnInit {
 
       }
     });
+  }
+}
+
+export class val {
+  key: number;
+  val: number;
+
+  constructor( key: number, val: number){
+    this.key = key;
+    this.val = val;
   }
 }
