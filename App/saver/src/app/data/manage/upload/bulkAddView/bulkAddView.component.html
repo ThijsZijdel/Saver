@@ -107,8 +107,12 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group input-group">
                   <label for="amount">Amount</label>
+                  
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">&euro;</div>
+                  </div>
                   <input type="text" class="form-control" id="amount"
                          [(ngModel)]="transaction.expense.amount" name="amount" required>
                 </div>
@@ -212,20 +216,6 @@
               </div>
             </div>
 
-
-
-
-
-
-
-
-
-
-          <div class="form-group">
-            <label for="TegenRekeningOption">TegenRekening</label>
-            <input type="text" class="form-control" id="TegenRekeningOption"
-                   name="TegenRekeningOption" value="{{transaction.expenseJson.Tegenrekening}}" required>
-          </div>
 
 
 

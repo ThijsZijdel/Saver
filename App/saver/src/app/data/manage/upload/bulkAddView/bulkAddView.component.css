@@ -63,6 +63,9 @@ button {
 .inputControls  .file-input > [type='file'] {
 
 }
+.form-group {
+  margin-bottom: 25px;
+}
 .form-group.select {
   position: relative;
 }
@@ -78,7 +81,9 @@ button {
   padding: 5px 25px 5px 15px;
   border-radius: 30px;
 }
-
+.form-group.select .selections {
+  margin-bottom: 15px;
+}
 .form-group.select .selections::after { /*  Custom dropdown arrow */
   content: "\25BC";
   height: 1em;
@@ -101,16 +106,21 @@ button {
   background: #fff;
 }
 
-.details-col {
-
+.details-col, .category-col {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .category-col {
   background: #f6f6f6;
 }
 
-form-group label {
-  font-size: 13px;
+.form-group label {
   color: #333;
+
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .transactions-containers .container:nth-child(odd){
