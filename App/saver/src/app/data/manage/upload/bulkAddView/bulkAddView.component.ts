@@ -246,10 +246,7 @@ export class BulkAddViewComponent implements OnInit {
       "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
 
       // Standard fields
-      "([^\"\\" + strDelimiter + "\\r\\n]*))"),
-
-      // Flags for the regExp
-      "gi"
+      "([^\"\\" + strDelimiter + "\\r\\n]*))"), "gi"
     );
 
     let data = [[]];
@@ -271,7 +268,7 @@ export class BulkAddViewComponent implements OnInit {
       // kind of value (quoted or unquoted).
       if (arrMatches[2]) {
         // Quoted value unescape any double quotes.
-        let strMatchedValue = arrMatches[2].replace(new RegExp("\"\"", "g"), "\"");
+        var strMatchedValue = arrMatches[2].replace(new RegExp("\"\"", "g"), "\"");
       } else {
         // Non-quoted value
         var strMatchedValue = arrMatches[3];
@@ -283,6 +280,7 @@ export class BulkAddViewComponent implements OnInit {
     // Return the parsed data
     return (data);
   }
+
 
 
   manageExpense(expense: Expense) {
