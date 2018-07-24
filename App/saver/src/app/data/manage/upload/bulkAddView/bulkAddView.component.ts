@@ -21,6 +21,8 @@ export class BulkAddViewComponent implements OnInit {
 
   amountOfHeaderFields = 9;
 
+  userBalanceName: string = "Hr T W J Zijdel";
+
   /**
    * Transaction variables
    */
@@ -317,7 +319,7 @@ export class BulkAddViewComponent implements OnInit {
       transaction.subCategories = this.subCategories;
 
       //get transaction company based on a few criteria
-      let company = this.getCompany(transaction.Tegenrekening);
+      let company = this.getCompany(transaction.Tegenrekening, transaction.NaamOmschrijving);
 
         //EXPENSE
       if (BulkAddViewComponent.isExpense(transaction)) {
@@ -330,14 +332,16 @@ export class BulkAddViewComponent implements OnInit {
         //Set new transaction code based on the gen. id
         transaction.code = expenseIteratorId;
 
-        this.transactions.push(
-          new TransactionBulk(
-              generalIteratorId, //id
-              newExpense,        //generated Expense
-              transaction,       //read Json object
-              null,
-            null)
-        );
+        let newTransaction = new TransactionBulk(
+          generalIteratorId, //id
+          newExpense,        //generated Expense
+          transaction,       //read Json object
+          null,
+          null);
+
+        newTransaction = this.checkNewTransaction(newTransaction);
+
+        this.transactions.push(newTransaction);
         expenseIteratorId++;
 
 
@@ -352,14 +356,16 @@ export class BulkAddViewComponent implements OnInit {
         //Set new transaction code based on the gen. id
         transaction.code = incomeIteratorId;
 
-        this.transactions.push(
-          new TransactionBulk(
-              generalIteratorId,  // id
-            null,
-            null,
-              newIncome,          // generated Income
-            transaction)          // read Json object
-        );
+        let newTransaction = new TransactionBulk(
+          generalIteratorId,      // id
+          null,
+          null,
+          newIncome,              // generated Income
+          transaction);          // read Json object
+
+        newTransaction = this.checkNewTransaction(newTransaction);
+
+        this.transactions.push(newTransaction);
 
         incomeIteratorId++;
       }
@@ -368,6 +374,53 @@ export class BulkAddViewComponent implements OnInit {
     }
 
     this.message = "Converted."
+  }
+
+  private checkNewTransaction(newTransaction: TransactionBulk) {
+    let isExpense = newTransaction.expense != null;
+    let Mededelingen;
+
+    if (isExpense){
+      Mededelingen = newTransaction.expense.description;
+    } else {
+      Mededelingen = newTransaction.income.description;
+    }
+
+    if (Mededelingen != null) {
+      Mededelingen.toLowerCase();
+    }
+
+      for (let balance of this.balances) {
+        //if there is an name set in the db
+        if (balance.transactionName != null) {
+
+          //validate this
+          if (Mededelingen.includes(balance.transactionName.toLowerCase())) {
+            //But check for potential switching balance transaction
+            if (name === this.userBalanceName) {
+
+              if (isExpense) {
+                //TODO : add the extra income --> to savings account
+
+                console.log( " ADD EXTRA EXPENSE -->")
+              } else if (!isExpense) {
+                //TODO : add the extra EXPENSE --> to main acc.
+
+                console.log( " ADD EXTRA FALSE -->")
+              }
+
+            }
+
+
+          }
+
+        }
+
+      }
+
+
+
+    return newTransaction;
   }
 
   /**
@@ -387,7 +440,7 @@ export class BulkAddViewComponent implements OnInit {
       this.monthnames[this.getDate(transaction).getMonth()-1],
       this.getDate(transaction).getMonth(),
       company.subCategoryFk,
-      1,
+      this.getBalanceFk(transaction.NaamOmschrijving,transaction.Mededelingen, true),
       company.id,
       1);
   }
@@ -399,6 +452,7 @@ export class BulkAddViewComponent implements OnInit {
    * @param company
    */
   private genIncome(transaction, incomeIteratorId: number, company: Company) {
+
     return new Income(
       incomeIteratorId,
       transaction.NaamOmschrijving,
@@ -408,7 +462,7 @@ export class BulkAddViewComponent implements OnInit {
       this.getDate(transaction),
       this.monthnames[this.getDate(transaction).getMonth()-1],
       this.getDate(transaction).getMonth(),
-      company.subCategoryFk,
+      this.getBalanceFk(transaction.NaamOmschrijving,transaction.Mededelingen, false),
       company.id,
       1);
   }
@@ -418,11 +472,16 @@ export class BulkAddViewComponent implements OnInit {
    * > based on the iban of that transaction.
    * @param iban
    */
-  private getCompany(iban: string) {
+  private getCompany(iban: string, transactionCompName: string) {
     //TODO check on more points than just iban: --> so more automatic
-    let companyG: Company = new Company(null,null,null,null,null,null,null);
+    let companyG: Company = new Company(null,null,null,null,null,null,null, null, null);
+
     for (let company of this.companies){
       if (iban === company.iban){
+        companyG = company;
+      }
+
+      if (transactionCompName === company.transactionName){
         companyG = company;
       }
     }
@@ -581,6 +640,35 @@ export class BulkAddViewComponent implements OnInit {
 
     //set the expense in the service
     this.addViewService.setExpense(expense);
+  }
+
+  /**
+   * Get the balance fk of an transaction based on the Message
+   * All the transactions will be checked if the transactionName is included
+   *
+   * @param Mededelingen: transaction message/description
+   * @param isExpense: yes/no
+   */
+  private getBalanceFk(name: string, Mededelingen: string, isExpense: boolean): number {
+    let balanceId = 1;
+
+
+    if (!isExpense) {
+      for (let balance of this.balances) {
+        //if there is an name set in the db
+        if (balance.transactionName != null) {
+
+          //validate this
+          if (Mededelingen.toLowerCase().includes(balance.transactionName.toLowerCase())) {
+            balanceId = balance.id;
+          }
+
+        }
+
+      }
+    }
+
+    return balanceId;
   }
 }
 
