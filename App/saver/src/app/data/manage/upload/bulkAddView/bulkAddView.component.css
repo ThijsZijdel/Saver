@@ -1,0 +1,152 @@
+@import "../../../../../assets/css/fonts.css";
+
+
+.navigation {
+  width: 100%;
+  padding: 5px;
+  margin-top: -5px;
+  margin-bottom: 5px;
+}
+.sub-navigation {
+  background: #e6e6e6;
+  height: 30px;
+}
+.navigation .left,
+.navigation .center,
+.navigation .right{
+  width: 33%;
+  float: left;
+}
+.navigation .center {
+  text-align: center;
+}
+.navigation .right {
+  text-align: right;
+}
+
+.navigation img {
+  margin: 0 auto;
+  width: 75px;
+}
+
+.navigation a {
+  color: #fff;
+  margin: 15px 20px;
+}
+.sub-navigation a {
+  color: #222222;
+}
+.cont {
+  margin-bottom: 5px;
+}
+
+
+button {
+  transition: all ease-in-out 0.5s;
+}
+
+
+.inputControls {
+  margin: 25px 0;
+}
+.inputControls button, .inputControls input {
+  margin-left: 25px;
+  float: left;
+}
+.inputControls input {
+  float-left: 0;
+}
+.inputControls button {
+  margin-top: -25px;
+}
+
+.inputControls  .file-input > [type='file'] {
+
+}
+.form-group {
+  margin-bottom: 25px;
+}
+.form-group.select {
+  position: relative;
+}
+.form-group.select .selection {
+  margin-top: 5px;
+  border: 1px solid #bababa;
+  background: #fff;
+  color: #127BE0;
+  font-size: 11px;
+
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  padding: 5px 25px 5px 15px;
+  border-radius: 30px;
+}
+.form-group.select .selections {
+  margin-bottom: 15px;
+}
+.form-group.select .selections::after { /*  Custom dropdown arrow */
+  content: "\25BC";
+  height: 1em;
+  font-size: .625em;
+  line-height: 1;
+  right: 35px;
+  top: 0;
+  margin-top: 50px;
+  color: #127BE0;
+  position: absolute;
+}
+.form-group.select .selections::before { /*  Custom dropdown arrow cover */
+  width: 2em;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 0 3px 3px 0;
+}
+.form-group.select .selection option{
+  background: #fff;
+}
+
+.details-col, .category-col {
+  padding-top: 20px;
+
+  padding-bottom: 20px;
+}
+.category-col {
+  /*background: #f6f6f6;*/
+
+  border-left: 2px solid #f9f9f9;
+  border-top: 2px solid #f9f9f9;
+
+}
+
+.form-group label {
+  color: #333;
+
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.transactions-containers .container:nth-child(odd){
+  background: #fbfbfb;
+
+}
+.transactions-containers .container {
+  margin-top: 100px;
+}
+
+
+
+
+
+
+
+
+.textarea {
+  height: 40px;
+}
+
+h3.kind{
+  padding-top: 25px;
+}

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Expense} from "../../../models/Expense";
-import {MessageService} from "../../../message/service_message/message.service";
-import {Category} from "../../../models/Category";
+import {Expense} from "../../../../models/Expense";
+import {MessageService} from "../../../service/message/service_message/message.service";
+import {Category} from "../../../../models/Category";
 
 
 

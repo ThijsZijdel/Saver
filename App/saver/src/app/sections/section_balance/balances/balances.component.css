@@ -115,6 +115,21 @@ div.main-category-box section.category ul.sub-cat li ul li span.info {
 div.main-category-box section.category ul.sub-cat li ul li:last-child {
   margin-bottom: 25px;
 }
+li.transaction-box{
+  margin: 0 0 0 -37px !important;
+  padding: 0 !important;
+}
+li.transaction-box tr {
+  border-top: 1px solid #d4d4d4;
+}
+li.transaction-box td {
+  text-align: left;
+}
+li.transaction-box tr:first-child,
+li.transaction-box td:first-child{
+  padding-top: 7px;
+  border-top: none;
+}
 
 h1.bulkBudgetLeft {
   right: 10px;

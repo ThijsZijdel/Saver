@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AddViewsService} from "../../../UI/addViews/service_addViews/addViews.service";
+import {AddViewsService} from "../../manage/addViews/service_addViews/addViews.service";
 import {Category} from "../../../models/Category";
 import {CategoryService} from "../service_category/category.service";
 

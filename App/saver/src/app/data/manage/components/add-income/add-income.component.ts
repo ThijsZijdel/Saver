@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Income} from "../../../models/Income";
-import {IncomeService} from "../service_income/income.service";
+import {Income} from "../../../../models/Income";
+import {IncomeService} from "../../../../sections/section_income/service_income/income.service";
 
 @Component({
   selector: 'app-add-income',

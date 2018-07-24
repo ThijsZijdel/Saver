@@ -23,11 +23,11 @@ import { IncomeComponent } from './sections/section_income/income/income.compone
 import { PersonalComponent } from './views/personal/personal.component';
 import { NavigationComponent } from './UI/navigation/navigation.component';
 
-import { AddBillComponent } from './sections/section_bills/add-bill/add-bill.component';
-import { ManageExpenseComponent } from './sections/section_expense/manage-expense/manage-expense.component';
-import { AddBalanceComponent } from './sections/section_balance/add-balance/add-balance.component';
-import { AddIncomeComponent } from './sections/section_income/add-income/add-income.component';
-import { AddBudgetComponent } from './sections/section_budget/add-budget/add-budget.component';
+import { AddBillComponent } from './data/manage/components/add-bill/add-bill.component';
+import { ManageExpenseComponent } from './data/manage/components/manage-expense/manage-expense.component';
+import { AddBalanceComponent } from './data/manage/components/add-balance/add-balance.component';
+import { AddIncomeComponent } from './data/manage/components/add-income/add-income.component';
+import { AddBudgetComponent } from './data/manage/components/add-budget/add-budget.component';
 import { BusinessComponent } from './views/business/business.component';
 
 import { IncomeService } from "./sections/section_income/service_income/income.service";
@@ -37,8 +37,8 @@ import {SpendingService} from "./sections/section_spending/service_spending/spen
 import {BalanceService} from "./sections/section_balance/service_balance/balance.service";
 import {ExpenseService} from "./sections/section_expense/service_expense/expense.service";
 
-import {MessageComponent} from "./message/message.component";
-import {MessageService} from "./message/service_message/message.service";
+import {MessageComponent} from "./data/service/message/message.component";
+import {MessageService} from "./data/service/message/service_message/message.service";
 
 
 
@@ -65,11 +65,14 @@ import {CalendarComponent} from "./sections/section_bills/calendar/calendar.comp
 import {SettingsService} from "./views/personal/settings.service";
 import {BalanceTypeService} from "./sections/section_balance/service_balanceType/balanceType.service";
 import {ContextMenuComponent, ContextMenuModule} from "ngx-contextmenu";
-import {AddViewsService} from "./UI/addViews/service_addViews/addViews.service";
-import {AddViewsComponent} from "./UI/addViews/addViews.component";
+import {AddViewsService} from "./data/manage/addViews/service_addViews/addViews.service";
+import {AddViewsComponent} from "./data/manage/addViews/addViews.component";
 import {FormsModule} from "@angular/forms";
 import {ManageCategoryComponent} from "./data/categories/manage-category/manage-category.component";
 import {ReloadService} from "./sections/section_budget/service_reload/reload.service";
+import {BulkAddViewComponent} from "./data/manage/upload/bulkAddView/bulkAddView.component";
+import {CompanyService} from "./data/service/service_company/company.service";
+import {NgHttpLoaderModule} from "ng-http-loader";
 
 
 
@@ -100,7 +103,8 @@ import {ReloadService} from "./sections/section_budget/service_reload/reload.ser
 
     CalendarComponent,
 
-    AddViewsComponent
+    AddViewsComponent,
+    BulkAddViewComponent
   ],
   imports: [
     BrowserModule,
@@ -121,6 +125,8 @@ import {ReloadService} from "./sections/section_budget/service_reload/reload.ser
 
     ContextMenuModule.forRoot(),
 
+    NgHttpLoaderModule,
+
     FormsModule
   ],
   providers: [
@@ -132,6 +138,8 @@ import {ReloadService} from "./sections/section_budget/service_reload/reload.ser
     ExpenseService,
     MessageService,
     CategoryService,
+    CompanyService,
+
     LocalStorageDatabase,
     SettingsService,
     AuthService,

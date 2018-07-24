@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import * as $ from "jquery"
+import {Spinkit} from "ng-http-loader";
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,9 @@ import * as $ from "jquery"
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'SaverApp';
 
+  public spinkit = Spinkit;
 
 }
 

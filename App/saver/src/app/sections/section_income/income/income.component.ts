@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { Chart, ChartModule } from 'angular-highcharts';
 import {Income} from "../../../models/Income";
 import {IncomeService} from "../service_income/income.service";
@@ -6,6 +6,7 @@ import {Spending} from "../../../models/Spending";
 import * as $ from "jquery"
 import {ExpenseService} from "../../section_expense/service_expense/expense.service";
 import {Expense} from "../../../models/Expense";
+import {ContextMenuComponent, ContextMenuService} from "ngx-contextmenu";
 
 @Component({
   selector: 'app-income',
@@ -13,6 +14,10 @@ import {Expense} from "../../../models/Expense";
   styleUrls: ['./income.component.css']
 })
 export class IncomeComponent implements OnInit {
+
+  @ViewChild(ContextMenuComponent) public expenseMenu: ContextMenuComponent;
+  @ViewChild(ContextMenuComponent) public incomeMenu: ContextMenuComponent;
+
 
   avgIncome: number = 0.00;
   currentMonth: string = "JUL 2018";
@@ -93,6 +98,7 @@ export class IncomeComponent implements OnInit {
     }
   }
 
+  eventPointY: string = this.monthly[new Date().getMonth()].toString();
 
   init() {
 
@@ -114,6 +120,17 @@ export class IncomeComponent implements OnInit {
       plotOptions: {
         column: {
           stacking: 'normal'
+        },
+        series: {
+          cursor: 'pointer',
+          events: {
+            click: function (event) {
+
+              handleIt(event, event.point.category);
+
+            }
+          }
+
         }
       },
       tooltip: {
@@ -134,7 +151,7 @@ export class IncomeComponent implements OnInit {
       series: [{
         name: 'Income',
         data: this.incomeData,
-        stack: 'overview'
+        stack: 'overview',
       }, {
         name: 'Saved',
         data: this.savedData,
@@ -149,8 +166,16 @@ export class IncomeComponent implements OnInit {
     this.chartIncome = chartIncomed;
 
 
-    chartIncomed.ref$.subscribe(console.log);
+    // chartIncomed.ref$.subscribe(console.log);
+
+    function handleIt(event: any, category: any) {
+      console.log("  >> "+category)
+      // this.eventPointY = category;
+      alert(event.point.y+"Y   "+event.point.x+"X  "+event.point.category+"  "+this.eventPointY);
+    }
   }
+
+
 
 
   private calculateAvg() {
@@ -174,6 +199,18 @@ export class IncomeComponent implements OnInit {
     setTimeout(()=>{
       this.init();
     }, 500);
+  }
+
+
+
+  toggleTooltips(){
+    $('.tooltipPerc').toggleClass("hidden");
+
+    $('.highcharts-tooltip').toggleClass("hidden");
+
+
+
+
   }
 }
 

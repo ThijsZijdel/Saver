@@ -48,6 +48,8 @@ app.use('/api', require('./controllers/incomesController'));
 app.use('/api', require('./controllers/budgetsController'));
 app.use('/api', require('./controllers/balancesController'));
 
+app.use('/api', require('./controllers/companiesController'));
+
 app.use('/api', require('./controllers/spendingsController'));
 
 

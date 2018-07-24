@@ -1,0 +1,338 @@
+<div class="sub-navigation navigation">
+  <div class="left">
+    <div class="tool" *ngFor="">
+
+    </div>
+    <a href="https://www.csvjson.com/csv2json" target="_blank">Csv > Json</a>
+    <a routerLink="/console">console</a>
+    <a routerLink="/bulkImport">import</a>
+  </div>
+
+  <div class="center">
+    {{message}} &nbsp;
+  </div>
+
+
+  <div class="right">
+    <a routerLink="/settings">settings</a>
+    <a routerLink="/account">account</a>
+  </div>
+</div>
+
+
+<div class="container">
+  <br>
+
+  <div class="Block">
+
+    <div class="inputControls">
+      <div class="file-input">
+        <input type='file' class="input" #fileUpload [disabled]="fileUploadDisabled"
+               (change)="fileChanged($event); fileUploadDisabled = true" >
+      </div>
+
+      <!--<button (click)="uploadDocument(file)" disabled>upload</button>-->
+      &nbsp;
+      <div class="parsing" >
+        <button class="btn-info btn btn-sm" #parser [disabled]="parserDisabled" *ngIf="file != null"
+                (click)="parse(); parserDisabled = true" >parse</button>
+      </div>
+
+      <button class="btn-info btn btn-sm" #converter [disabled]="converterDisabled"  *ngIf="parsedData != null"
+              (click)="convert(); converter.disabled = true">
+        convert
+      </button>
+
+      <button class="btn-outline-danger btn btn-sm" *ngIf="file != null"
+              (click)="fileUploadDisabled = false;  parserDisabled = false; converterDisabled = false; file = null;
+                      reset();">
+        reset
+      </button>
+
+      <span style="float: right;margin-top: -22px;" *ngIf="data !== null">
+      {{data.length}}
+      {{lengthDataType}}
+    </span>
+    </div>
+
+
+
+
+    <div class="container-fluid" *ngIf="parsedData != null">
+      <div class="row">
+        <div class="col-md-6">
+          <h4>Keys Imported</h4>
+          <ul>
+            <li *ngFor="let key of keys">{{key.name}}</li>
+          </ul>
+        </div>
+
+        <div class="col-md-6">
+          <h4>Keys Transactions</h4>
+          <ul>
+            <li *ngFor="let key of transactionKeys">{{key}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="transactions-containers">
+    <div class="container" *ngFor="let transaction of transactions; let i = index">
+
+
+
+
+      <div class="checkExpense" *ngIf="transaction.expense !== null && i < displayedTransactions">
+
+        <form (ngSubmit)="submitForm()" #expenseForm="ngForm">
+          <h3 class="kind">Expense</h3>
+
+          <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
+            <span>
+              {{transaction.expenseJson.MutatieSoort}} - {{transaction.expenseJson.Code}}
+            </span>
+          </span>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="name"
+                         [(ngModel)]="transaction.expense.name" name="name" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="amount">Amount</label>
+
+                  <input type="text" class="form-control" id="amount"
+                         [(ngModel)]="transaction.expense.amount" name="amount" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="padding-top: 20px;">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea type="text" class="form-control textarea" id="description"
+                            [(ngModel)]="transaction.expense.description" name="description" required>
+
+                  </textarea>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="datum">Date</label>
+                  <input type="text" class="form-control" id="datum"
+                         [(ngModel)]="transaction.expense.date" name="datum" required>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="col-md-6 details-col">
+
+
+                <div class="form-group select" >
+                  <label for="balanceOptions">Balance</label>
+                  <span class="selections">
+                    <select class="form-control selection" id="balanceOptions" required #balanceOptions [(ngModel)]="transaction.expense.balanceFk" name="balanceFk">
+
+
+                      <option *ngFor="let balance of balances"  selected="{{balance.id === 1}}" [value]="balance.id">
+                        {{balance.name}} &nbsp; - &nbsp;
+                        {{balance.description}}
+                      </option>
+
+                    </select>
+                  </span>
+
+                </div>
+
+                <div class="form-group select" >
+                  <label for="companiesOptions">Company</label>
+                  <span class="selections">
+                    <select class="form-control selection" id="companiesOptions" #companiesOptions [(ngModel)]="transaction.expense.companyFk" name="companyFk">
+
+                      <option *ngFor="let company of companies"  [value]="company.id">
+                        {{company.name}}
+                      </option>
+
+                    </select>
+                  </span>
+
+                </div>
+              </div>
+              <div class="col-md-6 category-col">
+                <div class="form-group select" >
+                  <label for="Category">Category</label>
+
+                  <span class="selections">
+                    <select class="form-control selection" id="Category" required #categoryOptions
+                            (change)="transaction.expenseJson.subCategories = getSubCats(parseFloat(categoryOptions.value));
+                          transaction.expense.subcategoryFk = parseFloat(subcatOptions.value);">
+
+                      <option [value]="9999">
+                        All Categories
+                      </option>
+                      <option *ngFor="let cat of transaction.expenseJson.mainCategories"  [value]="cat.id">
+                        {{cat.name}}
+                      </option>
+
+                    </select>
+                  </span>
+
+                </div>
+
+
+
+                <div class="form-group select">
+                  <label for="subCategory">Sub Category</label>
+
+                  <span class="selections">
+                    <select class="form-control selection" id="subCategory" required #subcatOptions [(ngModel)]="transaction.expense.subcategoryFk"
+                            (change)="transaction.expense.subcategoryFk = parseFloat(subcatOptions.value) " name="subcategoryFk"
+                            (click)="transaction.expense.subcategoryFk = parseFloat(subcatOptions.value);">
+
+                      <option *ngFor="let cat of transaction.expenseJson.subCategories" [value]="cat.id">
+                        {{cat.name}}
+                      </option>
+
+                    </select>
+                  </span>
+
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+          <button type="submit" class="btn btn-success" [disabled]="!expenseForm.form.valid">Submit</button>
+
+
+        </form>
+
+      </div>
+
+      <div class="checkIncome" *ngIf="transaction.income != null && i < displayedTransactions">
+
+
+        <form (ngSubmit)="submitForm()" #incomesForm="ngForm" >
+          <h3 class="kind">Income</h3>
+
+          <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
+            <span>
+              {{transaction.incomeJson.MutatieSoort}} - {{transaction.incomeJson.Code}}
+            </span>
+          </span>
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="nameIncome">Name</label>
+                <input type="text" class="form-control" id="nameIncome"
+                       [(ngModel)]="transaction.income.name" name="nameIncome" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="amountIncome">Amount</label>
+
+                <input type="text" class="form-control" id="amountIncome"
+                       [(ngModel)]="transaction.income.amount" name="amountIncome" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="padding-top: 20px;">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="descriptionIncome">Description</label>
+                <textarea type="text" class="form-control textarea" id="descriptionIncome"
+                          [(ngModel)]="transaction.income.description" name="descriptionIncome" required>
+
+                  </textarea>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="datumIncome">
+                <label for="datum">Date</label>
+                <input type="text" class="form-control" id="datumIncome"
+                       [(ngModel)]="transaction.income.date" name="datumIncome" required>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-md-6 details-col">
+
+
+              <div class="form-group select" >
+                <label for="balanceIncome">Balance</label>
+                <span class="selections">
+                    <select class="form-control selection" id="balanceIncome" required #balanceOptions [(ngModel)]="transaction.income.balanceFk" name="balanceIncome">
+
+
+                      <option *ngFor="let balance of balances"  selected="{{balance.id === 1}}" [value]="balance.id">
+                        {{balance.name}} &nbsp; - &nbsp;
+                        {{balance.description}}
+                      </option>
+
+                    </select>
+                  </span>
+
+              </div>
+            </div>
+            <div class="col-md-6 details-col">
+
+              <div class="form-group select" >
+                <label for="companiesIncome">Company</label>
+                <span class="selections">
+                    <select class="form-control selection" id="companiesIncome" #companiesOptions [(ngModel)]="transaction.income.companyFk" name="companiesIncome">
+
+                      <option *ngFor="let company of companies"  [value]="company.id">
+                        {{company.name}}
+                      </option>
+
+                    </select>
+                  </span>
+
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+
+
+    </div>
+  </div>
+
+  <button (click)="displayedTransactions=displayedTransactions+25;" *ngIf="(transactions.length - displayedTransactions) > 25">More transactions</button>
+  <button (click)="displayedTransactions=transactions.length;" *ngIf="(transactions.length - displayedTransactions) > 25">Show all transactions</button>
+
+
+</div>
+
+<!--<div *ngFor="let expense of expenses">-->
+  <!--<div *ngIf="expense.name != null">-->
+    <!--{{ expense.amount }}-->
+  <!--</div>-->
+
+<!--</div>-->
+
+<!--<button (click)="showImported()">dl</button>-->

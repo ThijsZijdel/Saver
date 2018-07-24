@@ -8,7 +8,7 @@ import {catchOffline, Network} from '@ngx-pwa/offline';
 
 import * as $ from "jquery"
 import {ContextMenuComponent} from "ngx-contextmenu";
-import {AddViewsService} from "../../../UI/addViews/service_addViews/addViews.service";
+import {AddViewsService} from "../../../data/manage/addViews/service_addViews/addViews.service";
 import {ReloadService} from "../../section_budget/service_reload/reload.service";
 
 @Component({
@@ -26,11 +26,6 @@ export class ExpensesComponent implements OnInit {
 
   expenses: Expense[] = [];
   categories: Category[] = [];
-
-  public items = [
-    { name: 'John', otherProperty: 'Foo' },
-    { name: 'Joe', otherProperty: 'Bar' }
-  ];
 
   // @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
@@ -240,6 +235,8 @@ export class ExpensesComponent implements OnInit {
    */
   toggleTooltips(){
     $('.tooltipPerc').toggleClass("hidden");
+
+    $('.highcharts-tooltip').toggleClass("hidden");
   }
 
 
@@ -252,6 +249,7 @@ export class ExpensesComponent implements OnInit {
 
     //manage new Expense
     if (expense === null) {
+      //todo get category if selected
       expense = new Expense(null, null, null, null, null, null, null, null, null, null, null, 0);
     }
 
