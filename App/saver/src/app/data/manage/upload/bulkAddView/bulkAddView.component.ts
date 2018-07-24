@@ -10,7 +10,6 @@ import {BalanceService} from "../../../../sections/section_balance/service_balan
 import {CompanyService} from "../../../service/service_company/company.service";
 import {Company} from "../../../../models/Company";
 import {AddViewsService} from "../../addViews/service_addViews/addViews.service";
-import {SpinnerVisibilityService} from "ng-http-loader";
 
 @Component({
   selector: 'app-bulkAddView',
@@ -39,6 +38,7 @@ export class BulkAddViewComponent implements OnInit {
   lengthDataType: string;
 
   file: any;
+  extention: string;
 
   data = null;
   parsedData = null;
@@ -124,14 +124,18 @@ export class BulkAddViewComponent implements OnInit {
     this.file = $event.target.files[0];
     this.message = "File selected."
 
-    setTimeout(()=>{
-      this.uploadDocument(this.file);
-    }, 100);
+    this.extention = this.file.name.split('.').pop();
 
+    if (this.extention !== 'json' && this.extention !== 'csv') {
+      this.message = "Wrong file format uploaded. Please reset & reupload."
+    } else {
+      this.message = "Correct file format uploaded."
+      setTimeout(() => {
+        this.uploadDocument(this.file);
+      }, 100);
+    }
 
   }
-
-
 
   uploadDocument(file) {
     let fileReader = new FileReader();
@@ -165,22 +169,119 @@ export class BulkAddViewComponent implements OnInit {
 
   parse() {
 
+    //Check witch way of parsing is needed
+    switch (this.extention) {
+      case "csv":
+        let json = this.CsvToJson(this.data);
+        console.log("data:")
+        console.log(this.data);
+        console.log("----------------------:")
+        console.log("json:")
+        console.log(json);
+        console.log("----------------------:")
+        this.parsedData = JSON.parse(json);
 
-    // this.data = this.csvJSON(this.data);
-    this.parsedData = JSON.parse(this.data);
-
-    let parsedKeys =  Object.keys(this.parsedData[0]);
-
-    this.keys = [];
-    for (let key of parsedKeys){
-      this.keys.push(new keysOptions(key,false,null,null,null))
+        console.log("parsed json:")
+        console.log(this.parsedData)
+        console.log("----------------------:")
+        break;
+      case "json":
+        this.parsedData = JSON.parse(this.data);
+        break;
+      default:
+        this.message = "File parsing of " + this.extention + " not supported yet."
+        break;
     }
+
+
+    this.getParsedKeys();
 
     this.lengthDataType = "Transactions";
     this.message = "Json parsed."
 
 
   }
+
+
+  CsvToJson(csv) {
+    //Get the data array of the @param csv file
+    let dataArray = this.csvToArray(csv, null);
+
+    let objArray = [];
+
+    // Loop trough the entire array
+    for (let i = 1; i < dataArray.length; i++) {
+
+      // Add empty object
+      objArray[i - 1] = {};
+
+      //Loop trough the data of that object
+      for (let k = 0; k < dataArray[0].length && k < dataArray[i].length; k++) {
+
+        //Get the right key
+        let key = dataArray[0][k];
+
+        //Add the object to the array
+        objArray[i - 1][key] = dataArray[i][k]
+      }
+    }
+
+    let json = JSON.stringify(objArray);
+
+    let str = json.replace(/},/g, "},\r\n");
+    return str;
+  }
+
+  csvToArray(strData, strDelimiter) {
+
+    // Assign the delimiter for RegExp
+    strDelimiter = (strDelimiter || ",");
+
+    // REGULAR EXPRESSION to parse the CSV values.
+    let objPattern = new RegExp((
+        // Delimiters
+      "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+
+      // Quoted fields
+      "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+
+      // Standard fields
+      "([^\"\\" + strDelimiter + "\\r\\n]*))"), "gi"
+    );
+
+    let data = [[]];
+
+    // Hold our individual regEx matched groups.
+    let arrMatches = null;
+
+    // Loop over RegExp matches until last match.
+    while (arrMatches = objPattern.exec(strData)) {
+
+      // Delimiter that was found.
+      let strMatchedDelimiter = arrMatches[1];
+
+      // Given delimiter has a length + matches field delimiter  --> delimiter is a row delimiter.
+      if (strMatchedDelimiter.length && (strMatchedDelimiter != strDelimiter)) {
+        data.push([]);
+      }
+
+      // kind of value (quoted or unquoted).
+      if (arrMatches[2]) {
+        // Quoted value unescape any double quotes.
+        var strMatchedValue = arrMatches[2].replace(new RegExp("\"\"", "g"), "\"");
+      } else {
+        // Non-quoted value
+        var strMatchedValue = arrMatches[3];
+      }
+
+      // Add value string
+      data[data.length - 1].push(strMatchedValue);
+    }
+    // Return the parsed data
+    return (data);
+  }
+
+
 
   manageExpense(expense: Expense) {
     //Set add/ edit vars
@@ -205,9 +306,9 @@ export class BulkAddViewComponent implements OnInit {
       tst.mainCategories = this.mainCategories;
       tst.subCategories = this.subCategories;
 
-      if (this.isExpense(tst)) {
+      let company = this.getCompany(tst.Tegenrekening);
 
-        let company = this.getCompany(tst.Tegenrekening);
+      if (this.isExpense(tst)) {
 
         let newExpense =
           new Expense(
@@ -238,15 +339,15 @@ export class BulkAddViewComponent implements OnInit {
 
         let newIncome = new Income(
           incomeIteratorId,
-          tst.NaamOmschrijving.substr(0,6),
+          tst.NaamOmschrijving,
           tst.Bedrag,
           null,
-          tst.NaamOmschrijving,
+          tst.Mededelingen,
           this.getDate(tst),
           this.monthnames[this.getDate(tst).getMonth()-1],
           this.getDate(tst).getMonth(),
-          null,
-          null,
+          company.subCategoryFk,
+          company.id,
           1);
 
         this.incomes.push(newIncome);
@@ -300,6 +401,7 @@ export class BulkAddViewComponent implements OnInit {
 
   private getDate(tst: JsonVal): Date {
     let date = tst.Datum.toString();
+
 
     return new Date(
         parseFloat(date.substr(0, 4)), //year
@@ -381,6 +483,15 @@ export class BulkAddViewComponent implements OnInit {
       }
     }
 
+  }
+
+  private getParsedKeys() {
+    let parsedKeys =  Object.keys(this.parsedData[0]);
+
+    this.keys = [];
+    for (let key of parsedKeys){
+      this.keys.push(new keysOptions(key,false,null,null,null))
+    }
   }
 }
 
