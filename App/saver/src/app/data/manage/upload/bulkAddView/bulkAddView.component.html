@@ -45,7 +45,7 @@
 
       <button class="btn-outline-danger btn btn-sm" *ngIf="file != null"
               (click)="fileUploadDisabled = false;  parserDisabled = false; converterDisabled = false; file = null;
-                      reset();">
+                      fileUpload.value = null; reset();">
         reset
       </button>
 
