@@ -63,6 +63,20 @@ button {
 .inputControls  .file-input > [type='file'] {
 
 }
+
+.checkIncome, .checkExpense {
+
+}
+.checkIncome.extraInput,
+.checkExpense.extraInput{
+  background: rgba(18, 149, 255, 0.11);
+}
+.checkIncome.extraInput.automatic,
+.checkExpense.extraInput.automatic{
+  background: rgba(18, 149, 255, 0.64);
+}
+
+
 .form-group {
   margin-bottom: 25px;
 }
