@@ -11,9 +11,6 @@ export class JsonVal{
   MutatieSoort: string;
   Mededelingen: string;
 
-  mainCategories: Category[];
-  subCategories: Category[];
-
 
   constructor(Datum: number,
               NaamOmschrijving: string,
