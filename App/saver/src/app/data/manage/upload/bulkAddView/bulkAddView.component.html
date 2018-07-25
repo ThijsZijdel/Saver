@@ -184,6 +184,9 @@
                       <option [value]="9999">
                         All Categories
                       </option>
+                      <option [value]="0">
+                        No category
+                      </option>
                       <option *ngFor="let cat of transaction.mainCategories"  [value]="cat.id">
                         {{cat.name}}
                       </option>
@@ -202,7 +205,9 @@
                     <select class="form-control selection" id="subCategory" required #subcatOptions [(ngModel)]="transaction.expense.subcategoryFk"
                             (change)="transaction.expense.subcategoryFk = parseFloat(subcatOptions.value) " name="subcategoryFk"
                             (click)="transaction.expense.subcategoryFk = parseFloat(subcatOptions.value);">
-
+                      <option [value]="0">
+                        No sub category
+                      </option>
                       <option *ngFor="let cat of transaction.subCategories" [value]="cat.id">
                         {{cat.name}}
                       </option>

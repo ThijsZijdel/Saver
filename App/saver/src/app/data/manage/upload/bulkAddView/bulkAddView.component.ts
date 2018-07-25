@@ -213,6 +213,8 @@ export class BulkAddViewComponent implements OnInit {
    * @param csv: file with data
    */
   CsvToJson(csv) {
+    csv = this.checkKeys(csv);
+
     //Get the data array of the @param csv file
     let dataArray = BulkAddViewComponent.csvToArray(csv, null);
 
@@ -239,6 +241,14 @@ export class BulkAddViewComponent implements OnInit {
 
     let str = json.replace(/},/g, "},\r\n");
     return str;
+  }
+
+  private checkKeys(csv: any) {
+    csv = csv.replace(' / ','');
+    csv = csv.replace('Af Bij','AfBij');
+    csv = csv.replace(' (EUR)','');
+
+    return csv;
   }
 
   /**
@@ -391,7 +401,12 @@ export class BulkAddViewComponent implements OnInit {
 
               if (isExpense) {
                 //So transaction == expense && is on same account
-
+                let balanceFk
+                if (newTransaction.expense.balanceFk != null) {
+                  balanceFk = newTransaction.expense.balanceFk === balance.id ?  1 : balance.id;
+                } else {
+                  balanceFk = balance.id;
+                }
                 newTransaction.income = new Income(
                   newTransaction.expense.id,
                   newTransaction.expense.name,
@@ -401,7 +416,7 @@ export class BulkAddViewComponent implements OnInit {
                   newTransaction.expense.date,
                   newTransaction.expense.monthName,
                   newTransaction.expense.monthFk,
-                  1,
+                  balanceFk,
                   null,
                   1);
 
@@ -410,6 +425,13 @@ export class BulkAddViewComponent implements OnInit {
 
 
               } else if (!isExpense) {
+
+                let balanceFk
+                if (newTransaction.income.balanceFk != null) {
+                  balanceFk = newTransaction.income.balanceFk === balance.id ? 1 : balance.id;
+                } else {
+                  balanceFk = balance.id;
+                }
 
                 //So transaction == income && is on same account
                 newTransaction.expense = new Expense(
@@ -422,7 +444,7 @@ export class BulkAddViewComponent implements OnInit {
                   newTransaction.income.monthName,
                   newTransaction.income.monthFk,
                   null,
-                  balance.id,
+                  balanceFk,
                   null,
                   1);
 
