@@ -12,6 +12,10 @@
       <app-manage-category></app-manage-category>
     </div>
 
+    <div *ngIf="addViews.getCompany() != null">
+      <app-manage-company></app-manage-company>
+    </div>
+
   </div>
 </div>
 
