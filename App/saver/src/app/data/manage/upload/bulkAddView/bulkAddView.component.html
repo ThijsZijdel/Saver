@@ -48,7 +48,7 @@
         reset
       </button>
 
-      <span style="float: right;margin-top: -22px;" *ngIf="data !== null">
+      <span style="float: right;margin-top: -22px;" *ngIf="data != null">
       {{data.length}}
       {{lengthDataTypeName}}
     </span>
@@ -84,13 +84,16 @@
 
 
 
-      <div class="checkExpense" *ngIf="transaction.expense !== null && i < displayedTransactions">
+      <div class="checkExpense" *ngIf="transaction.expense != null && i < displayedTransactions"
+           [ngClass]="{'extraInput': transaction.extraCssExpense}">
+        <!--, 'automatic': transaction.extraCssAutomatic-->
 
+        {{transaction.extraCssExpense}}
         <form (ngSubmit)="submitForm()" #expenseForm="ngForm">
           <h3 class="kind">Expense</h3>
 
           <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
-            <span>
+            <span *ngIf="transaction.expenseJson != null">
               {{transaction.expenseJson.MutatieSoort}} - {{transaction.expenseJson.Code}}
             </span>
           </span>
@@ -181,7 +184,7 @@
                       <option [value]="9999">
                         All Categories
                       </option>
-                      <option *ngFor="let cat of transaction.expenseJson.mainCategories"  [value]="cat.id">
+                      <option *ngFor="let cat of transaction.mainCategories"  [value]="cat.id">
                         {{cat.name}}
                       </option>
 
@@ -200,7 +203,7 @@
                             (change)="transaction.expense.subcategoryFk = parseFloat(subcatOptions.value) " name="subcategoryFk"
                             (click)="transaction.expense.subcategoryFk = parseFloat(subcatOptions.value);">
 
-                      <option *ngFor="let cat of transaction.expenseJson.subCategories" [value]="cat.id">
+                      <option *ngFor="let cat of transaction.subCategories" [value]="cat.id">
                         {{cat.name}}
                       </option>
 
@@ -223,14 +226,15 @@
 
       </div>
 
-      <div class="checkIncome" *ngIf="transaction.income != null && i < displayedTransactions">
-
-
+      <div class="checkIncome" *ngIf="transaction.income != null && i < displayedTransactions"
+           [ngClass]="{'extraInput': transaction.extraCssIncome}">
+        <!--, 'automatic': transaction.extraCssAutomatic-->
+      {{transaction.extraCssIncome}}
         <form (ngSubmit)="submitForm()" #incomesForm="ngForm" >
           <h3 class="kind">Income</h3>
 
           <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
-            <span>
+            <span *ngIf="transaction.incomeJson != null">
               {{transaction.incomeJson.MutatieSoort}} - {{transaction.incomeJson.Code}}
             </span>
           </span>
@@ -266,7 +270,7 @@
             </div>
             <div class="col-md-6">
               <div class="datumIncome">
-                <label for="datum">Date</label>
+                <label for="datumIncome">Date</label>
                 <input type="text" class="form-control" id="datumIncome"
                        [(ngModel)]="transaction.income.date" name="datumIncome" required>
               </div>
@@ -321,10 +325,14 @@
     </div>
   </div>
 
-  <button (click)="displayedTransactions=displayedTransactions+25;" *ngIf="(transactions.length - displayedTransactions) > 25">More transactions</button>
-  <button (click)="displayedTransactions=transactions.length;" *ngIf="(transactions.length - displayedTransactions) > 25">Show all transactions</button>
+  <hr>
 
-
+  <div *ngIf="parsedData != null">
+    <button (click)="changeDisplayedTransactions(25)" >More transactions</button>
+    <button (click)="changeDisplayedTransactions(transactions.length-displayedTransactions)" >Show all transactions</button>
+    <button (click)="displayedTransactions=25;" >Hide all transactions</button>
+  </div>
+  <!--*ngIf="(generalIteratorId - displayedTransactions) > 25"-->
 </div>
 
 <!--<div *ngFor="let expense of expenses">-->
