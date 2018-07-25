@@ -26,3 +26,18 @@
 
 /*validation */
 /*ng-valid	ng-invalid*/
+
+
+
+
+.ng-select.form-control {
+
+}
+.ng-select.form-control .ng-select-container  {
+
+  background: rgba(52, 214, 255, 0.5);
+}
+ng-select.ng-invalid.ng-touched .ng-select-container {
+  border-color: #dc3545;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px #fde6e8;
+}
