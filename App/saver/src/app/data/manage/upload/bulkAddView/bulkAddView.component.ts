@@ -10,6 +10,8 @@ import {BalanceService} from "../../../../sections/section_balance/service_balan
 import {CompanyService} from "../../../service/service_company/company.service";
 import {Company} from "../../../../models/Company";
 import {AddViewsService} from "../../addViews/service_addViews/addViews.service";
+import {KeysOptions} from "../../../../models/bulkAdd/KeysOptions";
+import {SpinnerVisibilityService} from "ng-http-loader";
 
 @Component({
   selector: 'app-bulkAddView',
@@ -26,7 +28,7 @@ export class BulkAddViewComponent implements OnInit {
   /**
    * Transaction variables
    */
-  DISPL_AMOUNT_TRANS: number = 50;
+  DISPL_AMOUNT_TRANS: number = 25;
 
   displayedTransactions: number = this.DISPL_AMOUNT_TRANS;
   transactions: TransactionBulk[] = [];
@@ -79,32 +81,17 @@ export class BulkAddViewComponent implements OnInit {
   /**
    * Keys
    */
-  keys: keysOptions[] = [];
+  keys: KeysOptions[] = [];
   transactionKeys: string[] = [];
 
-  // Datum; 0
-  // Naam / Omschrijving; 1
-  // Rekening; 2
-  // Tegenrekening; 3
-  // Code; 4
-  // Af Bij; 5
-  // Bedrag (EUR); 6
-  // MutatieSoort; 7
-  // Mededelingen 8
-
   fields: number = 7;
-
-  // expenseVal: JsonVal[] = [];
-  // incomesVal: JsonVal[] = [];
-
-
-
 
 
   constructor(private serviceCategories: CategoryService,
               private serviceBalances: BalanceService,
               private serviceCompany: CompanyService,
-              private addViewService: AddViewsService) {
+              private addViewService: AddViewsService,
+              private spinner: SpinnerVisibilityService) {
   }
 
   ngOnInit() {
@@ -303,6 +290,7 @@ export class BulkAddViewComponent implements OnInit {
     return (data);
   }
 
+  generalIteratorId: number = 0;
   /**
    * Converting json to usable objects 
    */
@@ -315,8 +303,7 @@ export class BulkAddViewComponent implements OnInit {
 
     //Loop trough all the transactions of the parsed file
     for (let transaction of this.parsedData) {
-      transaction.mainCategories = this.mainCategories;
-      transaction.subCategories = this.subCategories;
+      let newTransaction: TransactionBulk;
 
       //get transaction company based on a few criteria
       let company = this.getCompany(transaction.Tegenrekening, transaction.NaamOmschrijving);
@@ -332,7 +319,7 @@ export class BulkAddViewComponent implements OnInit {
         //Set new transaction code based on the gen. id
         transaction.code = expenseIteratorId;
 
-        let newTransaction = new TransactionBulk(
+        newTransaction = new TransactionBulk(
           generalIteratorId, //id
           newExpense,        //generated Expense
           transaction,       //read Json object
@@ -356,7 +343,7 @@ export class BulkAddViewComponent implements OnInit {
         //Set new transaction code based on the gen. id
         transaction.code = incomeIteratorId;
 
-        let newTransaction = new TransactionBulk(
+        newTransaction = new TransactionBulk(
           generalIteratorId,      // id
           null,
           null,
@@ -370,46 +357,82 @@ export class BulkAddViewComponent implements OnInit {
         incomeIteratorId++;
       }
 
+      newTransaction.mainCategories = this.mainCategories;
+      newTransaction.subCategories = this.subCategories;
+
       generalIteratorId++;
     }
+
+    this.generalIteratorId = generalIteratorId;
 
     this.message = "Converted."
   }
 
   private checkNewTransaction(newTransaction: TransactionBulk) {
     let isExpense = newTransaction.expense != null;
-    let Mededelingen;
+    let description;
 
     if (isExpense){
-      Mededelingen = newTransaction.expense.description;
+      description = newTransaction.expense.description;
     } else {
-      Mededelingen = newTransaction.income.description;
+      description = newTransaction.income.description;
     }
 
-    if (Mededelingen != null) {
-      Mededelingen.toLowerCase();
-    }
 
       for (let balance of this.balances) {
         //if there is an name set in the db
-        if (balance.transactionName != null) {
+        if (balance.transactionName != null && description !=null) {
 
           //validate this
-          if (Mededelingen.includes(balance.transactionName.toLowerCase())) {
-            //But check for potential switching balance transaction
-            if (name === this.userBalanceName) {
+          if (description.toLowerCase().includes(balance.transactionName.toLowerCase()) ) {
+
+            //Same balance name user.
+            // if (newTransaction. === this.userBalanceName) {
 
               if (isExpense) {
-                //TODO : add the extra income --> to savings account
+                //So transaction == expense && is on same account
 
-                console.log( " ADD EXTRA EXPENSE -->")
+                newTransaction.income = new Income(
+                  newTransaction.expense.id,
+                  newTransaction.expense.name,
+                  newTransaction.expense.amount,
+                  null,
+                  "Transfer to your own balance",
+                  newTransaction.expense.date,
+                  newTransaction.expense.monthName,
+                  newTransaction.expense.monthFk,
+                  1,
+                  null,
+                  1);
+
+                newTransaction.extraCssIncome = true;
+                newTransaction.extraCssAutomatic = true
+
+
               } else if (!isExpense) {
-                //TODO : add the extra EXPENSE --> to main acc.
+
+                //So transaction == income && is on same account
+                newTransaction.expense = new Expense(
+                  newTransaction.income.id,
+                  newTransaction.income.name,
+                  newTransaction.income.amount,
+                  null,
+                  "Transfer to your own balance",
+                  newTransaction.income.date,
+                  newTransaction.income.monthName,
+                  newTransaction.income.monthFk,
+                  null,
+                  balance.id,
+                  null,
+                  1);
+
+                newTransaction.extraCssExpense = true;
+                newTransaction.extraCssAutomatic = true
 
                 console.log( " ADD EXTRA FALSE -->")
               }
 
-            }
+            // }
 
 
           }
@@ -452,7 +475,6 @@ export class BulkAddViewComponent implements OnInit {
    * @param company
    */
   private genIncome(transaction, incomeIteratorId: number, company: Company) {
-
     return new Income(
       incomeIteratorId,
       transaction.NaamOmschrijving,
@@ -543,7 +565,7 @@ export class BulkAddViewComponent implements OnInit {
    * @param txt
    * @return num
    */
-  static parseFloat(txt: string): number{
+  parseFloat(txt: string): number{
     return parseFloat(txt);
   }
 
@@ -621,7 +643,7 @@ export class BulkAddViewComponent implements OnInit {
 
     this.keys = [];
     for (let key of parsedKeys){
-      this.keys.push(new keysOptions(key,false,null,null,null))
+      this.keys.push(new KeysOptions(key,false,null,null,null))
     }
   }
 
@@ -656,7 +678,7 @@ export class BulkAddViewComponent implements OnInit {
     if (!isExpense) {
       for (let balance of this.balances) {
         //if there is an name set in the db
-        if (balance.transactionName != null) {
+        if (balance.transactionName != null && Mededelingen != null) {
 
           //validate this
           if (Mededelingen.toLowerCase().includes(balance.transactionName.toLowerCase())) {
@@ -670,24 +692,16 @@ export class BulkAddViewComponent implements OnInit {
 
     return balanceId;
   }
-}
 
-
-export class keysOptions {
-  name: string;
-  isClicked: boolean;
-
-  matchedAttribute: string;
-  matchedAttributeId: number;
-
-  isInfo: boolean;
-
-  constructor(name: string, isClicked: boolean, matchedAttribute: string, matchedAttributeId: number, isInfo: boolean){
-    this.name = name;
-    this.isClicked = isClicked;
-    this.matchedAttribute = matchedAttribute;
-    this.matchedAttributeId = matchedAttributeId;
-    this.isInfo = isInfo;
+  async changeDisplayedTransactions(length: number) {
+    // TODO add: Async parallel --> till all new html (transactions) are loaded
+    this.spinner.show();
+    setTimeout(()=>{
+      this.displayedTransactions += length;
+    }, 100);
+    setTimeout(()=>{
+      this.spinner.hide();
+    }, 500);
   }
 }
 
