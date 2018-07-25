@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {CategoryService} from "../../../categories/service_category/category.service";
 import {Category} from "../../../../models/Category";
 import {Expense} from "../../../../models/Expense";
@@ -12,6 +12,7 @@ import {Company} from "../../../../models/Company";
 import {AddViewsService} from "../../addViews/service_addViews/addViews.service";
 import {KeysOptions} from "../../../../models/bulkAdd/KeysOptions";
 import {SpinnerVisibilityService} from "ng-http-loader";
+import {ContextMenuComponent} from "ngx-contextmenu";
 
 @Component({
   selector: 'app-bulkAddView',
@@ -85,7 +86,7 @@ export class BulkAddViewComponent implements OnInit {
   transactionKeys: string[] = [];
 
   fields: number = 7;
-
+  @ViewChild(ContextMenuComponent) public transactionMenu: ContextMenuComponent;
 
   constructor(private serviceCategories: CategoryService,
               private serviceBalances: BalanceService,
@@ -451,7 +452,6 @@ export class BulkAddViewComponent implements OnInit {
                 newTransaction.extraCssExpense = true;
                 newTransaction.extraCssAutomatic = true
 
-                console.log( " ADD EXTRA FALSE -->")
               }
 
             // }
@@ -669,21 +669,31 @@ export class BulkAddViewComponent implements OnInit {
     }
   }
 
-  /**
-   * Manage expense context menu
-   * @param expense
-   */
-  manageExpense(expense: Expense) {
-    //Set add/ edit vars
-    this.addViewService.isEdit(expense !== null);
 
-    //manage new Expense
-    if (expense === null) {
-      expense = new Expense(null, null, null, null, null, null, null, null, null, null, null, 0);
-    }
+  /**
+   * Add company for context menu (add)
+   */
+  addCompany() {
+    this.addViewService.isEdit(false);
+
+    let company = new Company(null, null, null, null, null, null, null, null, null);
+
 
     //set the expense in the service
-    this.addViewService.setExpense(expense);
+    this.addViewService.setCompany(company);
+  }
+
+  /**
+   * add category for context menu (add)
+   */
+  addCategory() {
+    this.addViewService.isEdit(false);
+
+    let category = new Category(null, null, null, null, null, null);
+
+
+    //set the expense in the service
+    this.addViewService.setCategory(category);
   }
 
   /**
@@ -725,6 +735,7 @@ export class BulkAddViewComponent implements OnInit {
       this.spinner.hide();
     }, 500);
   }
+
 }
 
 

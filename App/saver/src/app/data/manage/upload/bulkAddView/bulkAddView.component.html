@@ -79,7 +79,7 @@
   </div>
 
   <div class="transactions-containers">
-    <div class="container" *ngFor="let transaction of transactions; let i = index">
+    <div class="container" *ngFor="let transaction of transactions; let i = index" [contextMenu]="transactionMenu" [contextMenuSubject]="transaction">
 
 
 
@@ -348,3 +348,43 @@
 <!--</div>-->
 
 <!--<button (click)="showImported()">dl</button>-->
+
+
+
+<context-menu #transactionMenu >
+
+
+  <ng-template contextMenuItem let-item
+               (execute)="addCompany()">
+    <fa name="plus-circle"></fa>
+    Add Company
+  </ng-template>
+  <ng-template contextMenuItem let-item
+               (execute)="addCategory()">
+    <fa name="plus-circle"></fa>
+    Add Category
+  </ng-template>
+
+
+  <ng-template contextMenuItem divider="true"></ng-template>
+
+  <ng-template contextMenuItem [subMenu]="saySubMenu">
+    <fa name="share"></fa>
+    Share
+  </ng-template>
+  <context-menu #saySubMenu>
+    <ng-template contextMenuItem (execute)="showMessage('Hi, ' + $event.item.name)">
+      <fa name="bell"></fa>
+      Reminders
+    </ng-template>
+    <ng-template contextMenuItem (execute)="showMessage('Hola, ' + $event.item.name)">
+      <fa name="calendar-alt"></fa>
+      Agenda
+    </ng-template>
+    <ng-template contextMenuItem (execute)="showMessage('Salut, ' + $event.item.name)">
+      <fa name="envelope"></fa>
+      Mail
+    </ng-template>
+  </context-menu>
+
+</context-menu>
