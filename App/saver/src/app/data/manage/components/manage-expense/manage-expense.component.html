@@ -21,6 +21,23 @@
       </select>
     </div>
 
+
+    <label for="album">Loading async data</label>
+    <ng-select [items]="categories"  #select bindLabel="name"
+               dropdownPosition="auto"
+               bindValue="id"
+               labelForId="album"
+               placeholder="Select album"
+               [virtualScroll]="true"
+                name="album"
+                id="album">
+      <!--formControlName="album"-->
+      <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+        <div><span>Title: </span><span [ngOptionHighlight]="search">{{item.title}}</span></div>
+        <small><b>Id:</b> {{item.id}} | <b>UserId:</b> {{item.userId}}</small>
+      </ng-template>
+    </ng-select>
+
     <!--<ng-select [items]="categories"-->
                <!--bindLabel="name"-->
                <!--bindValue="id"-->
