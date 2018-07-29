@@ -9,16 +9,16 @@ export class Company {
   telephone: string;
   email: string;
 
-  subCategoryFk?: number;
+  categoryFk?: number;
 
   iban?: string;
 
   transactionName?: string;
 
-  constructor(id: number, name: string, description: string, website: string, telephone:string, email: string, iban?:string, subCategoryFk?: number, transactionName?: string){
+  constructor(id: number, name: string, description: string, website: string, telephone:string, email: string, iban?:string, categoryFk?: number, transactionName?: string){
     this.id = id;
     this.name = name;
-    this.subCategoryFk = subCategoryFk;
+    this.categoryFk = categoryFk;
 
     this.description = description;
     this.website = website;

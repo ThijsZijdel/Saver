@@ -2,9 +2,9 @@
 
 
 <div class="container">
-  <h1>Category</h1>
+  <h1>Company</h1>
   <h4><span *ngIf="addView.editObj">Edit</span><span *ngIf="addView.addObj">Create</span></h4>
-  <form>
+  <form (submit)="submitForm()" name="companyForm">
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control" id="name"
@@ -50,18 +50,15 @@
 
     <div class="form-group">
       <label for="power">Sub Category</label>
-      <select class="form-control" id="power" required [(ngModel)]="company.subCategoryFk">
+      <select class="form-control" id="power" [(ngModel)]="company.categoryFk" name="subcategoryFk">
         <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
       </select>
     </div>
 
 
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button type="submit" class="btn btn-success" (click)="submitForm()">Submit</button>
 
   </form>
 </div>
 
-
-{{addView.editObj}} edit <br>
-{{addView.addObj}} add
 
