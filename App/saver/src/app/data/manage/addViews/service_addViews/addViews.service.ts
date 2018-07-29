@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Expense} from "../../../../models/Expense";
 import {MessageService} from "../../../service/message/service_message/message.service";
 import {Category} from "../../../../models/Category";
+import {Company} from "../../../../models/Company";
 
 
 
@@ -15,6 +16,7 @@ export class AddViewsService {
 
   private expense: Expense = null;
   private category: Category = null;
+  private company: Company = null;
 
   constructor(private messageService: MessageService){}
 
@@ -26,6 +28,7 @@ export class AddViewsService {
 
     this.expense = null;
     this.category = null;
+    this.company = null;
 
     this.showAddViewOverlay = false
   }
@@ -52,7 +55,14 @@ export class AddViewsService {
     this.show();
   }
 
+  getCompany(): Company {
+    return this.company;
+  }
 
+  setCompany(company: Company) {
+    this.company = company;
+    this.show();
+  }
 
 
   /**
@@ -67,4 +77,6 @@ export class AddViewsService {
     this.editObj = bool;
     this.addObj = !bool;
   }
+
+
 }

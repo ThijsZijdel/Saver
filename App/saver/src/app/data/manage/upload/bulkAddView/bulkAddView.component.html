@@ -3,7 +3,6 @@
     <div class="tool" *ngFor="">
 
     </div>
-    <a href="https://www.csvjson.com/csv2json" target="_blank">Csv > Json</a>
     <a routerLink="/console">console</a>
     <a routerLink="/bulkImport">import</a>
   </div>
@@ -45,13 +44,13 @@
 
       <button class="btn-outline-danger btn btn-sm" *ngIf="file != null"
               (click)="fileUploadDisabled = false;  parserDisabled = false; converterDisabled = false; file = null;
-                      reset();">
+                      fileUpload.value = null; reset();">
         reset
       </button>
 
-      <span style="float: right;margin-top: -22px;" *ngIf="data !== null">
+      <span style="float: right;margin-top: -22px;" *ngIf="data != null">
       {{data.length}}
-      {{lengthDataType}}
+      {{lengthDataTypeName}}
     </span>
     </div>
 
@@ -80,18 +79,21 @@
   </div>
 
   <div class="transactions-containers">
-    <div class="container" *ngFor="let transaction of transactions; let i = index">
+    <div class="container" *ngFor="let transaction of transactions; let i = index" [contextMenu]="transactionMenu" [contextMenuSubject]="transaction">
 
 
 
 
-      <div class="checkExpense" *ngIf="transaction.expense !== null && i < displayedTransactions">
+      <div class="checkExpense" *ngIf="transaction.expense != null && i < displayedTransactions"
+           [ngClass]="{'extraInput': transaction.extraCssExpense}">
+        <!--, 'automatic': transaction.extraCssAutomatic-->
 
+        {{transaction.extraCssExpense}}
         <form (ngSubmit)="submitForm()" #expenseForm="ngForm">
           <h3 class="kind">Expense</h3>
 
           <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
-            <span>
+            <span *ngIf="transaction.expenseJson != null">
               {{transaction.expenseJson.MutatieSoort}} - {{transaction.expenseJson.Code}}
             </span>
           </span>
@@ -182,7 +184,10 @@
                       <option [value]="9999">
                         All Categories
                       </option>
-                      <option *ngFor="let cat of transaction.expenseJson.mainCategories"  [value]="cat.id">
+                      <option [value]="0">
+                        No category
+                      </option>
+                      <option *ngFor="let cat of transaction.mainCategories"  [value]="cat.id">
                         {{cat.name}}
                       </option>
 
@@ -200,8 +205,10 @@
                     <select class="form-control selection" id="subCategory" required #subcatOptions [(ngModel)]="transaction.expense.subcategoryFk"
                             (change)="transaction.expense.subcategoryFk = parseFloat(subcatOptions.value) " name="subcategoryFk"
                             (click)="transaction.expense.subcategoryFk = parseFloat(subcatOptions.value);">
-
-                      <option *ngFor="let cat of transaction.expenseJson.subCategories" [value]="cat.id">
+                      <option [value]="0">
+                        No sub category
+                      </option>
+                      <option *ngFor="let cat of transaction.subCategories" [value]="cat.id">
                         {{cat.name}}
                       </option>
 
@@ -224,14 +231,15 @@
 
       </div>
 
-      <div class="checkIncome" *ngIf="transaction.income != null && i < displayedTransactions">
-
-
+      <div class="checkIncome" *ngIf="transaction.income != null && i < displayedTransactions"
+           [ngClass]="{'extraInput': transaction.extraCssIncome}">
+        <!--, 'automatic': transaction.extraCssAutomatic-->
+      {{transaction.extraCssIncome}}
         <form (ngSubmit)="submitForm()" #incomesForm="ngForm" >
           <h3 class="kind">Income</h3>
 
           <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
-            <span>
+            <span *ngIf="transaction.incomeJson != null">
               {{transaction.incomeJson.MutatieSoort}} - {{transaction.incomeJson.Code}}
             </span>
           </span>
@@ -267,7 +275,7 @@
             </div>
             <div class="col-md-6">
               <div class="datumIncome">
-                <label for="datum">Date</label>
+                <label for="datumIncome">Date</label>
                 <input type="text" class="form-control" id="datumIncome"
                        [(ngModel)]="transaction.income.date" name="datumIncome" required>
               </div>
@@ -322,10 +330,14 @@
     </div>
   </div>
 
-  <button (click)="displayedTransactions=displayedTransactions+25;" *ngIf="(transactions.length - displayedTransactions) > 25">More transactions</button>
-  <button (click)="displayedTransactions=transactions.length;" *ngIf="(transactions.length - displayedTransactions) > 25">Show all transactions</button>
+  <hr>
 
-
+  <div *ngIf="parsedData != null">
+    <button (click)="changeDisplayedTransactions(25)" >More transactions</button>
+    <button (click)="changeDisplayedTransactions(transactions.length-displayedTransactions)" >Show all transactions</button>
+    <button (click)="displayedTransactions=25;" >Hide all transactions</button>
+  </div>
+  <!--*ngIf="(generalIteratorId - displayedTransactions) > 25"-->
 </div>
 
 <!--<div *ngFor="let expense of expenses">-->
@@ -336,3 +348,43 @@
 <!--</div>-->
 
 <!--<button (click)="showImported()">dl</button>-->
+
+
+
+<context-menu #transactionMenu >
+
+
+  <ng-template contextMenuItem let-item
+               (execute)="addCompany()">
+    <fa name="plus-circle"></fa>
+    Add Company
+  </ng-template>
+  <ng-template contextMenuItem let-item
+               (execute)="addCategory()">
+    <fa name="plus-circle"></fa>
+    Add Category
+  </ng-template>
+
+
+  <ng-template contextMenuItem divider="true"></ng-template>
+
+  <ng-template contextMenuItem [subMenu]="saySubMenu">
+    <fa name="share"></fa>
+    Share
+  </ng-template>
+  <context-menu #saySubMenu>
+    <ng-template contextMenuItem (execute)="showMessage('Hi, ' + $event.item.name)">
+      <fa name="bell"></fa>
+      Reminders
+    </ng-template>
+    <ng-template contextMenuItem (execute)="showMessage('Hola, ' + $event.item.name)">
+      <fa name="calendar-alt"></fa>
+      Agenda
+    </ng-template>
+    <ng-template contextMenuItem (execute)="showMessage('Salut, ' + $event.item.name)">
+      <fa name="envelope"></fa>
+      Mail
+    </ng-template>
+  </context-menu>
+
+</context-menu>

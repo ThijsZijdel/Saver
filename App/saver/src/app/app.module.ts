@@ -73,6 +73,7 @@ import {ReloadService} from "./sections/section_budget/service_reload/reload.ser
 import {BulkAddViewComponent} from "./data/manage/upload/bulkAddView/bulkAddView.component";
 import {CompanyService} from "./data/service/service_company/company.service";
 import {NgHttpLoaderModule} from "ng-http-loader";
+import {ManageCompanyComponent} from "./data/manage/components/manage-company/manage-company.component";
 
 
 
@@ -94,9 +95,11 @@ import {NgHttpLoaderModule} from "ng-http-loader";
     AddBillComponent,
     ManageExpenseComponent,
     ManageCategoryComponent,
+    ManageCompanyComponent,
     AddBalanceComponent,
     AddIncomeComponent,
     AddBudgetComponent,
+
 
     MessageComponent,
     BusinessComponent,

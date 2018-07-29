@@ -1,4 +1,5 @@
 @import "../../../../assets/css/fonts.css";
+@import "../../../../assets/css/contextmenu.css";
 
 .clickable {
   cursor: pointer;
@@ -80,32 +81,12 @@ h1.avg-display span {
 }
 
 .viewing-options {
-  text-align: right;
+  text-align: left;
   margin-top: -5px;
 }
 .earned-spend {
   margin-top: -5px;
   text-align: right;
-}
-
-/deep/.highcharts-tooltip.hidden {
-  display: none !important;
-  width: 1px !important;
-  height: 1px !important;
-}
-
-
-/deep/.highcharts-tooltip{
-
-
-}
-/deep/.highcharts-tooltip-box {
-  fill: rgba(255, 255, 255, 0.95);
-  stroke: rgba(205,205,205,0.8);
-  box-shadow: #eee 2px 2px 20px;
-}
-/deep/.highcharts-tooltip text {
-  font-size: 14px;
 }
 
 

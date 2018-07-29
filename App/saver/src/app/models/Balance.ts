@@ -7,7 +7,9 @@ export class Balance {
   bankFk: number;
   maxDebt: number;
 
-  constructor(id: number, name: string, amount: number, description: string,type: number, bankFk: number, maxDebt: number) {
+  transactionName?: string;
+
+  constructor(id: number, name: string, amount: number, description: string,type: number, bankFk: number, maxDebt: number,transactionName?: string) {
     this.id = id;
     this.name = name;
     this.amount = amount;
@@ -15,5 +17,7 @@ export class Balance {
     this.type = type;
     this.bankFk = bankFk;
     this.maxDebt = maxDebt;
+
+    this.transactionName = transactionName;
   }
 }
