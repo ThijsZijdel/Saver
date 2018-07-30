@@ -86,7 +86,7 @@ export class CompanyService {
    * @author Thijs Zijdel
    */
   updateCompany (company: Company): Observable<any> {
-    const url = `${this.companyUrl}?action=edit`;
+    const url = `${this.companyUrl}`;
 
     return this.http.put(url, company, httpOptions).pipe(
       tap(_ => this.log(`updated company id=${company.id}`)),
@@ -99,7 +99,7 @@ export class CompanyService {
    * note: POST
    */
   addCompany (company: Company): Observable<Company> {
-    const url = `${this.companyUrl}?action=add`;
+    const url = `${this.companyUrl}`;
 
     return this.http.post<Company>(url, company, httpOptions).pipe(
       tap((company: Company) => this.log(`added company w/ id=${company.id}`)),
@@ -114,7 +114,7 @@ export class CompanyService {
    */
   deleteCompany (company: Company | number): Observable<Company> {
     const id = typeof company === 'number' ? company : company.id;
-    const url = `${this.companyUrl}?action=delete&id=${id}`;
+    const url = `${this.companyUrl}/delete/:id`;
 
     return this.http.delete<Company>(url, httpOptions).pipe(
       tap(_ => this.log(`deleted incom id=${id}`)),

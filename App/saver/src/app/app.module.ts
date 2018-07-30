@@ -74,6 +74,7 @@ import {BulkAddViewComponent} from "./data/manage/upload/bulkAddView/bulkAddView
 import {CompanyService} from "./data/service/service_company/company.service";
 import {NgHttpLoaderModule} from "ng-http-loader";
 import {ManageCompanyComponent} from "./data/manage/components/manage-company/manage-company.component";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 
 
@@ -130,7 +131,8 @@ import {ManageCompanyComponent} from "./data/manage/components/manage-company/ma
 
     NgHttpLoaderModule,
 
-    FormsModule
+    FormsModule,
+    NgSelectModule
   ],
   providers: [
     IncomeService,

@@ -22,6 +22,40 @@
     </div>
 
 
+    <label for="album">Loading async data</label>
+    <ng-select [items]="categories"  #select bindLabel="name"
+               dropdownPosition="auto"
+               bindValue="id"
+               labelForId="album"
+               placeholder="Select album"
+               [virtualScroll]="true"
+                name="album"
+                id="album">
+      <!--formControlName="album"-->
+      <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+        <div><span>Title: </span><span [ngOptionHighlight]="search">{{item.title}}</span></div>
+        <small><b>Id:</b> {{item.id}} | <b>UserId:</b> {{item.userId}}</small>
+      </ng-template>
+    </ng-select>
+
+    <!--<ng-select [items]="categories"-->
+               <!--bindLabel="name"-->
+               <!--bindValue="id"-->
+               <!--[(ngModel)]="id">-->
+    <!--</ng-select>-->
+
+    <div class="form-group">
+      <label for="category">Sub category</label>
+      <ng-select [(ngModel)]="expense.subcategoryFk" id="category" class="form-control" name="category">
+        <ng-option *ngFor="let cat of categories" [value]="cat.id">
+          {{cat.name}}
+        </ng-option>
+
+        <ng-option [value]="'custom'">Custom</ng-option>
+      </ng-select>
+    </div>
+
+
     <button type="submit" class="btn btn-success" [disabled]="!expenseForm.form.valid">Submit</button>
     <button type="button" class="btn btn-default" (click)="newExpense(); expenseForm.reset()">New Expense</button>
   </form>
