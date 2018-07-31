@@ -28,7 +28,7 @@ export class CompanyService {
    * @author Thijs Zijdel
    */
   getCompanies(): Observable<Company[]> {
-    const url = `${this.companyUrl}`;
+    const url = this.companyUrl;
     return this.http.get<Company[]>(this.companyUrl)
       .pipe(
         tap(companies => this.log(`fetched companies`)),
@@ -86,7 +86,7 @@ export class CompanyService {
    * @author Thijs Zijdel
    */
   updateCompany (company: Company): Observable<any> {
-    const url = `${this.companyUrl}`;
+    const url = this.companyUrl;
 
     return this.http.put(url, company, httpOptions).pipe(
       tap(_ => this.log(`updated company id=${company.id}`)),
@@ -99,12 +99,16 @@ export class CompanyService {
    * note: POST
    */
   addCompany (company: Company): Observable<Company> {
-    const url = `${this.companyUrl}`;
+    const url = this.companyUrl;
 
-    return this.http.post<Company>(url, company, httpOptions).pipe(
-      tap((company: Company) => this.log(`added company w/ id=${company.id}`)),
-      catchError(this.handleError<Company>('addCompany'))
+    let obs: Observable<Company> = this.http.post<Company>(url, company, httpOptions).pipe(
+      tap((company: Company) => this.log(`added company w/ name=${company.name}`)),
+      catchError(
+        this.handleError<Company>('addCompany')
+      )
     );
+
+    return obs;
   }
 
   /**

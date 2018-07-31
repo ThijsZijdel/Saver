@@ -12,7 +12,7 @@ import {CategoryService} from "../../../categories/service_category/category.ser
 })
 export class ManageCompanyComponent implements OnInit {
 
-   company: Company = null;
+   @Input() company: Company = null;
 
   companies: Company[] = null;
 
