@@ -16,6 +16,18 @@
     </div>
 
     <div class="form-group">
+      <label for="Icon">Icon</label>
+      <input type="text" class="form-control" id="Icon"
+             [(ngModel)]="category.icon" name="Icon" required>
+    </div>
+
+    <div class="form-group">
+      <label for="Color">Color</label>
+      <input type="text" class="form-control" id="Color"
+             [(ngModel)]="category.color" name="Color" required>
+    </div>
+
+    <div class="form-group">
       <label for="power">Main Cat</label>
       <select class="form-control" id="power" required>
         <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
@@ -23,7 +35,7 @@
     </div>
 
 
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button type="submit" class="btn btn-success" (click)="submit()">Submit</button>
 
   </form>
 </div>

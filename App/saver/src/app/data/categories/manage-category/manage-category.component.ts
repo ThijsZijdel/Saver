@@ -10,7 +10,7 @@ import {CategoryService} from "../service_category/category.service";
 })
 export class ManageCategoryComponent implements OnInit {
 
-   category: Category = null;
+   @Input() category: Category = null;
 
   categories: Category[] = null;
 
@@ -39,6 +39,11 @@ export class ManageCategoryComponent implements OnInit {
       }
     });
     return data;
+  }
+
+  submit(){
+    console.log("Added category: "+this.category.name)
+    this.serviceCategories.addCategory(this.category);
   }
 
 }

@@ -106,7 +106,7 @@ export class CategoryService {
    * note: POST
    */
   addCategory (category: Category): Observable<Category> {
-    const url = `${this.categoryUrl}?action=add`;
+    const url = `${this.categoryUrl}`;
 
     return this.http.post<Category>(url, category, httpOptions).pipe(
       tap((category: Category) => this.log(`added category w/ id=${category.id}`)),
