@@ -10,6 +10,7 @@ import * as $ from "jquery"
 import {ContextMenuComponent} from "ngx-contextmenu";
 import {AddViewsService} from "../../../data/manage/addViews/service_addViews/addViews.service";
 import {ReloadService} from "../../section_budget/service_reload/reload.service";
+import {Company} from "../../../models/Company";
 
 @Component({
   selector: 'app-expenses',
@@ -272,6 +273,19 @@ export class ExpensesComponent implements OnInit {
 
   private refresh() {
     this.getExpenses();
+  }
+
+  manageCompany(company: Company) {
+    //Set add/ edit vars
+    this.addViewService.isEdit(company !== null);
+
+    //manage new Expense
+    if (company === null) {
+      company = new Company( null, null, null, null, null, null, null,null,null);
+    }
+
+    //set the expense in the service
+    this.addViewService.setCompany(company);
   }
 }
 

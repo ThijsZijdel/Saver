@@ -149,6 +149,12 @@
     Add Expense
   </ng-template>
 
+  <ng-template contextMenuItem let-item
+               (execute)="manageCompany(null)">
+    <fa name="plus-circle"></fa>
+    Add Company
+  </ng-template>
+
 
   <ng-template contextMenuItem divider="true"></ng-template>
 
