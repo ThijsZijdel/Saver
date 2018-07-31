@@ -43,20 +43,20 @@ router.post('/companies' ,  (req, res) => {
     async.parallel(
         [
             (callback) => {
-                //todo impliment changes
                 connection.connectDatabase.query(
-
-                    'INSERT INTO Budget(idCategory, name, description) VALUES(?,?,?)',
-                    [req.body.idCategory, req.body.name, req.body.description],
+                    'INSERT INTO Company(name, description, website, telephone, email, categoryFk, iban, transactionName) ' +
+                        'VALUES( ?, ?, ?, ?, ?, ?, ?, ?)',
+                    [req.body.name, req.body.description, req.body.website, req.body.telephone, req.body.email, req.body.categoryFk, req.body.iban, req.body.transactionName ],
                     (errors, results, fields) => {
-
                         callback(errors);
                     })
             }
         ],
         (err, results) => {
-
-            res.json({"Added company with id:":req.body.idCategory});
+            if (err){
+                res.json({"Something went wrong when uploading:":req.body.name});
+            }
+            res.json({"Added company with name:":req.body.name});
         }
     );
 

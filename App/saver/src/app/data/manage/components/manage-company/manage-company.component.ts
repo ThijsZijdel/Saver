@@ -12,7 +12,7 @@ import {CategoryService} from "../../../categories/service_category/category.ser
 })
 export class ManageCompanyComponent implements OnInit {
 
-   company: Company = null;
+   @Input() company: Company = null;
 
   companies: Company[] = null;
 
@@ -25,6 +25,8 @@ export class ManageCompanyComponent implements OnInit {
   ngOnInit() {
     this.company = this.addView.getCompany();
     this.companies = this.getCompanies();
+
+    this.getCategories();
   }
 
 
@@ -47,12 +49,16 @@ export class ManageCompanyComponent implements OnInit {
       for (let company of companies) {
         data.push(company);
 
-        if(company.subCategoryFk != 0){
+        if(company.categoryFk != 0){
 
         }
       }
     });
     return data;
+  }
+
+  submitForm():void {
+    this.serviceCompanies.addCompany(this.company);
   }
 
 }

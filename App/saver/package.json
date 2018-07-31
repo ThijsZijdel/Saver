@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/pwa": "^0.6.8",
     "@angular/router": "^6.0.3",
+    "@ng-select/ng-select": "^2.3.5",
     "@ngx-pwa/local-storage": "^6.0.0-rc.0",
     "@ngx-pwa/offline": "^6.0.0-rc.1",
     "angular-font-awesome": "^3.1.2",

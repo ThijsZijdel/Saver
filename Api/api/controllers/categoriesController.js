@@ -42,22 +42,19 @@ router.get('/categories' ,  (req, res) => {
 router.post('/categories' ,  (req, res) => {
     async.parallel(
         [
-             (callback) => {
-            //todo impliment changes
+            (callback) => {
                 connection.connectDatabase.query(
+                    'INSERT INTO Category(name, description, color, icon, subCategoryFk) VALUES(?,?,?,?,?)',
+                    [req.body.name, req.body.description, req.body.color, req.body.icon, req.body.subCategoryFk],
+                    (errors, results, fields) => {
 
-                    'INSERT INTO Category(idCategory, name, description) VALUES(?,?,?)',
-                    [req.body.idCategory, req.body.name, req.body.description],
-                     (errors, results, fields) => {
-
-                    callback(errors);
-                })
+                        callback(errors);
+                    })
             }
         ],
         (err, results) => {
 
-            res.statusCode = 201;
-            res.json({"Added cat with id:":req.body.idCategory});
+            res.json({"Added category:":req.body.name});
         }
     );
 

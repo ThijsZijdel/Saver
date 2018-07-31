@@ -21,8 +21,11 @@ div.overlay {
 }
 
 div.add-component {
+  height: 80%;
+  overflow: scroll;
+
   position: fixed;
-  top: 150px;
+  top: 50px;
 
   width: 60%;
 
@@ -31,3 +34,5 @@ div.add-component {
   background: #fff;
   z-index: 45;
 }
+
+

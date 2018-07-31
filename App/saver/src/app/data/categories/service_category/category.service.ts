@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, tap } from 'rxjs/operators';
+import {catchError, retry, tap} from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import {Observable, of} from 'rxjs/index';
@@ -106,10 +106,10 @@ export class CategoryService {
    * note: POST
    */
   addCategory (category: Category): Observable<Category> {
-    const url = `${this.categoryUrl}?action=add`;
+    const url = `${this.categoryUrl}`;
 
-    return this.http.post<Category>(url, category, httpOptions).pipe(
-      tap((category: Category) => this.log(`added category w/ id=${category.id}`)),
+    return this.http.post<Category>(url, category).pipe(
+      tap((category: Category) => this.log(`added category w/ name=${category.name}`)),
       catchError(this.handleError<Category>('addCategory'))
     );
   }
@@ -119,15 +119,24 @@ export class CategoryService {
    * note: DELETE
    * @author Thijs Zijdel
    */
-  deleteCategory (category: Category | number): Observable<Category> {
+  deleteCategory (category: Category | number) {
     const id = typeof category === 'number' ? category : category.id;
-    const url = `${this.categoryUrl}?action=delete&id=${id}`;
+    const url = `${this.categoryUrl}/delete/${id}`;
 
-    return this.http.delete<Category>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted incom id=${id}`)),
+    console.log( url)
+    return this.http.delete(url).pipe(
+      tap(_ => this.log(`deleted category id=${id}`)),
+      retry(2),
       catchError(this.handleError<Category>('deleteCategory'))
-    );
+    ).subscribe(() => console.log("Successful deleted category "+id));
   }
+
+  // return this.http.get<Category>(url).pipe(
+  //   tap(_ => this.log(`fetched category id=${id}`)),
+  // catchError(this.handleError<Category>(`getCategory id=${id}`))
+  // );
+
+
 
   /**
    * get categories whose name contains search term
