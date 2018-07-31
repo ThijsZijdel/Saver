@@ -43,7 +43,7 @@ export class ManageCategoryComponent implements OnInit {
 
   submit(){
     console.log("Added category: "+this.category.name)
-    this.serviceCategories.addCategory(this.category);
+    this.serviceCategories.addCategory(this.category).subscribe();
   }
 
 }
