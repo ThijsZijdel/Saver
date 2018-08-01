@@ -1,7 +1,8 @@
 
 
 
-<div class="container-fluid">
+<div class="container-fluid" [ngStyle]="{'overflow':AddViewService.overflowOutlet[0],
+                                          'height':AddViewService.overflowOutlet[1]}">
   <div class="row">
 
     <!-- Bills Col -->

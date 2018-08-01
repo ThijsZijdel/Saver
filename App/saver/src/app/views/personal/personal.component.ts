@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {JSONSchema, LocalStorage} from "@ngx-pwa/local-storage";
 import {SettingsService} from "./settings.service";
+import {AddViewsService} from "../../data/manage/addViews/service_addViews/addViews.service";
 
 @Component({
   selector: 'app-personal',
@@ -10,7 +11,8 @@ import {SettingsService} from "./settings.service";
 export class PersonalComponent implements OnInit {
 
   constructor(protected localStorage: LocalStorage,
-              public settingService: SettingsService) { }
+              public settingService: SettingsService,
+              public AddViewService: AddViewsService) { }
 
   addExpenseBox: boolean = false;
 

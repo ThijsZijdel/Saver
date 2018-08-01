@@ -14,6 +14,8 @@ export class AddViewsService {
   editObj: boolean = false;
   addObj: boolean = false;
 
+  overflowOutlet: string[] = ["scroll","auto"];
+
   private expense: Expense = null;
   private category: Category = null;
   private company: Company = null;
@@ -31,10 +33,14 @@ export class AddViewsService {
     this.company = null;
 
     this.showAddViewOverlay = false
+
+    this.overflowOutlet = ["scroll","auto"];
   }
 
   show(){
     this.showAddViewOverlay = true;
+
+    this.overflowOutlet = ["hidden","calc(100vh - 75px)"];
   }
 
   getExpense(): Expense{
