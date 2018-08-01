@@ -8,6 +8,8 @@ import {CategoryService} from "../categories/service_category/category.service";
 import {ExpenseService} from "../../sections/section_expense/service_expense/expense.service";
 import {IncomeService} from "../../sections/section_income/service_income/income.service";
 
+import * as $ from "jquery";
+
 @Component({
   selector: 'app-data-view',
   templateUrl: './data-view.component.html',
@@ -75,9 +77,8 @@ export class DataViewComponent implements OnInit {
     }
 
     //initialize the table
-    let divContainer = document.getElementById("showData");
-    divContainer.innerHTML = "";
-    divContainer.appendChild(table);
+    $("#data-container").html(table)
+
   }
 
 
