@@ -317,7 +317,7 @@ export class BulkAddViewComponent implements OnInit {
       let newTransaction: TransactionBulk;
 
       //get transaction company based on a few criteria
-      let company = this.getCompany(transaction.Tegenrekening, transaction.NaamOmschrijving);
+      let company = this.getCompany(transaction.Tegenrekening, transaction.NaamOmschrijving, transaction.MutatieSoort);
 
         //EXPENSE
       if (BulkAddViewComponent.isExpense(transaction)) {
@@ -484,7 +484,7 @@ export class BulkAddViewComponent implements OnInit {
       this.getDate(transaction),
       this.monthnames[this.getDate(transaction).getMonth()-1],
       this.getDate(transaction).getMonth(),
-      company.categoryFk,
+      company.categoryFk === null ? 99 : company.categoryFk,
       this.getBalanceFk(transaction.NaamOmschrijving,transaction.Mededelingen, true),
       company.id,
       1);
@@ -516,19 +516,28 @@ export class BulkAddViewComponent implements OnInit {
    * > based on the iban of that transaction.
    * @param iban
    */
-  private getCompany(iban: string, transactionCompName: string) {
+  private getCompany(iban: string, transactionCompName: string, mutatieSoort: string) {
     //TODO check on more points than just iban: --> so more automatic
     let companyG: Company = new Company(null,null,null,null,null,null,null, null, null);
 
     for (let company of this.companies){
+
+      //check if transaction was: 'Geldautomaat' === atm
+      if (mutatieSoort === "Geldautomaat" && company.id === 0){
+        return company;
+      }
+
+      //check iban for potential match
       if (iban === company.iban){
         companyG = company;
       }
 
+      //Check transaction name for match
       if (transactionCompName === company.transactionName){
         companyG = company;
       }
     }
+
     return companyG;
   }
 

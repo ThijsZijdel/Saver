@@ -178,7 +178,7 @@
 
                   <span class="selections">
                     <select class="form-control selection" id="Category" required #categoryOptions
-                            (change)="transaction.expenseJson.subCategories = getSubCats(parseFloat(categoryOptions.value));
+                            (change)="transaction.subCategories = getSubCats(parseFloat(categoryOptions.value));
                           transaction.expense.subcategoryFk = parseFloat(subcatOptions.value);">
 
                       <option [value]="9999">
@@ -200,15 +200,15 @@
 
                 <div class="form-group select">
                   <label for="subCategory">Sub Category</label>
-
+                {{transaction.expense.subcategoryFk}}
                   <span class="selections">
                     <select class="form-control selection" id="subCategory" required #subcatOptions [(ngModel)]="transaction.expense.subcategoryFk"
                             (change)="transaction.expense.subcategoryFk = parseFloat(subcatOptions.value) " name="subcategoryFk"
                             (click)="transaction.expense.subcategoryFk = parseFloat(subcatOptions.value);">
-                      <option [value]="0">
+                      <option [value]="99">
                         No sub category
                       </option>
-                      <option *ngFor="let cat of transaction.subCategories" [value]="cat.id">
+                      <option *ngFor="let cat of transaction.subCategories" [value]="cat.id" >
                         {{cat.name}}
                       </option>
 
