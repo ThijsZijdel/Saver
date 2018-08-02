@@ -93,7 +93,7 @@ export class CategoryService {
    * @author Thijs Zijdel
    */
   updateCategory (category: Category): Observable<any> {
-    const url = `${this.categoryUrl}?action=edit`;
+    const url = `${this.categoryUrl}/edit`;
 
     return this.http.put(url, category, httpOptions).pipe(
       tap(_ => this.log(`updated category id=${category.id}`)),
