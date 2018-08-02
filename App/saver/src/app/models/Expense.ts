@@ -46,4 +46,7 @@ export class Expense {
     this.monthFk = monthFk;
     this.repeatingFk = repeatingFk;
   }
+
+
+
 }

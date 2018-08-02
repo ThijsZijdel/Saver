@@ -25,7 +25,7 @@
         </h3>
 
         <span class="amount-box">&euro;
-        {{  getSumAmounts(getAllExpensesOfMain(categoryMain))  }}
+        {{  serviceExpenses.getSumAmount(getAllExpensesOfMain(categoryMain))  }}
         </span>
 
         <hr>
@@ -50,7 +50,7 @@
               <li *ngIf="category.subCategoryFk == categoryMain.id" >
                 <div class="sub-layer subcategory {{category.name+'-'+category.id}}">
 
-                  <span class="icon-subcat down" [ngStyle]="{'background':getColor(category)}">
+                  <span class="icon-subcat down" [ngStyle]="{'background':category.color}">
                     <fa name="{{category.icon}}"></fa>
                   </span>
 
@@ -60,7 +60,7 @@
 
                       {{category.name}}
                       <span class="amount">
-                        &euro;{{getSumAmounts(getExpensesOf(category))}}
+                        &euro;{{serviceExpenses.getSumAmount(getExpensesOf(category))}}
                       </span>
                       <span class="tooltipPerc">
                       {{ getAmountExpensesSub(category.id) }} expenses

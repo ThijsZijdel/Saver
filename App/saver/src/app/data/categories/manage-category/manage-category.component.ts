@@ -12,8 +12,8 @@ export class ManageCategoryComponent implements OnInit {
 
    @Input() category: Category = null;
 
-  categories: Category[] = null;
-
+  categories: Category[] = [];
+  mainCategories: Category[] = [];
 
   constructor(protected addView: AddViewsService,
               private serviceCategories: CategoryService) { }
@@ -33,8 +33,8 @@ export class ManageCategoryComponent implements OnInit {
       for (let category of categories) {
         data.push(category);
 
-        if(category.subCategoryFk != 0){
-
+        if(category.subCategoryFk === 0 && category.subCategoryFk != null){
+          this.mainCategories.push(category);
         }
       }
     });
@@ -42,7 +42,7 @@ export class ManageCategoryComponent implements OnInit {
   }
 
   submit(){
-    console.log("Added category: "+this.category.name)
+    console.log("Added category: "+this.category.name);
     this.serviceCategories.addCategory(this.category).subscribe();
   }
 

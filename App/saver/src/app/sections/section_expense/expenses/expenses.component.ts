@@ -19,7 +19,7 @@ import {Company} from "../../../models/Company";
 })
 export class ExpensesComponent implements OnInit {
 
-  constructor(private serviceExpenses: ExpenseService,
+  constructor(protected serviceExpenses: ExpenseService,
               private serviceCategories: CategoryService,
               protected network: Network,
               protected addViewService: AddViewsService,
@@ -78,37 +78,15 @@ export class ExpensesComponent implements OnInit {
   }
 
   protected getExpensesOf(cat: Category):Expense[]{
-    let data: Expense[] = [];
-
-    for (let expense of this.expenses) {
-      if(expense.subcategoryFk == cat.id && expense.subcategoryFk != 0){
-        data.push(expense);
-      }
-    }
-    return data;
+    return this.serviceExpenses.getExpensesOfcategory(cat, this.expenses);
   }
+
+
   protected getAllExpensesOfMain(cat: Category):Expense[]{
-    let data: Expense[] = [];
-
-    for (let expense of this.expenses) {
-      if (expense.subcategoryFk === cat.id  ||
-        expense.subcategoryFk === cat.subCategoryFk) {
-        data.push(expense);
-      }
-
-    }
-    return data;
+    return this.serviceExpenses.getExpensesOfmainCategory(cat, this.expenses);
   }
 
-  protected getSumAmounts(expenses: Expense[]): number {
-    let sum: number = 0;
 
-    for (let expense of expenses){
-      sum += expense.amount;
-    }
-
-    return sum;
-  }
 
 
 
@@ -153,34 +131,10 @@ export class ExpensesComponent implements OnInit {
   }
 
   protected getLastExpenseOf(categoryId: Number): Expense[] {
-    let data: Expense[] = [];
-    for (let expense of this.expenses) {
-      if(expense.subcategoryFk == categoryId){
-        data.push(expense);
-      }
-
-      if (data.length > 0){
-        return data;
-      }
-    }
-    return data;
+    return this.serviceExpenses.getLastExpenseOfCategory(categoryId, this.expenses);
   }
 
 
-  getColor(category: Category): string {
-    return category.color;
-  }
-
-
-  monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
-  formatDate(dateI: Date): string {
-    let date = new Date(dateI);
-    let curr_date = date.getDay();
-    let curr_month = date.getMonth();
-    let curr_year = date.getFullYear();
-    return(this.monthnames[curr_month] + " " + curr_date + ", " + curr_year);
-  }
 
   protected getSumSubCats(id: number):number {
     let sum: number = 0;
@@ -286,6 +240,15 @@ export class ExpensesComponent implements OnInit {
 
     //set the expense in the service
     this.addViewService.setCompany(company);
+  }
+  monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  formatDate(dateI: Date): string {
+    let date = new Date(dateI);
+    let curr_date = date.getDay();
+    let curr_month = date.getMonth();
+    let curr_year = date.getFullYear();
+    return(this.monthnames[curr_month] + " " + curr_date + ", " + curr_year);
   }
 }
 

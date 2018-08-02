@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, of} from 'rxjs/index';
 import {Expense} from "../../../models/Expense";
 import {MessageService} from "../../../data/service/message/service_message/message.service";
+import {Category} from "../../../models/Category";
 
 
 
@@ -163,6 +164,59 @@ export class ExpenseService {
       catchError(this.handleError<Expense[]>('searchExpenses', []))
     );
   }
+
+  public getExpensesOfcategory(cat: Category, expenses: Expense[]): Expense[] {
+    let data: Expense[] = [];
+
+    for (let expense of expenses) {
+      if(expense.subcategoryFk == cat.id && expense.subcategoryFk != 0){
+        data.push(expense);
+      }
+    }
+    return data;
+  }
+
+  public getExpensesOfmainCategory(cat: Category, expenses: Expense[]): Expense[] {
+    let data: Expense[] = [];
+
+    for (let expense of expenses) {
+      if (expense.subcategoryFk === cat.id  ||
+        expense.subcategoryFk === cat.subCategoryFk) {
+        data.push(expense);
+      }
+
+    }
+    return data;
+  }
+
+
+  public getSumAmount(expenses: Expense[]): number {
+    let sum: number = 0;
+
+    for (let expense of expenses){
+      sum += expense.amount;
+    }
+
+    return sum;
+  }
+
+  getLastExpenseOfCategory(categoryId: Number, expenses: Expense[]) {
+    let data: Expense[] = [];
+    for (let expense of expenses) {
+      if(expense.subcategoryFk == categoryId){
+        data.push(expense);
+      }
+
+      if (data.length > 0){
+        return data;
+      }
+    }
+    return data;
+  }
+
+
+
+
 
 }
 
