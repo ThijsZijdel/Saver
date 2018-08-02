@@ -28,9 +28,9 @@
     </div>
 
     <div class="form-group">
-      <label for="power">Main Cat</label>
-      <select class="form-control" id="power" required>
-        <option *ngFor="let cat of mainCategories" [value]="cat.id" [selected]="cat.id === 0">{{cat.name}}</option>
+      <label for="subCategoryFk">Main Cat</label>
+      <select class="form-control" id="subCategoryFk" required [(ngModel)]="category.subCategoryFk" name="subCategoryFk">
+        <option *ngFor="let cat of mainCategories" [value]="cat.id" [selected]="cat.id === 0">{{cat.name}} </option>
       </select>
     </div>
 
