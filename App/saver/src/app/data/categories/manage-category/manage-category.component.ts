@@ -42,8 +42,11 @@ export class ManageCategoryComponent implements OnInit {
   }
 
   submit(){
-    console.log("Added category: "+this.category.name);
-    this.serviceCategories.addCategory(this.category).subscribe();
+    if (this.addView.editObj){
+      this.serviceCategories.updateCategory(this.category).subscribe();
+    } else{
+      this.serviceCategories.addCategory(this.category).subscribe();
+    }
   }
 
 }
