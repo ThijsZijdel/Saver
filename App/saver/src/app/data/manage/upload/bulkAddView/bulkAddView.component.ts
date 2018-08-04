@@ -111,6 +111,12 @@ export class BulkAddViewComponent implements OnInit {
     this.getTransactionKeys();
   }
 
+  public reloadOptions(){
+    this.getCategories();
+    this.getBalances();
+    this.getCompanies();
+  }
+
 
   private getCategories() {
     this.categories = [];
@@ -479,10 +485,12 @@ export class BulkAddViewComponent implements OnInit {
    * @param company
    */
   private genExpense(transaction, expenseIteratorId: number, company: Company) {
+    transaction.Bedrag != null ? transaction.Bedrag = transaction.Bedrag.replace(',','.') : transaction.Bedrag = null;
+
     return new Expense(
       expenseIteratorId,
       transaction.NaamOmschrijving,
-      transaction.Bedrag.replace(',','.'),
+      transaction.Bedrag,
       null,
       transaction.Mededelingen,
       this.getDate(transaction),
@@ -502,10 +510,12 @@ export class BulkAddViewComponent implements OnInit {
    * @param company
    */
   private genIncome(transaction, incomeIteratorId: number, company: Company) {
+    transaction.Bedrag != null ? transaction.Bedrag = transaction.Bedrag.replace(',','.') : transaction.Bedrag = null;
+
     return new Income(
       incomeIteratorId,
       transaction.NaamOmschrijving,
-      transaction.Bedrag.replace(',','.'),
+      transaction.Bedrag,
       null,
       transaction.Mededelingen,
       this.getDate(transaction),
@@ -746,14 +756,18 @@ export class BulkAddViewComponent implements OnInit {
     }, 500);
   }
 
-  submitExpense(expense: Expense) {
+  submitExpense(expense: Expense, transaction: TransactionBulk) {
     expense.date = new Date(expense.date);
+
+    transaction.expenseSubmit = true;
 
     this.serviceExpense.addExpense(expense).subscribe();
   }
 
-  submitIncome(income: Income) {
+  submitIncome(income: Income, transaction: TransactionBulk) {
     income.date = new Date(income.date);
+
+    transaction.incomeSubmit = true;
 
     this.serviceIncomes.addIncome(income).subscribe();
   }
