@@ -37,6 +37,34 @@ router.get('/categories' ,  (req, res) => {
 });
 
 /**
+ * HTTP Put route for category
+ * @param :id of category
+ * @res json confirmation
+ */
+router.put('/categories/edit/' ,  (req, res) => {
+    async.parallel(
+        [
+            (callback) => {
+                connection.connectDatabase.query(
+                    'UPDATE Category SET name = ?, description= ?, color = ?, icon = ?, subCategoryFk= ? WHERE id = ?;',
+
+                    [req.body.name, req.body.description, req.body.color, req.body.icon, req.body.subCategoryFk, req.body.id],
+                    (errors, results) => {
+                        callback(errors);
+                    })
+            }
+        ],
+        (err, results) => {
+
+            res.json({"Edited cat with id:":req.params.id});
+
+
+        }
+    );
+
+});
+
+/**
  * HTTP Post route for categories
  */
 router.post('/categories' ,  (req, res) => {
@@ -53,8 +81,11 @@ router.post('/categories' ,  (req, res) => {
             }
         ],
         (err, results) => {
-
-            res.json({"Added category:":req.body.name});
+            if (err){
+                res.json({"Something went wrong when uploading:":req.body.name});
+            } else {
+                res.json({"Added category:": req.body.name});
+            }
         }
     );
 
@@ -78,8 +109,9 @@ router.delete('/categories/delete/:id' ,  (req, res) => {
         ],
         (err, results) => {
 
-            res.statusCode = 204;
             res.json({"Deleted cat with id:":req.params.id});
+
+
         }
     );
 
