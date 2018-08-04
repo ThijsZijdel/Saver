@@ -79,7 +79,7 @@
   </div>
 
   <div class="transactions-containers">
-    <div class="container" *ngFor="let transaction of transactions; let i = index" [contextMenu]="transactionMenu" [contextMenuSubject]="transaction">
+    <div class="container-fluid transaction-container" *ngFor="let transaction of transactions; let i = index" [contextMenu]="transactionMenu" [contextMenuSubject]="transaction">
 
 
 
@@ -88,10 +88,8 @@
            [ngClass]="{'extraInput': transaction.extraCssExpense}">
         <!--, 'automatic': transaction.extraCssAutomatic-->
 
-        {{transaction.extraCssExpense}}
-        <form #expenseForm="ngForm">
+        <form #expenseForm="ngForm" [ngClass]="{'submitted':transaction.expenseSubmit}">
           <h3 class="kind">Expense</h3>
-
           <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
             <span *ngIf="transaction.expenseJson != null">
               {{transaction.expenseJson.MutatieSoort}} - {{transaction.expenseJson.Code}}
@@ -200,7 +198,6 @@
 
                 <div class="form-group select">
                   <label for="subCategory">Sub Category</label>
-                {{transaction.expense.subcategoryFk}}
                   <span class="selections">
                     <select class="form-control selection" id="subCategory" required #subcatOptions [(ngModel)]="transaction.expense.subcategoryFk"
                             (change)="transaction.expense.subcategoryFk = parseFloat(subcatOptions.value) " name="subcategoryFk"
@@ -225,7 +222,7 @@
 
 
 
-          <button type="submit" class="btn btn-success" [disabled]="!expenseForm.form.valid" (click)="submitExpense(transaction.expense)">Submit</button>
+          <button type="submit" class="btn btn-success submit" [disabled]="!expenseForm.form.valid" (click)="submitExpense(transaction.expense, transaction)">Submit</button>
 
 
         </form>
@@ -234,9 +231,8 @@
 
       <div class="checkIncome" *ngIf="transaction.income != null && i < displayedTransactions"
            [ngClass]="{'extraInput': transaction.extraCssIncome}">
-        <!--, 'automatic': transaction.extraCssAutomatic-->
-      {{transaction.extraCssIncome}}
-        <form #incomesForm="ngForm" >
+        
+        <form #incomesForm="ngForm" [ngClass]="{'submitted':transaction.incomeSubmit}">
           <h3 class="kind">Income</h3>
 
           <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
@@ -323,7 +319,7 @@
             </div>
           </div>
 
-          <button type="submit" class="btn btn-success" [disabled]="!incomesForm.form.valid" (click)="submitIncome(transaction.income)">Submit</button>
+          <button type="submit" class="btn btn-success submit" [disabled]="!incomesForm.form.valid" (click)="submitIncome(transaction.income, transaction)">Submit</button>
 
 
         </form>
