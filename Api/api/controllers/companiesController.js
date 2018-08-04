@@ -54,6 +54,7 @@ router.post('/companies' ,  (req, res) => {
         ],
         (err, results) => {
             if (err){
+                res.statusCode = 400;
                 res.json({"Something went wrong when uploading:":req.body.name});
             }
             res.json({"Added company with name:":req.body.name});
