@@ -64,7 +64,11 @@ button {
 
 }
 
+.transaction-container{
+  margin: 150px 0;
+}
 .checkIncome, .checkExpense {
+  padding: 25px 25px 50px;
 
 }
 .checkIncome.extraInput,
@@ -150,10 +154,18 @@ button {
   margin-top: 100px;
 }
 
+form.submitted{
+  background: red;
+}
 
 
-
-
+button.submit {
+  float: right;
+  margin: 0 0 50px;
+}
+button.submit:after{
+  clear: both;
+}
 
 
 
