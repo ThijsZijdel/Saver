@@ -4,11 +4,13 @@ import {PersonalComponent} from "./views/personal/personal.component";
 import {MessageComponent} from "./data/service/message/message.component";
 import {BusinessComponent} from "./views/business/business.component";
 import {BulkAddViewComponent} from "./data/manage/upload/bulkAddView/bulkAddView.component";
+import {DataViewComponent} from "./data/data-view/data-view.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: PersonalComponent },
   // { path: 'current/:id', component: CurrentTaskComponent },
+  {path: 'dataView', component: DataViewComponent},
   {path: 'bulkImport', component: BulkAddViewComponent},
   {path: 'console', component: MessageComponent},
   {path: '404', component: PersonalComponent},
