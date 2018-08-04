@@ -13,6 +13,8 @@ import {AddViewsService} from "../../addViews/service_addViews/addViews.service"
 import {KeysOptions} from "../../../../models/bulkAdd/KeysOptions";
 import {SpinnerVisibilityService} from "ng-http-loader";
 import {ContextMenuComponent} from "ngx-contextmenu";
+import {IncomeService} from "../../../../sections/section_income/service_income/income.service";
+import {ExpenseService} from "../../../../sections/section_expense/service_expense/expense.service";
 
 @Component({
   selector: 'app-bulkAddView',
@@ -92,7 +94,9 @@ export class BulkAddViewComponent implements OnInit {
               private serviceBalances: BalanceService,
               private serviceCompany: CompanyService,
               private addViewService: AddViewsService,
-              private spinner: SpinnerVisibilityService) {
+              private spinner: SpinnerVisibilityService,
+              private serviceIncomes: IncomeService,
+              private serviceExpense: ExpenseService) {
   }
 
   ngOnInit() {
@@ -478,7 +482,7 @@ export class BulkAddViewComponent implements OnInit {
     return new Expense(
       expenseIteratorId,
       transaction.NaamOmschrijving,
-      transaction.Bedrag,
+      transaction.Bedrag.replace(',','.'),
       null,
       transaction.Mededelingen,
       this.getDate(transaction),
@@ -487,7 +491,8 @@ export class BulkAddViewComponent implements OnInit {
       company.categoryFk === null ? 99 : company.categoryFk,
       this.getBalanceFk(transaction.NaamOmschrijving,transaction.Mededelingen, true),
       company.id,
-      1);
+      1,
+      );
   }
 
   /**
@@ -500,7 +505,7 @@ export class BulkAddViewComponent implements OnInit {
     return new Income(
       incomeIteratorId,
       transaction.NaamOmschrijving,
-      transaction.Bedrag,
+      transaction.Bedrag.replace(',','.'),
       null,
       transaction.Mededelingen,
       this.getDate(transaction),
@@ -537,6 +542,7 @@ export class BulkAddViewComponent implements OnInit {
         companyG = company;
       }
     }
+    
 
     return companyG;
   }
@@ -559,11 +565,6 @@ export class BulkAddViewComponent implements OnInit {
     this.data = null;
     this.parsedData = null;
 
-  }
-
-
-  submitForm() {
-    //todo export transaction to api
   }
 
 
@@ -745,6 +746,17 @@ export class BulkAddViewComponent implements OnInit {
     }, 500);
   }
 
+  submitExpense(expense: Expense) {
+    expense.date = new Date(expense.date);
+
+    this.serviceExpense.addExpense(expense).subscribe();
+  }
+
+  submitIncome(income: Income) {
+    income.date = new Date(income.date);
+
+    this.serviceIncomes.addIncome(income).subscribe();
+  }
 }
 
 

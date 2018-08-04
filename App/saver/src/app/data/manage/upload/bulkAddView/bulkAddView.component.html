@@ -89,7 +89,7 @@
         <!--, 'automatic': transaction.extraCssAutomatic-->
 
         {{transaction.extraCssExpense}}
-        <form (ngSubmit)="submitForm()" #expenseForm="ngForm">
+        <form #expenseForm="ngForm">
           <h3 class="kind">Expense</h3>
 
           <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
@@ -225,7 +225,7 @@
 
 
 
-          <button type="submit" class="btn btn-success" [disabled]="!expenseForm.form.valid">Submit</button>
+          <button type="submit" class="btn btn-success" [disabled]="!expenseForm.form.valid" (click)="submitExpense(transaction.expense)">Submit</button>
 
 
         </form>
@@ -236,7 +236,7 @@
            [ngClass]="{'extraInput': transaction.extraCssIncome}">
         <!--, 'automatic': transaction.extraCssAutomatic-->
       {{transaction.extraCssIncome}}
-        <form (ngSubmit)="submitForm()" #incomesForm="ngForm" >
+        <form #incomesForm="ngForm" >
           <h3 class="kind">Income</h3>
 
           <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
@@ -322,6 +322,9 @@
               </div>
             </div>
           </div>
+
+          <button type="submit" class="btn btn-success" [disabled]="!incomesForm.form.valid" (click)="submitIncome(transaction.income)">Submit</button>
+
 
         </form>
 

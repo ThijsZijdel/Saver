@@ -126,7 +126,8 @@ export class ExpenseService {
    * note: POST
    */
   addExpense (expense: Expense): Observable<Expense> {
-    const url = `${this.expensUrl}?action=add`;
+    const url = `${this.expensUrl}`;
+    expense.sqlDate = expense.date.toJSON().slice(0, 10);
 
     return this.http.post<Expense>(url, expense, httpOptions).pipe(
       tap((expense: Expense) => this.log(`added expense w/ id=${expense.id}`)),

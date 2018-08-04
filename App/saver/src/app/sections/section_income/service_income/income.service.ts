@@ -107,7 +107,7 @@ export class IncomeService {
    * note: POST
    */
   addIncome (income: Income): Observable<Income> {
-    const url = `${this.incomeUrl}?action=add`;
+    const url = `${this.incomeUrl}`;
 
     return this.http.post<Income>(url, income, httpOptions).pipe(
       tap((income: Income) => this.log(`added income w/ id=${income.id}`)),
