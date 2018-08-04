@@ -75,6 +75,7 @@ import {CompanyService} from "./data/service/service_company/company.service";
 import {NgHttpLoaderModule} from "ng-http-loader";
 import {ManageCompanyComponent} from "./data/manage/components/manage-company/manage-company.component";
 import {NgSelectModule} from "@ng-select/ng-select";
+import { DataViewComponent } from './data/data-view/data-view.component';
 
 
 
@@ -108,7 +109,8 @@ import {NgSelectModule} from "@ng-select/ng-select";
     CalendarComponent,
 
     AddViewsComponent,
-    BulkAddViewComponent
+    BulkAddViewComponent,
+    DataViewComponent
   ],
   imports: [
     BrowserModule,

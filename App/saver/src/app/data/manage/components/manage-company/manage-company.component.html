@@ -51,6 +51,7 @@
     <div class="form-group">
       <label for="power">Sub Category</label>
       <select class="form-control" id="power" [(ngModel)]="company.categoryFk" name="subcategoryFk">
+        <option value="null">No category</option>
         <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
       </select>
     </div>
@@ -58,7 +59,6 @@
 
     <button type="submit" class="btn btn-success"  (click)="submitForm()" >Submit</button>
 
-    {{company.name}} {{company.description}} {{company.email}} {{company.telephone}} {{company.categoryFk}} {{company.website}} {{company.iban}} {{company.id}} {{company.transactionName}}
   </form>
 </div>
 

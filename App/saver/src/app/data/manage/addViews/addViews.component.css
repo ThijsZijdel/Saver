@@ -17,19 +17,21 @@ div.overlay {
   position: fixed;
   z-index: 35;
 
-  background: rgba(181, 181, 181, 0.9)
+  background: rgba(181, 181, 181, 0.9);
+  overflow: hidden;
 }
 
 div.add-component {
-  height: 80%;
+  height: auto;
   overflow: scroll;
 
   position: fixed;
   top: 50px;
+  bottom: 0;
 
   width: 60%;
 
-  margin: 25px 20%;
+  margin: 25px 20% 0;
 
   background: #fff;
   z-index: 45;
