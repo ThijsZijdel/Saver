@@ -50,8 +50,7 @@ export class BulkAddViewComponent implements OnInit {
   /**
    * General variables
    */
-  monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
+  monthnames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 
   // category: Category = null;
@@ -104,14 +103,14 @@ export class BulkAddViewComponent implements OnInit {
     this.getBalances();
     this.getCompanies();
 
-    setTimeout(()=>{
+    setTimeout(() => {
       this.filterCategories();
     }, 100);
 
     this.getTransactionKeys();
   }
 
-  public reloadOptions(){
+  public reloadOptions() {
     this.getCategories();
     this.getBalances();
     this.getCompanies();
@@ -127,7 +126,8 @@ export class BulkAddViewComponent implements OnInit {
       }
     });
   }
-  private getBalances(){
+
+  private getBalances() {
     this.balances = [];
 
     this.serviceBalances.getBalances().subscribe(balances => {
@@ -194,7 +194,7 @@ export class BulkAddViewComponent implements OnInit {
    *
    * @param none: file's stored local by: this.uploadDocument()
    */
-  public parse():void  {
+  public parse(): void {
     //Check witch way of parsing is needed
     switch (this.extension) {
       case "csv":
@@ -255,9 +255,9 @@ export class BulkAddViewComponent implements OnInit {
   }
 
   private checkKeys(csv: any) {
-    csv = csv.replace(' / ','');
-    csv = csv.replace('Af Bij','AfBij');
-    csv = csv.replace(' (EUR)','');
+    csv = csv.replace(' / ', '');
+    csv = csv.replace('Af Bij', 'AfBij');
+    csv = csv.replace(' (EUR)', '');
 
     return csv;
   }
@@ -312,10 +312,11 @@ export class BulkAddViewComponent implements OnInit {
   }
 
   generalIteratorId: number = 0;
+
   /**
-   * Converting json to usable objects 
+   * Converting json to usable objects
    */
-  convert(){
+  convert() {
     //Iterators for the id's
     let expenseIteratorId: number = 0;
     let incomeIteratorId: number = 0;
@@ -329,10 +330,10 @@ export class BulkAddViewComponent implements OnInit {
       //get transaction company based on a few criteria
       let company = this.getCompany(transaction.Tegenrekening, transaction.NaamOmschrijving, transaction.MutatieSoort);
 
-        //EXPENSE
+      //EXPENSE
       if (BulkAddViewComponent.isExpense(transaction)) {
 
-        let newExpense = this.genExpense(transaction,expenseIteratorId,company);
+        let newExpense = this.genExpense(transaction, expenseIteratorId, company);
 
         //Local expenses array
         this.expenses.push(newExpense);
@@ -354,9 +355,9 @@ export class BulkAddViewComponent implements OnInit {
 
 
       } //INCOME
-      else if (!BulkAddViewComponent.isExpense(transaction)){
+      else if (!BulkAddViewComponent.isExpense(transaction)) {
 
-        let newIncome = this.genIncome(transaction,incomeIteratorId,company);
+        let newIncome = this.genIncome(transaction, incomeIteratorId, company);
 
         //Local incomes array
         this.incomes.push(newIncome);
@@ -393,86 +394,85 @@ export class BulkAddViewComponent implements OnInit {
     let isExpense = newTransaction.expense != null;
     let description;
 
-    if (isExpense){
+    if (isExpense) {
       description = newTransaction.expense.description;
     } else {
       description = newTransaction.income.description;
     }
 
 
-      for (let balance of this.balances) {
-        //if there is an name set in the db
-        if (balance.transactionName != null && description !=null) {
+    for (let balance of this.balances) {
+      //if there is an name set in the db
+      if (balance.transactionName != null && description != null) {
 
-          //validate this
-          if (description.toLowerCase().includes(balance.transactionName.toLowerCase()) ) {
+        //validate this
+        if (description.toLowerCase().includes(balance.transactionName.toLowerCase())) {
 
-            //Same balance name user.
-            // if (newTransaction. === this.userBalanceName) {
+          //Same balance name user.
+          // if (newTransaction. === this.userBalanceName) {
 
-              if (isExpense) {
-                //So transaction == expense && is on same account
-                let balanceFk
-                if (newTransaction.expense.balanceFk != null) {
-                  balanceFk = newTransaction.expense.balanceFk === balance.id ?  1 : balance.id;
-                } else {
-                  balanceFk = balance.id;
-                }
-                newTransaction.income = new Income(
-                  newTransaction.expense.id,
-                  newTransaction.expense.name,
-                  newTransaction.expense.amount,
-                  null,
-                  "Transfer to your own balance",
-                  newTransaction.expense.date,
-                  newTransaction.expense.monthName,
-                  newTransaction.expense.monthFk,
-                  balanceFk,
-                  null,
-                  1);
+          if (isExpense) {
+            //So transaction == expense && is on same account
+            let balanceFk
+            if (newTransaction.expense.balanceFk != null) {
+              balanceFk = newTransaction.expense.balanceFk === balance.id ? 1 : balance.id;
+            } else {
+              balanceFk = balance.id;
+            }
+            newTransaction.income = new Income(
+              newTransaction.expense.id,
+              newTransaction.expense.name,
+              newTransaction.expense.amount,
+              null,
+              "Transfer to your own balance",
+              newTransaction.expense.date,
+              newTransaction.expense.monthName,
+              newTransaction.expense.monthFk,
+              balanceFk,
+              null,
+              1);
 
-                newTransaction.extraCssIncome = true;
-                newTransaction.extraCssAutomatic = true
+            newTransaction.extraCssIncome = true;
+            newTransaction.extraCssAutomatic = true
 
 
-              } else if (!isExpense) {
+          } else if (!isExpense) {
 
-                let balanceFk
-                if (newTransaction.income.balanceFk != null) {
-                  balanceFk = newTransaction.income.balanceFk === balance.id ? 1 : balance.id;
-                } else {
-                  balanceFk = balance.id;
-                }
+            let balanceFk
+            if (newTransaction.income.balanceFk != null) {
+              balanceFk = newTransaction.income.balanceFk === balance.id ? 1 : balance.id;
+            } else {
+              balanceFk = balance.id;
+            }
 
-                //So transaction == income && is on same account
-                newTransaction.expense = new Expense(
-                  newTransaction.income.id,
-                  newTransaction.income.name,
-                  newTransaction.income.amount,
-                  null,
-                  "Transfer to your own balance",
-                  newTransaction.income.date,
-                  newTransaction.income.monthName,
-                  newTransaction.income.monthFk,
-                  null,
-                  balanceFk,
-                  null,
-                  1);
+            //So transaction == income && is on same account
+            newTransaction.expense = new Expense(
+              newTransaction.income.id,
+              newTransaction.income.name,
+              newTransaction.income.amount,
+              null,
+              "Transfer to your own balance",
+              newTransaction.income.date,
+              newTransaction.income.monthName,
+              newTransaction.income.monthFk,
+              null,
+              balanceFk,
+              null,
+              1);
 
-                newTransaction.extraCssExpense = true;
-                newTransaction.extraCssAutomatic = true
-
-              }
-
-            // }
-
+            newTransaction.extraCssExpense = true;
+            newTransaction.extraCssAutomatic = true
 
           }
+
+          // }
+
 
         }
 
       }
 
+    }
 
 
     return newTransaction;
@@ -485,7 +485,7 @@ export class BulkAddViewComponent implements OnInit {
    * @param company
    */
   private genExpense(transaction, expenseIteratorId: number, company: Company) {
-    transaction.Bedrag != null ? transaction.Bedrag = transaction.Bedrag.replace(',','.') : transaction.Bedrag = null;
+    transaction.Bedrag != null ? transaction.Bedrag = transaction.Bedrag.replace(',', '.') : transaction.Bedrag = null;
 
     return new Expense(
       expenseIteratorId,
@@ -494,13 +494,13 @@ export class BulkAddViewComponent implements OnInit {
       null,
       transaction.Mededelingen,
       this.getDate(transaction),
-      this.monthnames[this.getDate(transaction).getMonth()-1],
-      this.getDate(transaction).getMonth()+1,
+      this.monthnames[this.getDate(transaction).getMonth() - 1],
+      this.getDate(transaction).getMonth() + 1,
       company.categoryFk === null ? 99 : company.categoryFk,
-      this.getBalanceFk(transaction.NaamOmschrijving,transaction.Mededelingen, true),
+      this.getBalanceFk(transaction.NaamOmschrijving, transaction.Mededelingen, true),
       company.id,
       1,
-      );
+    );
   }
 
   /**
@@ -510,7 +510,7 @@ export class BulkAddViewComponent implements OnInit {
    * @param company
    */
   private genIncome(transaction, incomeIteratorId: number, company: Company) {
-    transaction.Bedrag != null ? transaction.Bedrag = transaction.Bedrag.replace(',','.') : transaction.Bedrag = null;
+    transaction.Bedrag != null ? transaction.Bedrag = transaction.Bedrag.replace(',', '.') : transaction.Bedrag = null;
 
     return new Income(
       incomeIteratorId,
@@ -519,9 +519,9 @@ export class BulkAddViewComponent implements OnInit {
       null,
       transaction.Mededelingen,
       this.getDate(transaction),
-      this.monthnames[this.getDate(transaction).getMonth()-1],
+      this.monthnames[this.getDate(transaction).getMonth() - 1],
       this.getDate(transaction).getMonth(),
-      this.getBalanceFk(transaction.NaamOmschrijving,transaction.Mededelingen, false),
+      this.getBalanceFk(transaction.NaamOmschrijving, transaction.Mededelingen, false),
       company.id,
       1);
   }
@@ -533,26 +533,26 @@ export class BulkAddViewComponent implements OnInit {
    */
   private getCompany(iban: string, transactionCompName: string, mutatieSoort: string) {
     //TODO check on more points than just iban: --> so more automatic
-    let companyG: Company = new Company(null,null,null,null,null,null,null, null, null);
+    let companyG: Company = new Company(null, null, null, null, null, null, null, null, null);
 
-    for (let company of this.companies){
+    for (let company of this.companies) {
 
       //check if transaction was: 'Geldautomaat' === atm
-      if (mutatieSoort === "Geldautomaat" && company.id === 0){
+      if (mutatieSoort === "Geldautomaat" && company.id === 0) {
         return company;
       }
 
       //check iban for potential match
-      if (iban === company.iban){
+      if (iban === company.iban) {
         companyG = company;
       }
 
       //Check transaction name for match
-      if (transactionCompName === company.transactionName){
+      if (transactionCompName === company.transactionName) {
         companyG = company;
       }
     }
-    
+
 
     return companyG;
   }
@@ -561,7 +561,7 @@ export class BulkAddViewComponent implements OnInit {
   /**
    * Reset all the file information, transactions, data, fields and variables
    */
-  reset():void {
+  reset(): void {
 
     this.message = null;
     this.expenses = [];
@@ -596,12 +596,12 @@ export class BulkAddViewComponent implements OnInit {
 
 
     let dat = new Date(
-        parseFloat(date.substr(0, 4)), //year
-        parseFloat(date.substr(4, 2))-1, //month
-        parseFloat(date.substr(6, 2))  //day
+      parseFloat(date.substr(0, 4)), //year
+      parseFloat(date.substr(4, 2)) - 1, //month
+      parseFloat(date.substr(6, 2))  //day
     )
 
-    console.log(tst+" <tst    "+date+" <date     "+dat+" < returned");
+    console.log(tst + " <tst    " + date + " <date     " + dat + " < returned");
 
     return dat;
   }
@@ -612,7 +612,7 @@ export class BulkAddViewComponent implements OnInit {
    * @param txt
    * @return num
    */
-  parseFloat(txt: string): number{
+  parseFloat(txt: string): number {
     return parseFloat(txt);
   }
 
@@ -621,7 +621,7 @@ export class BulkAddViewComponent implements OnInit {
     this.subCategories = [];
 
 
-    for (let cat of this.categories){
+    for (let cat of this.categories) {
       if (cat.subCategoryFk === 0) {
         this.mainCategories.push(cat);
       } else {
@@ -647,10 +647,10 @@ export class BulkAddViewComponent implements OnInit {
   getSubCats(id: number): Category[] {
     let subCats: Category[] = [];
 
-    for (let cat of this.categories){
-      if (cat.subCategoryFk === id){
+    for (let cat of this.categories) {
+      if (cat.subCategoryFk === id) {
         subCats.push(cat);
-      } else if (id === 9999){
+      } else if (id === 9999) {
         subCats.push(cat);
       }
     }
@@ -665,12 +665,12 @@ export class BulkAddViewComponent implements OnInit {
     this.transactionKeys = [];
 
     let keys = Object.keys(
-      new Expense(null,null,null,null,
-        null,null,null,null,
-        null,null,null,null)
+      new Expense(null, null, null, null,
+        null, null, null, null,
+        null, null, null, null)
     );
-    for (let i = 0; i < keys.length; i++){
-      if (keys[i] !== "monthName" && keys[i] !== "monthFk" && keys[i] !== "alreadyPaid" && keys[i] !== "id"){
+    for (let i = 0; i < keys.length; i++) {
+      if (keys[i] !== "monthName" && keys[i] !== "monthFk" && keys[i] !== "alreadyPaid" && keys[i] !== "id") {
         this.transactionKeys.push(keys[i]);
       }
     }
@@ -686,11 +686,11 @@ export class BulkAddViewComponent implements OnInit {
   // }
 
   private getParsedKeys() {
-    let parsedKeys =  Object.keys(this.parsedData[0]);
+    let parsedKeys = Object.keys(this.parsedData[0]);
 
     this.keys = [];
-    for (let key of parsedKeys){
-      this.keys.push(new KeysOptions(key,false,null,null,null))
+    for (let key of parsedKeys) {
+      this.keys.push(new KeysOptions(key, false, null, null, null))
     }
   }
 
@@ -753,10 +753,10 @@ export class BulkAddViewComponent implements OnInit {
   async changeDisplayedTransactions(length: number) {
     // TODO add: Async parallel --> till all new html (transactions) are loaded
     this.spinner.show();
-    setTimeout(()=>{
+    setTimeout(() => {
       this.displayedTransactions += length;
     }, 100);
-    setTimeout(()=>{
+    setTimeout(() => {
       this.spinner.hide();
     }, 500);
   }
@@ -776,6 +776,20 @@ export class BulkAddViewComponent implements OnInit {
 
     this.serviceIncomes.addIncome(income).subscribe();
   }
+
+  submitAll(transactions: TransactionBulk[]){
+    for (let transaction of transactions){
+      if(transaction.expense != null){
+        this.submitExpense(transaction.expense, transaction);
+      }
+
+      if(transaction.income != null){
+        this.submitIncome(transaction.income, transaction);
+      }
+    }
+  }
+
+
 }
 
 

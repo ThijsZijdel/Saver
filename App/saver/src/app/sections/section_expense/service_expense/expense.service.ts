@@ -77,6 +77,7 @@ export class ExpenseService {
     );
   }
 
+
   /**
    * Log a expenseservice message with the MessageService
    * @author Thijs Zijdel
@@ -187,6 +188,8 @@ export class ExpenseService {
         expense.subcategoryFk === cat.subCategoryFk) {
         data.push(expense);
       }
+
+
 
     }
     return data;
