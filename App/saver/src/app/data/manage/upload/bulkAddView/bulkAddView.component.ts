@@ -625,18 +625,18 @@ export class BulkAddViewComponent implements OnInit {
     }
   }
 
-  getSubCategories(id: number) {
-    if (id === 9999){
-      this.filterCategories();
-      return;
-    }
-    this.subCategories = [];
-    for (let cat of this.categories){
-      if (cat.subCategoryFk === id){
-        this.subCategories.push(cat);
-      }
-    }
-  }
+  // getSubCategories(id: number) {
+  //   if (id === 9999){
+  //     this.filterCategories();
+  //     return;
+  //   }
+  //   this.subCategories = [];
+  //   for (let cat of this.categories){
+  //     if (cat.subCategoryFk === id){
+  //       this.subCategories.push(cat);
+  //     }
+  //   }
+  // }
 
 
   getSubCats(id: number): Category[] {
@@ -652,9 +652,9 @@ export class BulkAddViewComponent implements OnInit {
     return subCats;
   }
 
-  companySelected(company: number, expense: Expense) {
-
-  }
+  // companySelected(company: number, expense: Expense) {
+  //
+  // }
 
   private getTransactionKeys() {
     this.transactionKeys = [];
@@ -671,14 +671,14 @@ export class BulkAddViewComponent implements OnInit {
     }
   }
 
-  getBalanceName(balanceFk: number): string {
-    for (let balance of this.balances){
-      if (balance.id = balanceFk){
-        return balance.name;
-      }
-    }
-
-  }
+  // getBalanceName(balanceFk: number): string {
+  //   for (let balance of this.balances){
+  //     if (balance.id = balanceFk){
+  //       return balance.name;
+  //     }
+  //   }
+  //
+  // }
 
   private getParsedKeys() {
     let parsedKeys =  Object.keys(this.parsedData[0]);

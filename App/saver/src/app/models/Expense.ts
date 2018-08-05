@@ -14,7 +14,7 @@ export class Expense {
   balanceFk: number;
   companyFk: number;
 
-  alreadyPaid: boolean;
+  alreadyPaid: boolean|number;
 
 
   sqlDate:string;

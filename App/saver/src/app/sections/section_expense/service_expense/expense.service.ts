@@ -129,6 +129,8 @@ export class ExpenseService {
     const url = `${this.expensUrl}`;
     expense.sqlDate = expense.date.toJSON().slice(0, 10);
 
+    expense.alreadyPaid === true ?  expense.alreadyPaid = 0 :expense.alreadyPaid = 1 ;
+
     return this.http.post<Expense>(url, expense, httpOptions).pipe(
       tap((expense: Expense) => this.log(`added expense w/ id=${expense.id}`)),
       catchError(this.handleError<Expense>('addExpense'))

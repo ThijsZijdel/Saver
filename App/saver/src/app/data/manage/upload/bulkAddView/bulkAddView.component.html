@@ -51,6 +51,8 @@
       <span style="float: right;margin-top: -22px;" *ngIf="data != null">
       {{data.length}}
       {{lengthDataTypeName}}
+
+        <button (click)="reloadOptions()">reload</button>
     </span>
     </div>
 
@@ -152,9 +154,12 @@
                       </option>
 
                     </select>
+
+
                   </span>
 
                 </div>
+                
 
                 <div class="form-group select" >
                   <label for="companiesOptions">Company</label>
@@ -231,7 +236,7 @@
 
       <div class="checkIncome" *ngIf="transaction.income != null && i < displayedTransactions"
            [ngClass]="{'extraInput': transaction.extraCssIncome}">
-        
+
         <form #incomesForm="ngForm" [ngClass]="{'submitted':transaction.incomeSubmit}">
           <h3 class="kind">Income</h3>
 

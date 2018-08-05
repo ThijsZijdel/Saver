@@ -153,11 +153,16 @@ button {
 .transactions-containers .container {
   margin-top: 100px;
 }
-
-form.submitted{
-  background: red;
+form {
+  transition: all 0.5s ease-in-out;
 }
-
+form.submitted{
+  height: 60px;
+  overflow: hidden;
+  margin: 25px -65px;
+  background: #999;
+  padding: 0 15px;
+}
 
 button.submit {
   float: right;
