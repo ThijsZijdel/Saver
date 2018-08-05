@@ -67,7 +67,7 @@ export class ExpensesComponent implements OnInit {
     // TODO  --> --> when click: show last 5 expenses in that subc.
 
 
-    this.serviceExpenses.getExpensesOf(this.reloadService.month, this.reloadService.year).pipe(catchOffline()).subscribe(expenses => {
+    this.serviceExpenses.getExpensesOf(this.reloadService.month, this.reloadService.year).subscribe(expenses => {
       // loop trough all the expenes
       for (let expense of expenses) {
         this.expenses.push(expense);

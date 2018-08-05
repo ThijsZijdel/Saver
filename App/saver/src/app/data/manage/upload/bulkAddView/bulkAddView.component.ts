@@ -495,7 +495,7 @@ export class BulkAddViewComponent implements OnInit {
       transaction.Mededelingen,
       this.getDate(transaction),
       this.monthnames[this.getDate(transaction).getMonth()-1],
-      this.getDate(transaction).getMonth(),
+      this.getDate(transaction).getMonth()+1,
       company.categoryFk === null ? 99 : company.categoryFk,
       this.getBalanceFk(transaction.NaamOmschrijving,transaction.Mededelingen, true),
       company.id,
@@ -591,14 +591,19 @@ export class BulkAddViewComponent implements OnInit {
    * @param date YYYYMMDD format
    */
   private getDate(tst: JsonVal): Date {
+
     let date = tst.Datum.toString();
 
 
-    return new Date(
+    let dat = new Date(
         parseFloat(date.substr(0, 4)), //year
-        parseFloat(date.substr(4, 2)), //month
+        parseFloat(date.substr(4, 2))-1, //month
         parseFloat(date.substr(6, 2))  //day
     )
+
+    console.log(tst+" <tst    "+date+" <date     "+dat+" < returned");
+
+    return dat;
   }
 
 
