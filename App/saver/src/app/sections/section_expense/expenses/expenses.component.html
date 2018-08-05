@@ -7,7 +7,7 @@
      onmousedown="return false;">
 
 
-  <div class="category-box main-category-box" *ngFor="let categoryMain of categories">
+  <div class="category-box main-category-box" *ngFor="let categoryMain of categories; trackBy: trackByFn">
     <div class="check" *ngIf="categoryMain.subCategoryFk == 0">
 
       <section class="category {{categoryMain.name+'-'+categoryMain.id}}">
@@ -25,7 +25,7 @@
         </h3>
 
         <span class="amount-box">&euro;
-        {{  serviceExpenses.getSumAmount(getAllExpensesOfMain(categoryMain))  }}
+        {{  categoryMain.total }}
         </span>
 
         <hr>
@@ -44,7 +44,7 @@
           </div>
           -->
 
-          <div class="expense" *ngFor="let category of categories">
+          <div class="expense" *ngFor="let category of categories ">
 
 
               <li *ngIf="category.subCategoryFk == categoryMain.id" >
@@ -60,7 +60,7 @@
 
                       {{category.name}}
                       <span class="amount">
-                        &euro;{{serviceExpenses.getSumAmount(getExpensesOf(category))}}
+                        &euro;{{category.total}}
                       </span>
                       <span class="tooltipPerc">
                       {{ getAmountExpensesSub(category.id) }} expenses
@@ -218,5 +218,4 @@
   </ng-template>
 
 </context-menu>
-
 

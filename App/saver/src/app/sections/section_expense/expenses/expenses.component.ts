@@ -67,7 +67,7 @@ export class ExpensesComponent implements OnInit {
     // TODO  --> --> when click: show last 5 expenses in that subc.
 
 
-    this.serviceExpenses.getExpensesOf(this.reloadService.month, this.reloadService.year).subscribe(expenses => {
+    this.serviceExpenses.getExpensesOf(this.reloadService.month+1, this.reloadService.year).subscribe(expenses => {
       // loop trough all the expenes
       for (let expense of expenses) {
         this.expenses.push(expense);
@@ -88,13 +88,23 @@ export class ExpensesComponent implements OnInit {
 
 
 
-
+  trackByFn(index, item) {
+    return index; // or item.id
+  }
 
   private getCategories() {
 
     let data: Category[] = [];
 
-    this.serviceCategories.getCategories().subscribe(categories => {
+    this.serviceCategories.getExpenseCategories(this.reloadService.month+1, this.reloadService.year, "onlyMain").subscribe(categories => {
+      // loop trough all the categories
+      for (let category of categories) {
+        data.push(category);
+      }
+    });
+
+
+    this.serviceCategories.getExpenseCategories(this.reloadService.month+1, this.reloadService.year, "all").subscribe(categories => {
       // loop trough all the categories
       for (let category of categories) {
         data.push(category);
@@ -104,6 +114,8 @@ export class ExpensesComponent implements OnInit {
         }
       }
     });
+
+
     return data;
   }
 
@@ -226,7 +238,9 @@ export class ExpensesComponent implements OnInit {
   }
 
   private refresh() {
-    this.getExpenses();
+    this.categories = this.getCategories();
+    // this.getExpenses();
+
   }
 
   manageCompany(company: Company) {
