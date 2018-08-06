@@ -5,12 +5,14 @@ import {MessageComponent} from "./data/service/message/message.component";
 import {BusinessComponent} from "./views/business/business.component";
 import {BulkAddViewComponent} from "./data/manage/upload/bulkAddView/bulkAddView.component";
 import {DataViewComponent} from "./data/data-view/data-view.component";
+import {IncomeComponent} from "./sections/section_income/income/income.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: PersonalComponent },
-  // { path: 'current/:id', component: CurrentTaskComponent },
+  { path: 'business', component: BusinessComponent },
   {path: 'dataView', component: DataViewComponent},
+  {path: 'income', component: IncomeComponent},
   {path: 'bulkImport', component: BulkAddViewComponent},
   {path: 'console', component: MessageComponent},
   {path: '404', component: PersonalComponent},
