@@ -107,7 +107,10 @@ export class IncomeService {
    * note: POST
    */
   addIncome (income: Income): Observable<Income> {
-    const url = `${this.incomeUrl}?action=add`;
+    const url = `${this.incomeUrl}`;
+    income.sqlDate = income.date.toJSON().slice(0, 10);
+
+    income.alreadyPaid === true ?  income.alreadyPaid = 0 : income.alreadyPaid = 1 ;
 
     return this.http.post<Income>(url, income, httpOptions).pipe(
       tap((income: Income) => this.log(`added income w/ id=${income.id}`)),

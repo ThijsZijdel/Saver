@@ -98,20 +98,30 @@ router.post('/incomes' ,  (req, res) => {
     async.parallel(
         [
              (callback) => {
-            //todo impliment changes
                 connection.connectDatabase.query(
 
-                    'INSERT INTO Income(idCategory, name, description) VALUES(?,?,?)',
-                    [req.body.idCategory, req.body.name, req.body.description],
-                     (errors, results, fields) => {
+                 'INSERT INTO Income(name, description, amount, repeatingFk, date, monthFk, balanceFk, alreadyPaid, companyFk) ' +
+                    'VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    [req.body.name, req.body.description, req.body.amount, req.body.repeatingFk, req.body.sqlDate, req.body.monthFk,
+                        req.body.balanceFk, req.body.alreadyPaid, req.body.companyFk],
+                    (errors, results, fields) => {
 
                     callback(errors);
                 })
             }
         ],
         (err, results) => {
-
-            res.json({"Added income with id:":req.body.idCategory});
+            if (err){
+                res.statusCode = 400;
+                res.json({
+                    "Could not add income with name: ":req.body.name,
+                    "body":req.body,
+                    "sqlDate must been set: ":req.body.sqlDate,
+                    "error":err
+                });
+            } else {
+                res.json({"Added income with name: ": req.body.name});
+            }
         }
     );
 

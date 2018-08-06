@@ -14,8 +14,10 @@ export class Expense {
   balanceFk: number;
   companyFk: number;
 
-  alreadyPaid: boolean;
+  alreadyPaid: boolean|number;
 
+
+  sqlDate:string;
 
   constructor(id: number,
               name: string,
@@ -28,7 +30,8 @@ export class Expense {
               subcategoryFk: number,
               balanceFk: number,
               companyFk: number,
-              alreadyPaid: number) {
+              alreadyPaid: number,
+              sqlDate?:string) {
     this.id = id;
     this.name = name;
     this.amount = amount;
@@ -45,5 +48,10 @@ export class Expense {
 
     this.monthFk = monthFk;
     this.repeatingFk = repeatingFk;
+
+    this.sqlDate = sqlDate;
   }
+
+
+
 }

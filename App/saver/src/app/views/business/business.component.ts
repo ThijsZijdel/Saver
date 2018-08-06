@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AddViewsService} from "../../data/manage/addViews/service_addViews/addViews.service";
 
 @Component({
   selector: 'app-business',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BusinessComponent implements OnInit {
 
-  constructor() { }
+  constructor(public AddViewService: AddViewsService) { }
 
   ngOnInit() {
   }
