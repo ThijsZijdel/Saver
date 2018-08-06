@@ -61,14 +61,22 @@ router.get('/expenses/get/:month/:year' ,  (req, res) => {
             }
         ],
         (err, results) => {
+            if (err){
+                res.statusCode = 400;
+                res.json({
+                    "Could not get expenses of ":req.body.month,
+                    "body":req.body,
+                    "error":err
+                });
+            } else {
+
+                //Get the data from the initial call
+                let data = results[0];
 
 
-            //Get the data from the initial call
-            let data = results[0];
-
-
-            res.statusCode = 200;
-            res.json(data);
+                res.statusCode = 200;
+                res.json(data);
+            }
         }
     );
 
