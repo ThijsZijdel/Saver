@@ -1,3 +1,35 @@
-<p>
-  business works!
-</p>
+
+
+
+<div class="container-fluid" [ngStyle]="{'overflow':AddViewService.overflowOutlet[0],
+                                          'height':AddViewService.overflowOutlet[1]}">
+  <div class="row">
+
+    <!-- Expenses Col -->
+    <div class="col-md-3 colum-section">
+
+      <div class="row">
+
+        <div class="col-md-12">
+          <app-budget></app-budget>
+        </div>
+
+        <div class="col-md-12">
+          <div class="add-expense-box" *ngIf="addExpenseBox">
+            <app-manage-expense></app-manage-expense>
+          </div>
+
+          <div *ngIf="!addExpenseBox">
+            <app-expenses></app-expenses>
+          </div>
+        </div>
+
+      </div>
+
+    </div><!-- / Expenses Col -->
+
+
+
+  </div>
+</div>
+
