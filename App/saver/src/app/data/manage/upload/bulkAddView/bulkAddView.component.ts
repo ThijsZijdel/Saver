@@ -786,6 +786,8 @@ export class BulkAddViewComponent implements OnInit {
       if(transaction.income != null){
         this.submitIncome(transaction.income, transaction);
       }
+
+      transaction = null;
     }
   }
 
