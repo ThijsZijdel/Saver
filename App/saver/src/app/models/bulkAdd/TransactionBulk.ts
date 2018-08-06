@@ -19,6 +19,8 @@ export class TransactionBulk {
   mainCategories: Category[];
   subCategories: Category[];
 
+  expenseSubmit: boolean = false;
+  incomeSubmit: boolean = false;
 
   constructor(id: number,
               expense: Expense,

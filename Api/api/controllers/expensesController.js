@@ -61,14 +61,22 @@ router.get('/expenses/get/:month/:year' ,  (req, res) => {
             }
         ],
         (err, results) => {
+            if (err){
+                res.statusCode = 400;
+                res.json({
+                    "Could not get expenses of ":req.body.month,
+                    "body":req.body,
+                    "error":err
+                });
+            } else {
+
+                //Get the data from the initial call
+                let data = results[0];
 
 
-            //Get the data from the initial call
-            let data = results[0];
-
-
-            res.statusCode = 200;
-            res.json(data);
+                res.statusCode = 200;
+                res.json(data);
+            }
         }
     );
 
@@ -78,12 +86,17 @@ router.get('/expenses/get/:month/:year' ,  (req, res) => {
  * HTTP Post route for expenses
  */
 router.post('/expenses' ,  (req, res) => {
+
     async.parallel(
         [
              (callback) => {
+
+
                 connection.connectDatabase.query(
-                    'INSERT INTO Category(idCategory, name, description) VALUES(?,?,?)',
-                    [req.body.idCategory, req.body.name, req.body.description],
+                    'INSERT INTO Expense(name, description, amount, repeatingFk, subcategoryFk, date, monthFk, balanceFk, alreadyPaid, companyFk, year) ' +
+                    'VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    [req.body.name, req.body.description, req.body.amount, req.body.repeatingFk, req.body.subcategoryFk,
+                        req.body.sqlDate, req.body.monthFk, req.body.balanceFk, req.body.alreadyPaid, req.body.companyFk, req.body.year],
                      (errors, results, fields) => {
 
                     callback(errors);
@@ -91,8 +104,17 @@ router.post('/expenses' ,  (req, res) => {
             }
         ],
         (err, results) => {
-
-            res.json({"Added expense with id:":req.body.idCategory});
+            if (err){
+                res.statusCode = 400;
+                res.json({
+                            "Could not add expense with name: ":req.body.name,
+                            "body":req.body,
+                            "sqlDate must been set: ":req.body.sqlDate,
+                            "error":err
+                });
+            } else {
+                res.json({"Added expense with name: ": req.body.name});
+            }
         }
     );
 

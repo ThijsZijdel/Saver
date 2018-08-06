@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, of} from 'rxjs/index';
 import {Category} from "../../../models/Category";
 import {MessageService} from "../../service/message/service_message/message.service";
+import {Expense} from "../../../models/Expense";
 
 
 
@@ -34,6 +35,22 @@ export class CategoryService {
         catchError(this.handleError('getCategory', []))
       );
   }
+
+  /**
+   * get categories from the server
+   * @author Thijs Zijdel
+   */
+  getMainCategories(): Observable<Category[]> {
+    const url = `${this.categoryUrl}/main`; //?action=getAll
+    return this.http.get<Category[]>(url)
+      .pipe(
+        tap(categories => this.log(`fetched main categories`)),
+        catchError(this.handleError('getCategory', []))
+      );
+  }
+
+
+
 
   /**
    * get category by id.
@@ -93,7 +110,7 @@ export class CategoryService {
    * @author Thijs Zijdel
    */
   updateCategory (category: Category): Observable<any> {
-    const url = `${this.categoryUrl}?action=edit`;
+    const url = `${this.categoryUrl}/edit`;
 
     return this.http.put(url, category, httpOptions).pipe(
       tap(_ => this.log(`updated category id=${category.id}`)),
@@ -154,5 +171,15 @@ export class CategoryService {
     );
   }
 
+  getExpenseCategories(month: number, year: number, filter: string): Observable<Category[]> {
+    let url = `${this.categoryUrl}/get/${month}/${year}/${filter}`;
+
+
+
+    return this.http.get<Category[]>(url).pipe(
+      tap(_ => this.log(`fetched Category month=${month} year=${year}`)),
+      catchError(this.handleError<Category[]>(`getCategory month=${month} year=${year}`))
+    );
+  }
 }
 

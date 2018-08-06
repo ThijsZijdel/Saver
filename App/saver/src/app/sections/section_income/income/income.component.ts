@@ -46,8 +46,8 @@ export class IncomeComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getIncomes("monthly", 12);
-    this.getSpendings("monthly", 12);
+    this.getFilteredIncomes("monthly", 12);
+    this.getFilteredSpendings("monthly", 12);
     this.calculateSaved();
     this.calculateAvg();
 
@@ -58,7 +58,7 @@ export class IncomeComponent implements OnInit {
 
   }
 
-  private getIncomes(frequency: string, months: number):void {
+  private getFilteredIncomes(frequency: string, months: number):void {
     this.incomes = [];
     this.incomeData = [];
 
@@ -72,7 +72,7 @@ export class IncomeComponent implements OnInit {
     });
   }
 
-  private getSpendings(frequency: string, months: number): void {
+  private getFilteredSpendings(frequency: string, months: number): void {
     this.spendingData = [];
     this.expenses = [];
 
@@ -138,7 +138,10 @@ export class IncomeComponent implements OnInit {
         formatter: function () {
           return '<b>' + this.x + '</b><br/>' +
             this.series.name + ': ' + this.y ;
-        }
+        },
+        hideDelay: 0,
+        shadow: false,
+        animation: false,
       },
       yAxis:{
         title: {
@@ -190,8 +193,8 @@ export class IncomeComponent implements OnInit {
 
 
   selectionChange(frequency: string, months: number) {
-    this.getSpendings(frequency, months);
-    this.getIncomes(frequency, months);
+    this.getFilteredSpendings(frequency, months);
+    this.getFilteredIncomes(frequency, months);
 
     this.calculateAvg();
     this.calculateSaved();

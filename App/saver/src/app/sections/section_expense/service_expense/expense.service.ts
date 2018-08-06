@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, of} from 'rxjs/index';
 import {Expense} from "../../../models/Expense";
 import {MessageService} from "../../../data/service/message/service_message/message.service";
+import {Category} from "../../../models/Category";
 
 
 
@@ -76,6 +77,7 @@ export class ExpenseService {
     );
   }
 
+
   /**
    * Log a expenseservice message with the MessageService
    * @author Thijs Zijdel
@@ -125,7 +127,10 @@ export class ExpenseService {
    * note: POST
    */
   addExpense (expense: Expense): Observable<Expense> {
-    const url = `${this.expensUrl}?action=add`;
+    const url = `${this.expensUrl}`;
+    expense.sqlDate = expense.date.toJSON().slice(0, 10);
+
+    expense.alreadyPaid === true ?  expense.alreadyPaid = 0 :expense.alreadyPaid = 1 ;
 
     return this.http.post<Expense>(url, expense, httpOptions).pipe(
       tap((expense: Expense) => this.log(`added expense w/ id=${expense.id}`)),
@@ -163,6 +168,61 @@ export class ExpenseService {
       catchError(this.handleError<Expense[]>('searchExpenses', []))
     );
   }
+
+  public getExpensesOfcategory(cat: Category, expenses: Expense[]): Expense[] {
+    let data: Expense[] = [];
+
+    for (let expense of expenses) {
+      if(expense.subcategoryFk == cat.id && expense.subcategoryFk != 0){
+        data.push(expense);
+      }
+    }
+    return data;
+  }
+
+  public getExpensesOfmainCategory(cat: Category, expenses: Expense[]): Expense[] {
+    let data: Expense[] = [];
+
+    for (let expense of expenses) {
+      if (expense.subcategoryFk === cat.id  ||
+        expense.subcategoryFk === cat.subCategoryFk) {
+        data.push(expense);
+      }
+
+
+
+    }
+    return data;
+  }
+
+
+  public getSumAmount(expenses: Expense[]): number {
+    let sum: number = 0;
+
+    for (let expense of expenses){
+      sum += expense.amount;
+    }
+
+    return sum;
+  }
+
+  getLastExpenseOfCategory(categoryId: Number, expenses: Expense[]) {
+    let data: Expense[] = [];
+    for (let expense of expenses) {
+      if(expense.subcategoryFk == categoryId){
+        data.push(expense);
+      }
+
+      if (data.length > 0){
+        return data;
+      }
+    }
+    return data;
+  }
+
+
+
+
 
 }
 

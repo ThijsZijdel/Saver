@@ -51,6 +51,8 @@
       <span style="float: right;margin-top: -22px;" *ngIf="data != null">
       {{data.length}}
       {{lengthDataTypeName}}
+
+        <button (click)="reloadOptions()">reload</button>
     </span>
     </div>
 
@@ -73,13 +75,18 @@
           </ul>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-12">
+          <button (click)="submitAll(transactions)">submit all transactions</button>
+        </div>
+      </div>
     </div>
 
 
   </div>
 
   <div class="transactions-containers">
-    <div class="container" *ngFor="let transaction of transactions; let i = index" [contextMenu]="transactionMenu" [contextMenuSubject]="transaction">
+    <div class="container-fluid transaction-container" *ngFor="let transaction of transactions; let i = index" [contextMenu]="transactionMenu" [contextMenuSubject]="transaction">
 
 
 
@@ -88,10 +95,8 @@
            [ngClass]="{'extraInput': transaction.extraCssExpense}">
         <!--, 'automatic': transaction.extraCssAutomatic-->
 
-        {{transaction.extraCssExpense}}
-        <form (ngSubmit)="submitForm()" #expenseForm="ngForm">
+        <form #expenseForm="ngForm" [ngClass]="{'submitted':transaction.expenseSubmit}">
           <h3 class="kind">Expense</h3>
-
           <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
             <span *ngIf="transaction.expenseJson != null">
               {{transaction.expenseJson.MutatieSoort}} - {{transaction.expenseJson.Code}}
@@ -154,9 +159,12 @@
                       </option>
 
                     </select>
+
+
                   </span>
 
                 </div>
+                
 
                 <div class="form-group select" >
                   <label for="companiesOptions">Company</label>
@@ -187,7 +195,7 @@
                       <option [value]="0">
                         No category
                       </option>
-                      <option *ngFor="let cat of transaction.mainCategories"  [value]="cat.id">
+                      <option *ngFor="let cat of transaction.mainCategories"  [value]="cat.id" >
                         {{cat.name}}
                       </option>
 
@@ -200,7 +208,6 @@
 
                 <div class="form-group select">
                   <label for="subCategory">Sub Category</label>
-                {{transaction.expense.subcategoryFk}}
                   <span class="selections">
                     <select class="form-control selection" id="subCategory" required #subcatOptions [(ngModel)]="transaction.expense.subcategoryFk"
                             (change)="transaction.expense.subcategoryFk = parseFloat(subcatOptions.value) " name="subcategoryFk"
@@ -208,7 +215,8 @@
                       <option [value]="99">
                         No sub category
                       </option>
-                      <option *ngFor="let cat of transaction.subCategories" [value]="cat.id" >
+                      <option *ngFor="let cat of transaction.subCategories" [value]="cat.id"
+                              selected="{{cat.id === transaction.expense.subcategoryFk}}">
                         {{cat.name}}
                       </option>
 
@@ -224,7 +232,7 @@
 
 
 
-          <button type="submit" class="btn btn-success" [disabled]="!expenseForm.form.valid">Submit</button>
+          <button type="submit" class="btn btn-success submit" [disabled]="!expenseForm.form.valid" (click)="submitExpense(transaction.expense, transaction)">Submit</button>
 
 
         </form>
@@ -233,9 +241,8 @@
 
       <div class="checkIncome" *ngIf="transaction.income != null && i < displayedTransactions"
            [ngClass]="{'extraInput': transaction.extraCssIncome}">
-        <!--, 'automatic': transaction.extraCssAutomatic-->
-      {{transaction.extraCssIncome}}
-        <form (ngSubmit)="submitForm()" #incomesForm="ngForm" >
+
+        <form #incomesForm="ngForm" [ngClass]="{'submitted':transaction.incomeSubmit}">
           <h3 class="kind">Income</h3>
 
           <span class="float-right" style="font-size: 10px; color:#c7c7c7;">
@@ -321,6 +328,9 @@
               </div>
             </div>
           </div>
+
+          <button type="submit" class="btn btn-success submit" [disabled]="!incomesForm.form.valid" (click)="submitIncome(transaction.income, transaction)">Submit</button>
+
 
         </form>
 

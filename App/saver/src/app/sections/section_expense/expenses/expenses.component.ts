@@ -19,7 +19,7 @@ import {Company} from "../../../models/Company";
 })
 export class ExpensesComponent implements OnInit {
 
-  constructor(private serviceExpenses: ExpenseService,
+  constructor(protected serviceExpenses: ExpenseService,
               private serviceCategories: CategoryService,
               protected network: Network,
               protected addViewService: AddViewsService,
@@ -67,7 +67,7 @@ export class ExpensesComponent implements OnInit {
     // TODO  --> --> when click: show last 5 expenses in that subc.
 
 
-    this.serviceExpenses.getExpensesOf(this.reloadService.month, this.reloadService.year).pipe(catchOffline()).subscribe(expenses => {
+    this.serviceExpenses.getExpensesOf(this.reloadService.month+1, this.reloadService.year).subscribe(expenses => {
       // loop trough all the expenes
       for (let expense of expenses) {
         this.expenses.push(expense);
@@ -78,45 +78,33 @@ export class ExpensesComponent implements OnInit {
   }
 
   protected getExpensesOf(cat: Category):Expense[]{
-    let data: Expense[] = [];
-
-    for (let expense of this.expenses) {
-      if(expense.subcategoryFk == cat.id && expense.subcategoryFk != 0){
-        data.push(expense);
-      }
-    }
-    return data;
+    return this.serviceExpenses.getExpensesOfcategory(cat, this.expenses);
   }
+
+
   protected getAllExpensesOfMain(cat: Category):Expense[]{
-    let data: Expense[] = [];
-
-    for (let expense of this.expenses) {
-      if (expense.subcategoryFk === cat.id  ||
-        expense.subcategoryFk === cat.subCategoryFk) {
-        data.push(expense);
-      }
-
-    }
-    return data;
-  }
-
-  protected getSumAmounts(expenses: Expense[]): number {
-    let sum: number = 0;
-
-    for (let expense of expenses){
-      sum += expense.amount;
-    }
-
-    return sum;
+    return this.serviceExpenses.getExpensesOfmainCategory(cat, this.expenses);
   }
 
 
+
+  trackByFn(index, item) {
+    return index; // or item.id
+  }
 
   private getCategories() {
 
     let data: Category[] = [];
 
-    this.serviceCategories.getCategories().subscribe(categories => {
+    this.serviceCategories.getExpenseCategories(this.reloadService.month+1, this.reloadService.year, "onlyMain").subscribe(categories => {
+      // loop trough all the categories
+      for (let category of categories) {
+        data.push(category);
+      }
+    });
+
+
+    this.serviceCategories.getExpenseCategories(this.reloadService.month+1, this.reloadService.year, "all").subscribe(categories => {
       // loop trough all the categories
       for (let category of categories) {
         data.push(category);
@@ -126,6 +114,8 @@ export class ExpensesComponent implements OnInit {
         }
       }
     });
+
+
     return data;
   }
 
@@ -153,34 +143,10 @@ export class ExpensesComponent implements OnInit {
   }
 
   protected getLastExpenseOf(categoryId: Number): Expense[] {
-    let data: Expense[] = [];
-    for (let expense of this.expenses) {
-      if(expense.subcategoryFk == categoryId){
-        data.push(expense);
-      }
-
-      if (data.length > 0){
-        return data;
-      }
-    }
-    return data;
+    return this.serviceExpenses.getLastExpenseOfCategory(categoryId, this.expenses);
   }
 
 
-  getColor(category: Category): string {
-    return category.color;
-  }
-
-
-  monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
-  formatDate(dateI: Date): string {
-    let date = new Date(dateI);
-    let curr_date = date.getDay();
-    let curr_month = date.getMonth();
-    let curr_year = date.getFullYear();
-    return(this.monthnames[curr_month] + " " + curr_date + ", " + curr_year);
-  }
 
   protected getSumSubCats(id: number):number {
     let sum: number = 0;
@@ -272,7 +238,9 @@ export class ExpensesComponent implements OnInit {
   }
 
   private refresh() {
-    this.getExpenses();
+    this.categories = this.getCategories();
+    // this.getExpenses();
+
   }
 
   manageCompany(company: Company) {
@@ -286,6 +254,15 @@ export class ExpensesComponent implements OnInit {
 
     //set the expense in the service
     this.addViewService.setCompany(company);
+  }
+  monthnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  formatDate(dateI: Date): string {
+    let date = new Date(dateI);
+    let curr_date = date.getDay();
+    let curr_month = date.getMonth();
+    let curr_year = date.getFullYear();
+    return(this.monthnames[curr_month] + " " + curr_date + ", " + curr_year);
   }
 }
 
