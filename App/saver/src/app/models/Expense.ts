@@ -16,6 +16,7 @@ export class Expense {
 
   alreadyPaid: boolean|number;
 
+  year: number;
 
   sqlDate:string;
 
@@ -50,6 +51,8 @@ export class Expense {
     this.repeatingFk = repeatingFk;
 
     this.sqlDate = sqlDate;
+
+    this.year = date.getFullYear();
   }
 
 

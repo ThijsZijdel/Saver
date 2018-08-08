@@ -520,7 +520,7 @@ export class BulkAddViewComponent implements OnInit {
       transaction.Mededelingen,
       this.getDate(transaction),
       this.monthnames[this.getDate(transaction).getMonth() - 1],
-      this.getDate(transaction).getMonth(),
+      this.getDate(transaction).getMonth()+1,
       this.getBalanceFk(transaction.NaamOmschrijving, transaction.Mededelingen, false),
       company.id,
       1);
