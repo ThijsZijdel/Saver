@@ -66,10 +66,15 @@ export class ExpenseService {
    * get expenses of certain month
    * @param {number} month
    * @param {number} year
+   * @param groupBy
    * @returns {Observable<Expense[]>}
    */
-  getExpensesOf(month: number, year: number): Observable<Expense[]> {
-    const url = `${this.expensUrl}/get/${month}/${year}`;
+  getExpensesOf(month: number, year: number, orderBy?: string): Observable<Expense[]> {
+    let url = `${this.expensUrl}/get/${month}/${year}`;
+
+    if (orderBy != null) {
+      url +="?orderBy="+orderBy;
+    }
 
     return this.http.get<Expense[]>(url).pipe(
       tap(_ => this.log(`fetched Expenses month=${month} year=${year}`)),
