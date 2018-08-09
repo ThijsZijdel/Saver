@@ -46,14 +46,23 @@ router.get('/expenses' ,  (req, res) => {
 });
 
 router.get('/expenses/get/:month/:year' ,  (req, res) => {
+    let generatedQuery = 'SELECT E.* ' +
+        'FROM Expense AS E ' +
+        'INNER JOIN MonthTab AS M on E.monthFk = M.id '+
+        'WHERE E.monthFk = ? AND E.year = ? ';
+
+    if (req.query != null ) {
+        generatedQuery += 'ORDER BY '+req.query.orderBy;
+    }
+
+    generatedQuery += ';';
+
+
     async.parallel(
         [
             (callback) => {
                 connection.connectDatabase.query(
-                    'SELECT E.* ' +
-                    'FROM Expense AS E ' +
-                    'INNER JOIN MonthTab AS M on E.monthFk = M.id '+
-                    'WHERE E.monthFk = ? AND E.year = ? ;',
+                    generatedQuery,
                     [req.params.month, req.params.year],
                     (errors, results, fields) => {
                         callback(errors, results);
