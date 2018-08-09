@@ -7,8 +7,9 @@
      onmousedown="return false;">
 
 
-  <div class="category-box main-category-box" *ngFor="let categoryMain of categories; trackBy: trackByFn">
-    <div class="check" *ngIf="categoryMain.subCategoryFk == 0">
+  <div class="category-box main-category-box" *ngFor="let categoryMain of mainCategories; trackBy: trackByFn">
+    <div class="check" >
+      <!--*ngIf="categoryMain.subCategoryFk == 0"-->
 
       <section class="category {{categoryMain.name+'-'+categoryMain.id}}">
 
@@ -44,10 +45,10 @@
           </div>
           -->
 
-          <div class="expense" *ngFor="let category of categories ">
+          <div class="expense" *ngFor="let category of subCategories ">
 
 
-              <li *ngIf="category.subCategoryFk == categoryMain.id" >
+              <li *ngIf="category.subCategoryFk === categoryMain.id" >
                 <div class="sub-layer subcategory {{category.name+'-'+category.id}}">
 
                   <span class="icon-subcat down" [ngStyle]="{'background':category.color}">
@@ -218,4 +219,3 @@
   </ng-template>
 
 </context-menu>
-

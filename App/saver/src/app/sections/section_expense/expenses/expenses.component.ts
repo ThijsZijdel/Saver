@@ -43,7 +43,7 @@ export class ExpensesComponent implements OnInit {
 
 
   ngOnInit() {
-    this.categories = this.getCategories();
+    this.getCategories();
     this.getExpenses();
 
     console.log(this.network.online+" network");
@@ -51,9 +51,7 @@ export class ExpensesComponent implements OnInit {
     this.reloadService.change.subscribe(month => {
         this.refresh();
     });
-    this.reloadService.change.subscribe(year => {
-      this.refresh();
-    });
+
 
 
   }
@@ -92,14 +90,18 @@ export class ExpensesComponent implements OnInit {
     return index; // or item.id
   }
 
-  private getCategories() {
+  mainCategories: Category[] = [];
+  subCategories: Category[] = [];
 
-    let data: Category[] = [];
+  private getCategories() {
+    this.mainCategories = [];
+    this.subCategories = [];
 
     this.serviceCategories.getExpenseCategories(this.reloadService.month+1, this.reloadService.year, "onlyMain").subscribe(categories => {
       // loop trough all the categories
+      console.log("called")
       for (let category of categories) {
-        data.push(category);
+        this.mainCategories.push(category);
       }
     });
 
@@ -107,7 +109,7 @@ export class ExpensesComponent implements OnInit {
     this.serviceCategories.getExpenseCategories(this.reloadService.month+1, this.reloadService.year, "all").subscribe(categories => {
       // loop trough all the categories
       for (let category of categories) {
-        data.push(category);
+        this.subCategories.push(category);
 
         if(category.subCategoryFk != 0){
 
@@ -116,7 +118,6 @@ export class ExpensesComponent implements OnInit {
     });
 
 
-    return data;
   }
 
   setShowStateSubLayer(mainClasse:string, name: string, id: number) {
@@ -238,7 +239,8 @@ export class ExpensesComponent implements OnInit {
   }
 
   private refresh() {
-    this.categories = this.getCategories();
+     this.getCategories();
+
     // this.getExpenses();
 
   }
