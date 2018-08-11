@@ -76,6 +76,7 @@ import {NgHttpLoaderModule} from "ng-http-loader";
 import {ManageCompanyComponent} from "./data/manage/components/manage-company/manage-company.component";
 import {NgSelectModule} from "@ng-select/ng-select";
 import { DataViewComponent } from './data/data-view/data-view.component';
+import {MaxCharsPipe, ValutaPipe} from "./data/service/pipes/CustomTransforms";
 
 
 
@@ -110,7 +111,10 @@ import { DataViewComponent } from './data/data-view/data-view.component';
 
     AddViewsComponent,
     BulkAddViewComponent,
-    DataViewComponent
+    DataViewComponent,
+
+    MaxCharsPipe,
+    ValutaPipe
   ],
   imports: [
     BrowserModule,
