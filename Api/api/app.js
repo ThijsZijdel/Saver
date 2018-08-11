@@ -74,7 +74,7 @@ app.use(function(err, req, res, next) {
     // req.status(err.status || 500);
     // res.render('error');
 
-    res.send(500, {status:500, message: 'internal error', type:'internal'});
+    res.status(500).send({status:500, message: 'internal error', type:'internal'});
 });
 
 

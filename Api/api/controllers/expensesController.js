@@ -51,7 +51,7 @@ router.get('/expenses/get/:month/:year' ,  (req, res) => {
         'INNER JOIN MonthTab AS M on E.monthFk = M.id '+
         'WHERE E.monthFk = ? AND E.year = ? ';
 
-    if (req.query != null ) {
+    if (req.query.orderBy != null ) {
         generatedQuery += 'ORDER BY '+req.query.orderBy;
     }
 
