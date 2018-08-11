@@ -61,7 +61,7 @@ export class CalendarComponent implements OnInit {
         day.before && td.classList.add('before');
         day.after && td.classList.add('after');
 
-        if (!day.before && !day.after && i == new Date().getMonth())
+        if (!day.before && !day.after && i === new Date().getMonth())
           day.current && td.classList.add('current');
 
 
@@ -153,16 +153,67 @@ export class CalendarComponent implements OnInit {
   }
 
 
-  changeMonth(number: number) {
-    if (number == null){
-      this.displayedMonth = this.currentMonth;
-    } else {
-      //todo check year
-      this.displayedMonth = this.displayedMonth + number;
+  changeMonth(interval: number) {
+    if (interval == null){
+      this.displayedMonth = this.today.getMonth();
+      this.year = this.today.getFullYear();
     }
 
+    //If month === 11 (Dec) set year +1 and months = 0 (Jan)  +
+    if (this.displayedMonth === 11 && interval > 0){
+      this.displayedMonth = 0;
+      interval = 0;
+      this.changeYear(1);
+
+
+      this.emitMonth(interval);
+      return;
+
+    }
+
+    //If month === 0 (Jan) set year -1 and months = 12 (Dec)  -
+    if (interval < 0 && (this.displayedMonth === 0 ) ){
+      this.displayedMonth = 12;
+      this.changeYear(-1);
+
+      this.emitMonth(interval);
+      return;
+    }
+
+    //Else just emit the change
+    this.emitMonth(interval);
     this.setUpCalendar(this.displayedMonth);
   }
+
+  /**
+   * Emit month change
+   * @param {number} interval
+   */
+  private emitMonth(interval: number) {
+    //Set the month
+    this.displayedMonth = this.displayedMonth + interval;
+
+    this.setUpCalendar(this.displayedMonth);
+
+    //Emit it to the Event
+    // this.change.emit(this.month);
+  }
+
+
+  /**
+   * Change year and emit the event
+   * @param {number} interval
+   */
+  changeYear(interval: number) {
+
+    this.year = this.year + interval;
+
+
+    this.setUpCalendar(this.displayedMonth);
+
+    // this.changeYr.emit(this.year);
+  }
+
 }
 // display: inline-block;
 // vertical-align: top;
