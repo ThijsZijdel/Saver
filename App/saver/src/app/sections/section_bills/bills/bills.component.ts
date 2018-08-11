@@ -44,8 +44,9 @@ export class BillsComponent implements OnInit {
     for (let expense of expenses){
       sum += expense.amount;
     }
-    return sum;
+    return parseFloat(sum.toFixed(2));
   }
+
 
   private getBills() {
     this.paidBills = [];

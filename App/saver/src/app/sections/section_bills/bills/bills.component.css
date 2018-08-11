@@ -22,7 +22,8 @@ div.bill-labels ul li {
   width: 75px;
   font-size: 13px;
 }
-div.bill-labels ul li span {
+div.bill-labels ul li span,
+ul.transactions li:before{
   content: " ";
   border-radius: 50%;
   border: 2px solid #999;
@@ -31,18 +32,28 @@ div.bill-labels ul li span {
   vertical-align: 2px;
   font-size: 8px;
 }
+ul.transactions li:before {
+  margin-left: -25px;
+}
 
-div.bill-labels ul li.bill span {
+div.bill-labels ul li.bill span,
+ul.bills-bill li:before{
   border-color: #127BE0;
 }
-div.bill-labels ul li.paid span {
+div.bill-labels ul li.paid span,
+ul.paid-bill li:before{
   border-color: #4BCA81;
 }
-div.bill-labels ul li.over span {
+div.bill-labels ul li.over span,
+ul.bills-overdue li:before{
   border-color: #D02C4D;
 }
-
-
+ul.transactions {
+  list-style: none;
+}
+ul.transactions li h2 {
+  margin-top: -21px;
+}
 section {
   margin: 15px 0 35px;
 }
