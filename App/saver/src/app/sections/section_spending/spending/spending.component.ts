@@ -44,7 +44,6 @@ export class SpendingComponent implements OnInit {
 
   ngOnInit() {
     this.getSpendings();
-    this.getTotalBudgetSpend();
     this.categories = this.getCategories();
 
     this.expenses = this.getExpenses();
@@ -77,8 +76,8 @@ export class SpendingComponent implements OnInit {
   private getSpendings() {
     //TODO the spendings should be collected in groups, sorted and the sum of the amounts for each category!
     //TODO This way they can be all loaded into the chart
-
-    this.serviceSpending.getSpendings().subscribe(spendings => {
+    console.log("spending")
+    this.serviceSpending.getSpendings(12, ).subscribe(spendings => {
       this.spendingData = [];
       this.spendings = [];
       this.totalSpendAmout = 0;
@@ -89,8 +88,8 @@ export class SpendingComponent implements OnInit {
 
         //this.getCatName(spending.subcategoryFk)
 
-        this.spendingData.push( new dataObj(spending.name, spending.count, spending.id ) );
-        this.totalSpendAmout += spending.count;
+        this.spendingData.push( new dataObj(spending.name, spending.amount, spending.id ) );
+        this.totalSpendAmout += spending.amount;
 
       }
     });
@@ -146,21 +145,21 @@ export class SpendingComponent implements OnInit {
     }
   }
 
-  /**
-   * By looping trough the budgets and calculate the spend.
-   */
-  private getTotalBudgetSpend(){
-    this.totalBudgetSpend = 0;
-
-    this.serviceBudgets.getBudgets().subscribe(budgets => {
-      // loop trough all the expenes
-      for (let budget of budgets) {
-
-        this.totalBudgetSpend += (budget.amountStart-budget.amountLeft);
-        //incomeDataC.push(income.amount);
-      }
-    });
-  }
+  // /**
+  //  * By looping trough the budgets and calculate the spend.
+  //  */
+  // private getTotalBudgetSpend(){
+  //   this.totalBudgetSpend = 0;
+  //
+  //   this.serviceBudgets.getBudgets().subscribe(budgets => {
+  //     // loop trough all the expenes
+  //     for (let budget of budgets) {
+  //
+  //       this.totalBudgetSpend += (budget.amountStart-budget.amountLeft);
+  //       //incomeDataC.push(income.amount);
+  //     }
+  //   });
+  // }
 
   /**
    * Get percentage of spending by cat.
@@ -169,7 +168,7 @@ export class SpendingComponent implements OnInit {
    * @returns {string}
    */
   getPercentage(category: Spending):string {
-    let percentage: number = ((category.count/this.totalSpendAmout)*100);
+    let percentage: number = ((category.amount/this.totalSpendAmout)*100);
 
     return (percentage.toString()).substr(0,percentage.toString().indexOf('.')+2)+"%";
   }
@@ -196,9 +195,9 @@ export class SpendingComponent implements OnInit {
    * @param {Spending} spending
    * @returns {string}
    */
-  getColor(spending: Spending): string {
-    if (spending.id < this.colors.length)
-      return this.colors[spending.id];
+  getColor(index: number): string {
+    if (index < this.colors.length)
+      return this.colors[index];
   }
 
   /**
@@ -290,7 +289,7 @@ export class SpendingComponent implements OnInit {
         },
         tooltip: {
           borderColor: 'rgba(205,205,205,0.8)',
-          pointFormat: '{series.name.slice(0, -1)}: <b>{point.percentage:.1f}%</b>'
+          pointFormat: '{series.name.slice(0, -1)} <b>{point.percentage:.1f}%</b>'
         },
         plotOptions: {
           pie: {
