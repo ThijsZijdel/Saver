@@ -36,24 +36,25 @@ router.get('/labels' ,  (req, res) => {
 
         where = 'WHERE date BETWEEN "'+from+'" and "'+to+'" ',
         filter= ' ',
-        group = 'GROUP BY  monthFk ',
-        order = 'ORDER BY monthFk;';
+        group = 'GROUP BY  Year(date), monthFk ',
+        order = 'ORDER BY Year(date) ASC,monthFk;';
 
     if (req.query.frequency === "monthly") {
         select = 'SELECT MonthTab.shortName as name ';
-        group = 'GROUP BY  monthFk ';
-        order = 'ORDER BY monthFk;';
+        group = 'GROUP BY  Year(date), monthFk ';
+        order = 'ORDER BY Year(date) ASC, monthFk;';
     } else if (req.query.frequency === "weekly") {
         select = 'SELECT WEEK(date) AS name ';
-        group = 'GROUP BY  WEEK(date) ';
-        order = 'ORDER BY WEEK(date);'
+        group = 'GROUP BY  Year(date), WEEK(date) ';
+        order = 'ORDER BY Year(date) ASC, WEEK(date);'
     } else if (req.query.frequency === "daily"){
         select = 'SELECT date as name ';
-        group =  'GROUP BY  date ';
-        order =  'ORDER BY date;';
+        group =  'GROUP BY  Year(date), date ';
+        order =  'ORDER BY Year(date) ASC, date;';
     }
 
     let query = select + fromTbl+ join + where + filter + group + order;
+
     async.parallel(
         [
             (callback) => {
@@ -82,18 +83,23 @@ router.get('/labels' ,  (req, res) => {
 
 
 
-router.get('/test' ,  (req, res) => {
-
+router.get('/currentStats' ,  (req, res) => {
+    let earnedQuery = "SELECT sum(amount) as earned " +
+                        "FROM Income " +
+                        "WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND MONTH(date) = MONTH(CURRENT_DATE());",
+        spendQuery = "SELECT sum(amount) as spent " +
+            "FROM Expense " +
+            "WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND MONTH(date) = MONTH(CURRENT_DATE());";
     async.parallel(
         [
             (callback) => {
-                connection.connectDatabase.query( "select * from income where monthFk = 3" ,
+                connection.connectDatabase.query(earnedQuery ,
                     (errors, results, fields) => {
                         callback(errors, results);
                     })
             },
             (callback) => {
-                connection.connectDatabase.query( "select * from expense where monthFk = 2" ,
+                connection.connectDatabase.query(spendQuery ,
                     (errors, results, fields) => {
                         callback(errors, results);
                     })

@@ -21,11 +21,17 @@ console.log(querystring.parse(parsedUrl));
  * @param res = all expense
  */
 router.get('/expenses' ,  (req, res) => {
+    let generatedQuery = "SELECT * FROM Expense ORDER BY date DESC ";
+
+    if (req.query.limit != null && !isNaN(req.query.limit) ) {
+        generatedQuery += 'LIMIT '+req.query.limit;
+    }
+
     async.parallel(
 
         [
              (callback) => {
-                connection.connectDatabase.query('SELECT * FROM Expense;',
+                connection.connectDatabase.query(generatedQuery,
                     (errors, results, fields) => {
                     callback(errors, results);
                 })
@@ -210,28 +216,27 @@ router.get('/expenses/filter' ,  (req, res) => {
 
         where = 'WHERE date BETWEEN "'+from+'" and "'+to+'" ',
         filter= ' ',
-        group = 'GROUP BY  monthFk ',
-        order = 'ORDER BY monthFk;';
+        group = 'GROUP BY  Year(date), monthFk ',
+        order = 'ORDER BY Year(date) ASC, monthFk;';
 
     if (req.query.frequency === "monthly") {
         select = 'SELECT SUM(amount) as amount, monthFk ';
-        group = 'GROUP BY  monthFk ';
-        order = 'ORDER BY monthFk;';
+        group = 'GROUP BY  Year(date), monthFk ';
+        order = 'ORDER BY Year(date) ASC, monthFk;;';
     } else if (req.query.frequency === "weekly") {
         select = 'SELECT SUM(amount) as amount,  WEEK(date) AS week ';
-        group = 'GROUP BY  WEEK(date) ';
-        order = 'ORDER BY WEEK(date);'
+        group = 'GROUP BY  Year(date), WEEK(date) ';
+        order = 'ORDER BY Year(date) ASC, WEEK(date);'
     } else if (req.query.frequency === "daily"){
         select = 'SELECT SUM(amount) as amount,  date ';
-        group =  'GROUP BY  date ';
-        order =  'ORDER BY date;';
+        group =  'GROUP BY  Year(date), date ';
+        order =  'ORDER BY Year(date) ASC, date;';
     }
 
 
 
 
     let query = select + fromTbl+ join + where + filter + group + order;
-
     async.parallel(
         [
             (callback) => {
