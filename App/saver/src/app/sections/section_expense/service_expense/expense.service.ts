@@ -40,8 +40,20 @@ export class ExpenseService {
    * get expenses from the server
    * @author Thijs Zijdel
    */
-  getExpensesFiltered(frequency: string, months: number): Observable<Expense[]> {
-    const url = `${this.expensUrl}/${frequency}/${months}` // ?action=getAll;
+  getExpensesFiltered(frequency?: string, months?: number): Observable<Expense[]> {
+    let url = `${this.expensUrl}/filter`;
+    if (frequency != null) {
+      url += '?frequency=' + frequency;
+
+      if (months != null) {
+        url += '&months=' + months;
+      }
+    }
+
+    if (frequency === null && months != null){
+      url += '?months=' + months;
+    }
+
     return this.http.get<Expense[]>(url)
       .pipe(
         tap(expenses => this.log(`fetched `+frequency+` - `+months+`months: expenses`)),
@@ -66,7 +78,7 @@ export class ExpenseService {
    * get expenses of certain month
    * @param {number} month
    * @param {number} year
-   * @param groupBy
+   * @param orderBy
    * @returns {Observable<Expense[]>}
    */
   getExpensesOf(month: number, year: number, orderBy?: string): Observable<Expense[]> {
