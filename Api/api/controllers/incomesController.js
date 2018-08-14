@@ -13,63 +13,89 @@ let express = require('express'),
  * @param res = all incomes
  */
 router.get('/incomes' ,  (req, res) => {
+    let generatedQuery = "SELECT * FROM Income ORDER BY date DESC ";
+
+    if (req.query.limit != null && !isNaN(req.query.limit) ) {
+        generatedQuery += 'LIMIT '+req.query.limit;
+    }
+
     async.parallel(
+
         [
-             (callback) => {
-                connection.connectDatabase.query('SELECT * FROM Income;',
+            (callback) => {
+                connection.connectDatabase.query(generatedQuery,
                     (errors, results, fields) => {
-                    callback(errors, results);
-                })
+                        callback(errors, results);
+                    })
             }
         ],
         (err, results) => {
 
+            if (err){
+                res.statusCode = 400;
+                res.json({
+                    "Could not get incomes of ":generatedQuery,
+                    "queried":req.query,
+                    "error":err
+                });
+            } else {
 
-            //Get the data from the initial call
-            let data = results[0];
+                //Get the data from the initial call
+                let data = results[0];
 
-
-            res.statusCode = 200;
-            res.json(data);
+                res.statusCode = 200;
+                res.json(data);
+            }
         }
     );
 
 });
 
 /**
- * HTTP Get route for expense
- * @param :id of expense
- * @res json expense object
+ * HTTP Get route for incomes filtered
+ * @param query: months => from .. amount of months ago     default: 12 months
+ * @param frequency: options => monthly, weekly, daily.     default: monthly
+ * @res json incomes objects
  */
-router.get('/incomes/?:frequency/?:months' ,  (req, res) => {
-    let query, where = 'date BETWEEN "2017/07/01" and "2018/07/01"';
-
-    if (req.params.months === 12)
-        where = 'date BETWEEN "2017/07/01" and "2018/07/01"';
-    if (req.params.months === 6)
-        where = 'date BETWEEN "2018/02/01" and "2018/07/01"';
-
-
-
-    if (req.params.frequency === "monthly") {
-        query = 'SELECT SUM(amount) as amount, monthFk ' +
-            'FROM Income ' +
-            'WHERE '+where+' ' +
-            'GROUP BY  monthFk ' +
-            'ORDER BY monthFk;'
-    } else if (req.params.frequency === "weekly") {
-        query = 'SELECT SUM(amount) as amount,  WEEK(date) AS week ' +
-            'FROM Income ' +
-            'WHERE '+where+' ' +
-            'GROUP BY  WEEK(date) ' +
-            'ORDER BY WEEK(date);'
-    } else if (req.params.frequency === "daily"){
-        query = 'SELECT SUM(amount) as amount,  date ' +
-            'FROM Income ' +
-            'WHERE '+where+' ' +
-            'GROUP BY  date ' +
-            'ORDER BY date;'
+router.get('/incomes/filter' ,  (req, res) => {
+    let months = 12;
+    if (req.query.months != null){
+        months = parseInt(req.query.months);
     }
+
+    let fromDate = new Date(),
+        from = new Date( fromDate.setMonth(fromDate.getMonth()-months) ).toISOString().slice(0,10) ,
+        todayDate = new Date(),
+        to = todayDate.toISOString().slice(0,10);
+
+    let select = 'SELECT SUM(amount) as amount, monthFk  ',
+        fromTbl = 'FROM Income ',
+        join = ' ',
+
+        where = 'WHERE date BETWEEN "'+from+'" and "'+to+'" ',
+        filter= ' ',
+        group = 'GROUP BY  Year(date), monthFk ',
+        order = 'ORDER BY Year(date) ASC, monthFk;';
+
+    if (req.query.frequency === "monthly") {
+        select = 'SELECT SUM(amount) as amount, monthFk ';
+        group = 'GROUP BY  Year(date), monthFk ';
+        order = 'ORDER BY Year(date) ASC, monthFk;';
+    } else if (req.query.frequency === "weekly") {
+        select = 'SELECT SUM(amount) as amount,  WEEK(date) AS week ';
+        group = 'GROUP BY  Year(date), WEEK(date) ';
+        order = 'ORDER BY Year(date) ASC, WEEK(date);'
+    } else if (req.query.frequency === "daily"){
+        select = 'SELECT SUM(amount) as amount,  date ';
+        group =  'GROUP BY  Year(date), date ';
+        order =  'ORDER BY Year(date) ASC, date;';
+    }
+
+
+
+
+    let query = select + fromTbl+ join + where + filter + group + order;
+
 
     async.parallel(
         [
@@ -81,11 +107,21 @@ router.get('/incomes/?:frequency/?:months' ,  (req, res) => {
             }
         ],
         (err, results) => {
-            //Get the data from the initial call
-            let data = results[0];
+            if (err){
+                res.statusCode = 400;
+                res.json({
+                    "Could not get incomes of ":query,
+                    "queried":req.query,
+                    "error":err
+                });
+            } else {
 
-            res.statusCode = 200;
-            res.json(data);
+                //Get the data from the initial call
+                let data = results[0];
+
+                res.statusCode = 200;
+                res.json(data);
+            }
         }
     );
 

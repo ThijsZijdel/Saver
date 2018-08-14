@@ -12,6 +12,7 @@ import {ExpenseService} from "../../section_expense/service_expense/expense.serv
 
 import * as $ from "jquery"
 import * as Highcharts from "highcharts";
+import {ReloadServiceFinancial} from "../../section_financial/service_reloadFinancial/reload.serviceFinancial";
 
 
 @Component({
@@ -24,7 +25,8 @@ export class SpendingComponent implements OnInit {
   constructor(private serviceSpending: SpendingService,
               private serviceCategories: CategoryService,
               private serviceBudgets: BudgetService,
-              private serviceExpenses: ExpenseService) { }
+              private serviceExpenses: ExpenseService,
+              private reloadServiceFinancial: ReloadServiceFinancial) { }
 
   chart: Chart;
 
@@ -43,14 +45,18 @@ export class SpendingComponent implements OnInit {
   totalSpendAmout: number = 0;
 
   ngOnInit() {
-    this.getSpendings();
-    this.getTotalBudgetSpend();
+    this.getSpendings(12);
     this.categories = this.getCategories();
 
-    this.expenses = this.getExpenses();
+    this.expenses = this.getExpenses("monthly", 12);
     setTimeout(()=>{
       this.init();
     }, 500);
+
+
+    this.reloadServiceFinancial.change.subscribe(month => {
+      this.refresh();
+    });
   }
 
   /**
@@ -74,11 +80,11 @@ export class SpendingComponent implements OnInit {
   /**
    * Get all the spendings
    */
-  private getSpendings() {
+  private getSpendings(months: number) {
     //TODO the spendings should be collected in groups, sorted and the sum of the amounts for each category!
     //TODO This way they can be all loaded into the chart
-
-    this.serviceSpending.getSpendings().subscribe(spendings => {
+    console.log("spending")
+    this.serviceSpending.getSpendings(months ).subscribe(spendings => {
       this.spendingData = [];
       this.spendings = [];
       this.totalSpendAmout = 0;
@@ -89,8 +95,8 @@ export class SpendingComponent implements OnInit {
 
         //this.getCatName(spending.subcategoryFk)
 
-        this.spendingData.push( new dataObj(spending.name, spending.count, spending.id ) );
-        this.totalSpendAmout += spending.count;
+        this.spendingData.push( new dataObj(spending.name, spending.amount, spending.id ) );
+        this.totalSpendAmout += spending.amount;
 
       }
     });
@@ -100,14 +106,14 @@ export class SpendingComponent implements OnInit {
    * Get all the expenses of .. //todo this month
    * @returns {Expense[]}
    */
-  private getExpenses(): Expense[] {
+  private getExpenses(frequency: string, months: number): Expense[] {
     let data: Expense[] = [];
 
 
-    this.serviceExpenses.getExpenses().subscribe(expenses => {
+    this.serviceExpenses.getExpensesFiltered(frequency, months).subscribe(expenses => {
       // loop trough all the expenes
-      for (let income of expenses) {
-        data.push(income);
+      for (let expense of expenses) {
+        data.push(expense);
 
         //incomeDataC.push(income.amount);
       }
@@ -146,21 +152,21 @@ export class SpendingComponent implements OnInit {
     }
   }
 
-  /**
-   * By looping trough the budgets and calculate the spend.
-   */
-  private getTotalBudgetSpend(){
-    this.totalBudgetSpend = 0;
-
-    this.serviceBudgets.getBudgets().subscribe(budgets => {
-      // loop trough all the expenes
-      for (let budget of budgets) {
-
-        this.totalBudgetSpend += (budget.amountStart-budget.amountLeft);
-        //incomeDataC.push(income.amount);
-      }
-    });
-  }
+  // /**
+  //  * By looping trough the budgets and calculate the spend.
+  //  */
+  // private getTotalBudgetSpend(){
+  //   this.totalBudgetSpend = 0;
+  //
+  //   this.serviceBudgets.getBudgets().subscribe(budgets => {
+  //     // loop trough all the expenes
+  //     for (let budget of budgets) {
+  //
+  //       this.totalBudgetSpend += (budget.amountStart-budget.amountLeft);
+  //       //incomeDataC.push(income.amount);
+  //     }
+  //   });
+  // }
 
   /**
    * Get percentage of spending by cat.
@@ -169,7 +175,7 @@ export class SpendingComponent implements OnInit {
    * @returns {string}
    */
   getPercentage(category: Spending):string {
-    let percentage: number = ((category.count/this.totalSpendAmout)*100);
+    let percentage: number = ((category.amount/this.totalSpendAmout)*100);
 
     return (percentage.toString()).substr(0,percentage.toString().indexOf('.')+2)+"%";
   }
@@ -196,9 +202,9 @@ export class SpendingComponent implements OnInit {
    * @param {Spending} spending
    * @returns {string}
    */
-  getColor(spending: Spending): string {
-    if (spending.id < this.colors.length)
-      return this.colors[spending.id];
+  getColor(index: number): string {
+    if (index < this.colors.length)
+      return this.colors[index];
   }
 
   /**
@@ -290,7 +296,7 @@ export class SpendingComponent implements OnInit {
         },
         tooltip: {
           borderColor: 'rgba(205,205,205,0.8)',
-          pointFormat: '{series.name.slice(0, -1)}: <b>{point.percentage:.1f}%</b>'
+          pointFormat: '{series.name.slice(0, -1)} <b>{point.percentage:.1f}%</b>'
         },
         plotOptions: {
           pie: {
@@ -351,6 +357,15 @@ export class SpendingComponent implements OnInit {
       // chart.ref$.subscribe(console.log);
   }
 
+  private refresh() {
+    this.getSpendings(this.reloadServiceFinancial.months);
+    this.categories = this.getCategories();
+
+    this.expenses = this.getExpenses(this.reloadServiceFinancial.frequency, this.reloadServiceFinancial.months);
+    setTimeout(()=>{
+      this.init();
+    }, 500);
+  }
 }
 
 

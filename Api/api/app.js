@@ -53,6 +53,8 @@ app.use('/api', require('./controllers/companiesController'));
 app.use('/api', require('./controllers/spendingsController'));
 
 
+app.use('/api', require('./controllers/generalController'));
+
 /**
  * Catch 404 errors and forward to next handler
  */
@@ -74,7 +76,7 @@ app.use(function(err, req, res, next) {
     // req.status(err.status || 500);
     // res.render('error');
 
-    res.send(500, {status:500, message: 'internal error', type:'internal'});
+    res.status(500).send({status:500, message: 'internal error', type:'internal'});
 });
 
 

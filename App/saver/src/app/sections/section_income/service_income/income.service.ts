@@ -150,7 +150,18 @@ export class IncomeService {
   }
 
   getIncomesFiltered(frequency: string, months: number): Observable<Income[]> {
-    const url = `${this.incomeUrl}/`+frequency+`/`+months; // ?action=getAll;
+    let url = `${this.incomeUrl}/filter`;
+    if (frequency != null) {
+      url += '?frequency=' + frequency;
+
+      if (months != null) {
+        url += '&months=' + months;
+      }
+    }
+
+    if (frequency === null && months != null){
+      url += '?months=' + months;
+    }
     return this.http.get<Income[]>(url)
       .pipe(
         tap(expenses => this.log(`fetched `+frequency+` - `+months+`months: incomes`)),

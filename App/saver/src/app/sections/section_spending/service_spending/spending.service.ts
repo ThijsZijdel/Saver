@@ -22,14 +22,6 @@ export class SpendingService {
     private http: HttpClient,
     private messageService: MessageService) { }
 
-  /**
-   * get spendings from the server
-   * @author Thijs Zijdel
-   */
-  getSpendings(): Observable<Spending[]> {
-    let today = new Date();
-    return this.getSpending(today.getMonth(), today.getFullYear());
-  }
 
 
   /**
@@ -42,6 +34,19 @@ export class SpendingService {
     return this.http.get<Spending[]>(url).pipe(
       tap(_ => this.log(`fetched Spendings month=${month} year=${year}`)),
       catchError(this.handleError<Spending[]>(`getSpendings month=${month} year=${year}`))
+    );
+  }
+
+  /**
+   * get spending by id.
+   * @author Thijs Zijdel
+   */
+  getSpendings(months: number): Observable<Spending[]> {
+    const url = `${this.spendingUrl}/?months=`+months;
+
+    return this.http.get<Spending[]>(url).pipe(
+      tap(_ => this.log(`fetched Spendings  months=${months} `)),
+      catchError(this.handleError<Spending[]>(`getSpendings months=${months}`))
     );
   }
 

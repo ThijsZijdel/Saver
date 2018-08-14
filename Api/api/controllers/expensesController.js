@@ -21,11 +21,17 @@ console.log(querystring.parse(parsedUrl));
  * @param res = all expense
  */
 router.get('/expenses' ,  (req, res) => {
+    let generatedQuery = "SELECT * FROM Expense ORDER BY date DESC ";
+
+    if (req.query.limit != null && !isNaN(req.query.limit) ) {
+        generatedQuery += 'LIMIT '+req.query.limit;
+    }
+
     async.parallel(
 
         [
              (callback) => {
-                connection.connectDatabase.query('SELECT * FROM Expense;',
+                connection.connectDatabase.query(generatedQuery,
                     (errors, results, fields) => {
                     callback(errors, results);
                 })
@@ -33,27 +39,44 @@ router.get('/expenses' ,  (req, res) => {
         ],
         (err, results) => {
 
+            if (err){
+                res.statusCode = 400;
+                res.json({
+                    "Could not get expenses of ":generatedQuery,
+                    "queried":req.query,
+                    "error":err
+                });
+            } else {
 
-            //Get the data from the initial call
-            let data = results[0];
+                //Get the data from the initial call
+                let data = results[0];
 
-
-            res.statusCode = 200;
-            res.json(data);
+                res.statusCode = 200;
+                res.json(data);
+            }
         }
     );
 
 });
 
 router.get('/expenses/get/:month/:year' ,  (req, res) => {
+    let generatedQuery = 'SELECT E.* ' +
+        'FROM Expense AS E ' +
+        'INNER JOIN MonthTab AS M on E.monthFk = M.id '+
+        'WHERE E.monthFk = ? AND E.year = ? ';
+
+    if (req.query.orderBy != null ) {
+        generatedQuery += 'ORDER BY '+req.query.orderBy;
+    }
+
+    generatedQuery += ';';
+
+
     async.parallel(
         [
             (callback) => {
                 connection.connectDatabase.query(
-                    'SELECT E.* ' +
-                    'FROM Expense AS E ' +
-                    'INNER JOIN MonthTab AS M on E.monthFk = M.id '+
-                    'WHERE E.monthFk = ? AND E.year = ? ;',
+                    generatedQuery,
                     [req.params.month, req.params.year],
                     (errors, results, fields) => {
                         callback(errors, results);
@@ -170,40 +193,50 @@ router.get('/expenses/get/?:id' ,  (req, res) => {
 
 });
 /**
- * HTTP Get route for expense
- * @param :id of expense
- * @res json expense object
+ * HTTP Get route for expense filtered
+ * @param query: months => from .. amount of months ago     default: 12 months
+ * @param frequency: options => monthly, weekly, daily.     default: monthly
+ * @res json expenses objects
  */
-router.get('/expenses/?:frequency/?:months' ,  (req, res) => {
-    let query, where = 'date BETWEEN "2017/07/01" and "2018/07/01"';
-
-    if (req.params.months === 12)
-        where = 'date BETWEEN "2017/07/01" and "2018/07/01"';
-    if (req.params.months === 6)
-        where = 'date BETWEEN "2018/02/01" and "2018/07/01"';
+router.get('/expenses/filter' ,  (req, res) => {
 
 
+    let months = 12;
+    if (req.query.months != null){
+        months = parseInt(req.query.months);
+    }
+    let fromDate = new Date(),
+        from = new Date(fromDate.setMonth(fromDate.getMonth()-months)).toISOString().slice(0,10) ,
+        todayDate = new Date(),
+        to = todayDate.toISOString().slice(0,10);
 
-    if (req.params.frequency === "monthly") {
-        query = 'SELECT SUM(amount) as amount, monthFk ' +
-            'FROM Expense ' +
-            'WHERE '+where+' ' +
-            'GROUP BY  monthFk ' +
-            'ORDER BY monthFk;'
-    } else if (req.params.frequency === "weekly") {
-        query = 'SELECT SUM(amount) as amount,  WEEK(date) AS week ' +
-            'FROM Expense ' +
-            'WHERE '+where+' ' +
-            'GROUP BY  WEEK(date) ' +
-            'ORDER BY WEEK(date);'
-    } else if (req.params.frequency === "daily"){
-        query = 'SELECT SUM(amount) as amount,  date ' +
-            'FROM Expense ' +
-            'WHERE '+where+' ' +
-            'GROUP BY  date ' +
-            'ORDER BY date;'
+    let select = 'SELECT SUM(amount) as amount, monthFk  ',
+        fromTbl = 'FROM Expense ',
+        join = ' ',
+
+        where = 'WHERE date BETWEEN "'+from+'" and "'+to+'" ',
+        filter= ' ',
+        group = 'GROUP BY  Year(date), monthFk ',
+        order = 'ORDER BY Year(date) ASC, monthFk;';
+
+    if (req.query.frequency === "monthly") {
+        select = 'SELECT SUM(amount) as amount, monthFk ';
+        group = 'GROUP BY  Year(date), monthFk ';
+        order = 'ORDER BY Year(date) ASC, monthFk;;';
+    } else if (req.query.frequency === "weekly") {
+        select = 'SELECT SUM(amount) as amount,  WEEK(date) AS week ';
+        group = 'GROUP BY  Year(date), WEEK(date) ';
+        order = 'ORDER BY Year(date) ASC, WEEK(date);'
+    } else if (req.query.frequency === "daily"){
+        select = 'SELECT SUM(amount) as amount,  date ';
+        group =  'GROUP BY  Year(date), date ';
+        order =  'ORDER BY Year(date) ASC, date;';
     }
 
+
+
+
+    let query = select + fromTbl+ join + where + filter + group + order;
     async.parallel(
         [
             (callback) => {
@@ -214,11 +247,23 @@ router.get('/expenses/?:frequency/?:months' ,  (req, res) => {
             }
         ],
         (err, results) => {
-            //Get the data from the initial call
-            let data = results[0];
 
-            res.statusCode = 200;
-            res.json(data);
+            if (err){
+                res.statusCode = 400;
+                res.json({
+                    "Could not get expenses of ":query,
+                    "queried":req.query,
+                    "error":err
+                });
+            } else {
+
+                //Get the data from the initial call
+                let data = results[0];
+
+                res.statusCode = 200;
+                res.json(data);
+            }
+
         }
     );
 

@@ -2,9 +2,8 @@
 <div class="row correction">
   <h1 class="clickable" (click)="init()">Spending</h1>
 
-  <button class="prev"> &#9664; </button> <button class="next"> &#9654; </button>
 
-  <h1 class="bulkBudgetLeft">&euro;{{totalBudgetSpend}}</h1>
+  <h1 class="bulkBudgetLeft">&euro;{{totalSpendAmout | valuta}}</h1>
 </div>
 
 <div class="row">
@@ -18,7 +17,7 @@
 
 
     <ul class="sub-cat mgtp">
-      <div class="expense" *ngFor="let category of spendings">
+      <div class="expense" *ngFor="let category of spendings; let i = index;">
 
 
         <div class="sub-layer {{category.name.split(' ').join('_')+'-'+category.id}}">
@@ -26,7 +25,7 @@
 
           <li>
 
-                <span class="icon-subcat" [ngStyle]="{'border-color':getColor(category)}">
+                <span class="icon-subcat" [ngStyle]="{'border-color':getColor(i)}">
 
                 </span>
 
@@ -35,10 +34,10 @@
                          >
               {{getPercentage(category)}}
               <span class="amount">
-                      &euro;{{category.count}}
+                      &euro;{{category.amount | valuta}}
                     </span>
               <span class="tooltipPerc">
-                    {{getExpensesOf(category.id).length}} expenses
+                    {{category.count}} expenses
                     </span>
             </h2>
 

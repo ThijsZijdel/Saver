@@ -18,22 +18,22 @@
 
   <hr>
 
-  <ul class="bills-overdue" *ngFor="let bill of overdueBills; let o = index">
+  <ul class="bills-overdue transactions" *ngFor="let bill of overdueBills; let o = index">
     <div *ngIf="o < overdueShown">
       <li class="over">
-        <span></span><h2>{{bill.name}} <span class="amount">&euro;{{bill.amount}}</span></h2>
+        <span></span><h2>{{bill.name | maxChar }} <span class="amount">&euro;{{bill.amount}}</span></h2>
         <span class="info"><span class="date">Mar 20, 2018</span><span class="dot"></span><span class="company">Bol.com</span></span>
       </li>
     </div>
   </ul>
-  <ul *ngIf="overdueBills.length == 0">
+  <ul *ngIf="overdueBills.length === 0" class="bills-overdue transactions">
     <li class="over">
       <span></span><h2>There are no bills overdue </h2>
-      <span class="info"><span class="date">But, {{billBills.length}} bills need to be payed soon </span><span class="dot"></span><span class="company">Total: &euro;{{getSumExpenses(billBills)}}</span></span>
+      <span class="info" *ngIf="billBills.length > 0"><span class="date">But, {{billBills.length}} bills need to be payed soon </span><span class="dot"></span><span class="company">Total: &euro;{{getSumExpenses(billBills)}}</span></span>
     </li>
   </ul>
 
-  <button class="more btn wide overdueShown" (click)="showBills('overdueShown')">
+  <button *ngIf="overdueBills.length != 0" class="more btn wide overdueShown" (click)="showBills('overdueShown')">
     {{billsBtnText}}
     <span *ngIf="overdueBills.length-overdueShown > 0">({{overdueBills.length-overdueShown}})</span>
   </button>
@@ -45,16 +45,22 @@
 
   <hr>
 
-  <ul class="bills-bill" *ngFor="let bill of billBills; let i = index">
+  <ul class="bills-bill transactions" *ngFor="let bill of billBills; let i = index">
     <div *ngIf="i < billsShown">
       <li class="bill">
-        <span></span><h2>{{bill.name}} <span class="amount">&euro;{{bill.amount}}</span></h2>
+        <span></span><h2>{{bill.name | maxChar}} <span class="amount">&euro;{{bill.amount}}</span></h2>
         <span class="info"><span class="date">Jul 20, 2018</span><span class="dot"></span><span class="company">Bol.com</span></span>
       </li>
     </div>
   </ul>
 
-  <button class="more btn wide billsShown" (click)="showBills('billsShown')">
+  <ul *ngIf="billBills.length === 0" class="bills-bill transactions">
+    <li class="over">
+      <span></span><h2>There are no upcoming bills </h2>
+    </li>
+  </ul>
+
+  <button *ngIf="billBills.length != 0" class="more btn wide billsShown" (click)="showBills('billsShown')">
     {{billsBtnText}}
     <span *ngIf="billBills.length-billsShown > 0">({{billBills.length-billsShown}})</span>
   </button>
@@ -66,10 +72,10 @@
 
   <hr>
 
-  <ul class="paid-bill" *ngFor="let bill of paidBills; let p = index">
+  <ul class="paid-bill transactions" *ngFor="let bill of paidBills; let p = index">
     <div *ngIf="p < paidShown">
       <li class="bill">
-        <span></span><h2>{{bill.name}} <span class="amount">&euro;{{bill.amount}}</span></h2>
+        <span></span><h2>{{bill.name | maxChar}} <span class="amount">&euro;{{bill.amount}}</span></h2>
         <span class="info"><span class="date">Jul 20, 2018</span><span class="dot"></span><span class="company">Bol.com</span></span>
       </li>
     </div>

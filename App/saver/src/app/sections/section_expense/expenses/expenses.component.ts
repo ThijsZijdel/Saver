@@ -43,7 +43,7 @@ export class ExpensesComponent implements OnInit {
 
 
   ngOnInit() {
-    this.categories = this.getCategories();
+    this.getCategories();
     this.getExpenses();
 
     console.log(this.network.online+" network");
@@ -51,9 +51,7 @@ export class ExpensesComponent implements OnInit {
     this.reloadService.change.subscribe(month => {
         this.refresh();
     });
-    this.reloadService.change.subscribe(year => {
-      this.refresh();
-    });
+
 
 
   }
@@ -67,7 +65,7 @@ export class ExpensesComponent implements OnInit {
     // TODO  --> --> when click: show last 5 expenses in that subc.
 
 
-    this.serviceExpenses.getExpensesOf(this.reloadService.month+1, this.reloadService.year).subscribe(expenses => {
+    this.serviceExpenses.getExpensesOf(this.reloadService.month+1, this.reloadService.year,"subcategoryFk").subscribe(expenses => {
       // loop trough all the expenes
       for (let expense of expenses) {
         this.expenses.push(expense);
@@ -92,14 +90,18 @@ export class ExpensesComponent implements OnInit {
     return index; // or item.id
   }
 
-  private getCategories() {
+  mainCategories: Category[] = [];
+  subCategories: Category[] = [];
 
-    let data: Category[] = [];
+  private getCategories() {
+    this.mainCategories = [];
+    this.subCategories = [];
 
     this.serviceCategories.getExpenseCategories(this.reloadService.month+1, this.reloadService.year, "onlyMain").subscribe(categories => {
       // loop trough all the categories
+      console.log("called")
       for (let category of categories) {
-        data.push(category);
+        this.mainCategories.push(category);
       }
     });
 
@@ -107,7 +109,7 @@ export class ExpensesComponent implements OnInit {
     this.serviceCategories.getExpenseCategories(this.reloadService.month+1, this.reloadService.year, "all").subscribe(categories => {
       // loop trough all the categories
       for (let category of categories) {
-        data.push(category);
+        this.subCategories.push(category);
 
         if(category.subCategoryFk != 0){
 
@@ -116,7 +118,6 @@ export class ExpensesComponent implements OnInit {
     });
 
 
-    return data;
   }
 
   setShowStateSubLayer(mainClasse:string, name: string, id: number) {
@@ -217,7 +218,7 @@ export class ExpensesComponent implements OnInit {
     //manage new Expense
     if (expense === null) {
       //todo get category if selected
-      expense = new Expense(null, null, null, null, null, null, null, null, null, null, null, 0);
+      expense = new Expense(null, null, null, null, null, new Date(), null, null, null, null, null, 0);
     }
 
     //set the expense in the service
@@ -238,7 +239,8 @@ export class ExpensesComponent implements OnInit {
   }
 
   private refresh() {
-    this.categories = this.getCategories();
+     this.getCategories();
+
     // this.getExpenses();
 
   }

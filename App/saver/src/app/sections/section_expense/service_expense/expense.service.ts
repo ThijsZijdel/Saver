@@ -6,6 +6,7 @@ import {Observable, of} from 'rxjs/index';
 import {Expense} from "../../../models/Expense";
 import {MessageService} from "../../../data/service/message/service_message/message.service";
 import {Category} from "../../../models/Category";
+import {Label} from "../../../models/Label";
 
 
 
@@ -40,14 +41,51 @@ export class ExpenseService {
    * get expenses from the server
    * @author Thijs Zijdel
    */
-  getExpensesFiltered(frequency: string, months: number): Observable<Expense[]> {
-    const url = `${this.expensUrl}/${frequency}/${months}` // ?action=getAll;
+  getExpensesFiltered(frequency?: string, months?: number): Observable<Expense[]> {
+    let url = `${this.expensUrl}/filter`;
+    if (frequency != null) {
+      url += '?frequency=' + frequency;
+
+      if (months != null) {
+        url += '&months=' + months;
+      }
+    }
+
+    if (frequency === null && months != null){
+      url += '?months=' + months;
+    }
+
     return this.http.get<Expense[]>(url)
       .pipe(
         tap(expenses => this.log(`fetched `+frequency+` - `+months+`months: expenses`)),
         catchError(this.handleError('getExpenses with frequency of '+frequency+' - '+months, []))
       );
   }
+
+  getLabelsFiltered(table: string, frequency?: string, months?: number): Observable<Label[]> {
+    let url = `http://127.0.0.1:8124/api/labels`;
+
+    url += '?table='+table;
+
+    if (frequency != null) {
+      url += '&frequency=' + frequency;
+    }
+
+    if (months != null){
+      url += '&months=' + months;
+    }
+
+
+
+    console.log(url)
+    return this.http.get<Label[]>(url)
+      .pipe(
+        tap(labels => this.log(`fetched `+frequency+` - `+months+` labels of: expenses`)),
+        catchError(this.handleError('get labels with frequency of '+frequency+' - '+months, []))
+      );
+  }
+
+
 
   /**
    * get expense by id.
@@ -66,10 +104,15 @@ export class ExpenseService {
    * get expenses of certain month
    * @param {number} month
    * @param {number} year
+   * @param orderBy
    * @returns {Observable<Expense[]>}
    */
-  getExpensesOf(month: number, year: number): Observable<Expense[]> {
-    const url = `${this.expensUrl}/get/${month}/${year}`;
+  getExpensesOf(month: number, year: number, orderBy?: string): Observable<Expense[]> {
+    let url = `${this.expensUrl}/get/${month}/${year}`;
+
+    if (orderBy != null) {
+      url +="?orderBy="+orderBy;
+    }
 
     return this.http.get<Expense[]>(url).pipe(
       tap(_ => this.log(`fetched Expenses month=${month} year=${year}`)),
