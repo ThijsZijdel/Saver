@@ -53,6 +53,8 @@ app.use('/api', require('./controllers/companiesController'));
 app.use('/api', require('./controllers/spendingsController'));
 
 
+app.use('/api', require('./controllers/generalController'));
+
 /**
  * Catch 404 errors and forward to next handler
  */
