@@ -29,7 +29,7 @@
   <ul *ngIf="overdueBills.length === 0" class="bills-overdue transactions">
     <li class="over">
       <span></span><h2>There are no bills overdue </h2>
-      <span class="info"><span class="date">But, {{billBills.length}} bills need to be payed soon </span><span class="dot"></span><span class="company">Total: &euro;{{getSumExpenses(billBills)}}</span></span>
+      <span class="info" *ngIf="billBills.length > 0"><span class="date">But, {{billBills.length}} bills need to be payed soon </span><span class="dot"></span><span class="company">Total: &euro;{{getSumExpenses(billBills)}}</span></span>
     </li>
   </ul>
 
