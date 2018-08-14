@@ -97,7 +97,8 @@
                   <li class="forloop transaction-box" >
                     <!--getTransactionOf(balance.id-->
                     <table style="width: 100%;">
-                    <tr *ngFor="let transaction of getTransactionOf(balance.id); let i = index;">
+                    <tr *ngFor="let transaction of null; let i = index;">
+                      <!--getTransactionOf(balance.id)-->
                         <td *ngIf="displayedAmount[balance.id].val > i">
 
                           {{formatDate(transaction.date)}}
