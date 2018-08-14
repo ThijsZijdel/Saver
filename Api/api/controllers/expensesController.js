@@ -179,39 +179,50 @@ router.get('/expenses/get/?:id' ,  (req, res) => {
 
 });
 /**
- * HTTP Get route for expense
- * @param :id of expense
- * @res json expense object
+ * HTTP Get route for expense filtered
+ * @param query: months => from .. amount of months ago     default: 12 months
+ * @param frequency: options => monthly, weekly, daily.     default: monthly
+ * @res json expenses objects
  */
-router.get('/expenses/?:frequency/?:months' ,  (req, res) => {
-    let query, where = 'date BETWEEN "2017/07/01" and "2018/07/01"';
-
-    if (req.params.months === 12)
-        where = 'date BETWEEN "2017/07/01" and "2018/07/01"';
-    if (req.params.months === 6)
-        where = 'date BETWEEN "2018/02/01" and "2018/07/01"';
+router.get('/expenses/filter' ,  (req, res) => {
 
 
-
-    if (req.params.frequency === "monthly") {
-        query = 'SELECT SUM(amount) as amount, monthFk ' +
-            'FROM Expense ' +
-            'WHERE '+where+' ' +
-            'GROUP BY  monthFk ' +
-            'ORDER BY monthFk;'
-    } else if (req.params.frequency === "weekly") {
-        query = 'SELECT SUM(amount) as amount,  WEEK(date) AS week ' +
-            'FROM Expense ' +
-            'WHERE '+where+' ' +
-            'GROUP BY  WEEK(date) ' +
-            'ORDER BY WEEK(date);'
-    } else if (req.params.frequency === "daily"){
-        query = 'SELECT SUM(amount) as amount,  date ' +
-            'FROM Expense ' +
-            'WHERE '+where+' ' +
-            'GROUP BY  date ' +
-            'ORDER BY date;'
+    let months = 12;
+    if (req.query.months != null){
+        months = parseInt(req.query.months);
     }
+    let fromDate = new Date(),
+        from = new Date(fromDate.setMonth(fromDate.getMonth()-months)).toISOString().slice(0,10) ,
+        todayDate = new Date(),
+        to = todayDate.toISOString().slice(0,10);
+
+    let select = 'SELECT SUM(amount) as amount, monthFk  ',
+        fromTbl = 'FROM Expense ',
+        join = ' ',
+
+        where = 'WHERE date BETWEEN "'+from+'" and "'+to+'" ',
+        filter= ' ',
+        group = 'GROUP BY  monthFk ',
+        order = 'ORDER BY monthFk;';
+
+    if (req.query.frequency === "monthly") {
+        select = 'SELECT SUM(amount) as amount, monthFk ';
+        group = 'GROUP BY  monthFk ';
+        order = 'ORDER BY monthFk;';
+    } else if (req.query.frequency === "weekly") {
+        select = 'SELECT SUM(amount) as amount,  WEEK(date) AS week ';
+        group = 'GROUP BY  WEEK(date) ';
+        order = 'ORDER BY WEEK(date);'
+    } else if (req.query.frequency === "daily"){
+        select = 'SELECT SUM(amount) as amount,  date ';
+        group =  'GROUP BY  date ';
+        order =  'ORDER BY date;';
+    }
+
+
+
+
+    let query = select + fromTbl+ join + where + filter + group + order;
 
     async.parallel(
         [
