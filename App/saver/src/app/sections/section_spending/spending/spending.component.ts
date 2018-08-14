@@ -12,6 +12,7 @@ import {ExpenseService} from "../../section_expense/service_expense/expense.serv
 
 import * as $ from "jquery"
 import * as Highcharts from "highcharts";
+import {ReloadServiceFinancial} from "../../section_financial/service_reloadFinancial/reload.serviceFinancial";
 
 
 @Component({
@@ -24,7 +25,8 @@ export class SpendingComponent implements OnInit {
   constructor(private serviceSpending: SpendingService,
               private serviceCategories: CategoryService,
               private serviceBudgets: BudgetService,
-              private serviceExpenses: ExpenseService) { }
+              private serviceExpenses: ExpenseService,
+              private reloadServiceFinancial: ReloadServiceFinancial) { }
 
   chart: Chart;
 
@@ -43,13 +45,18 @@ export class SpendingComponent implements OnInit {
   totalSpendAmout: number = 0;
 
   ngOnInit() {
-    this.getSpendings();
+    this.getSpendings(12);
     this.categories = this.getCategories();
 
-    this.expenses = this.getExpenses();
+    this.expenses = this.getExpenses("monthly", 12);
     setTimeout(()=>{
       this.init();
     }, 500);
+
+
+    this.reloadServiceFinancial.change.subscribe(month => {
+      this.refresh();
+    });
   }
 
   /**
@@ -73,11 +80,11 @@ export class SpendingComponent implements OnInit {
   /**
    * Get all the spendings
    */
-  private getSpendings() {
+  private getSpendings(months: number) {
     //TODO the spendings should be collected in groups, sorted and the sum of the amounts for each category!
     //TODO This way they can be all loaded into the chart
     console.log("spending")
-    this.serviceSpending.getSpendings(12, ).subscribe(spendings => {
+    this.serviceSpending.getSpendings(months ).subscribe(spendings => {
       this.spendingData = [];
       this.spendings = [];
       this.totalSpendAmout = 0;
@@ -99,14 +106,14 @@ export class SpendingComponent implements OnInit {
    * Get all the expenses of .. //todo this month
    * @returns {Expense[]}
    */
-  private getExpenses(): Expense[] {
+  private getExpenses(frequency: string, months: number): Expense[] {
     let data: Expense[] = [];
 
 
-    this.serviceExpenses.getExpenses().subscribe(expenses => {
+    this.serviceExpenses.getExpensesFiltered(frequency, months).subscribe(expenses => {
       // loop trough all the expenes
-      for (let income of expenses) {
-        data.push(income);
+      for (let expense of expenses) {
+        data.push(expense);
 
         //incomeDataC.push(income.amount);
       }
@@ -350,6 +357,15 @@ export class SpendingComponent implements OnInit {
       // chart.ref$.subscribe(console.log);
   }
 
+  private refresh() {
+    this.getSpendings(this.reloadServiceFinancial.months);
+    this.categories = this.getCategories();
+
+    this.expenses = this.getExpenses(this.reloadServiceFinancial.frequency, this.reloadServiceFinancial.months);
+    setTimeout(()=>{
+      this.init();
+    }, 500);
+  }
 }
 
 
