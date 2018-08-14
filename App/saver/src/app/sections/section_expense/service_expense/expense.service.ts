@@ -6,6 +6,7 @@ import {Observable, of} from 'rxjs/index';
 import {Expense} from "../../../models/Expense";
 import {MessageService} from "../../../data/service/message/service_message/message.service";
 import {Category} from "../../../models/Category";
+import {Label} from "../../../models/Label";
 
 
 
@@ -60,6 +61,31 @@ export class ExpenseService {
         catchError(this.handleError('getExpenses with frequency of '+frequency+' - '+months, []))
       );
   }
+
+  getLabelsFiltered(table: string, frequency?: string, months?: number): Observable<Label[]> {
+    let url = `http://127.0.0.1:8124/api/labels`;
+
+    url += '?table='+table;
+
+    if (frequency != null) {
+      url += '&frequency=' + frequency;
+    }
+
+    if (months != null){
+      url += '&months=' + months;
+    }
+
+
+
+    console.log(url)
+    return this.http.get<Label[]>(url)
+      .pipe(
+        tap(labels => this.log(`fetched `+frequency+` - `+months+` labels of: expenses`)),
+        catchError(this.handleError('get labels with frequency of '+frequency+' - '+months, []))
+      );
+  }
+
+
 
   /**
    * get expense by id.
