@@ -58,8 +58,39 @@
 /*}*/
 
 
+.calender-component #calender-box div table.calendarTbl tbody td.over:before,
+.calender-component #calender-box div table.calendarTbl tbody td.bill:before,
+.calender-component #calender-box div table.calendarTbl tbody td.paid:before {
+  content: " ";
+  border-radius: 50%;
+  border: 2px solid #999;
+  padding: 0 5px;
+  position: absolute;
+
+  width: 30px;
+
+  height: 30px;
+  margin: 0 -10px -5px
+}
+
+.calender-component #calender-box div table.calendarTbl tbody td.over:before{
+
+  border-color: #D02C4D;
 
 
+
+}
+.calender-component #calender-box div table.calendarTbl tbody td.bill:before{
+
+  border-color: #127BE0;
+
+
+}
+.calender-component #calender-box div table.calendarTbl tbody td.paid:before{
+
+  border-color: #4BCA81;
+
+}
 
 
 .calender-component .calendar-container {
