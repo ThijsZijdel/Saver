@@ -7,6 +7,7 @@ import * as $ from "jquery"
 import {ExpenseService} from "../../section_expense/service_expense/expense.service";
 import {Expense} from "../../../models/Expense";
 import {ContextMenuComponent, ContextMenuService} from "ngx-contextmenu";
+import {ReloadServiceFinancial} from "../../section_financial/service_reloadFinancial/reload.serviceFinancial";
 
 @Component({
   selector: 'app-income',
@@ -21,8 +22,8 @@ export class IncomeComponent implements OnInit {
 
   avgIncome: number = 0.00;
   currentMonth: string = "JUL 2018";
-  currentEarned: number = 66000;
-  currentSpent: number = 53730;
+  currentEarned: number = 0;
+  currentSpent: number = 0;
 
   chartIncome: Chart;
 
@@ -34,18 +35,22 @@ export class IncomeComponent implements OnInit {
 
   savedData: number[] = [];
 
-  monthly: String[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  labels: String[] = [];
 
 
   showSavedSerie: boolean = false;
 
 
   constructor(private serviceIncome: IncomeService,
-              private serviceExpense: ExpenseService) { }
+              private serviceExpense: ExpenseService,
+              private reloadServiceFinancial: ReloadServiceFinancial) { }
 
 
 
   ngOnInit() {
+    this.getCurrentAmounts();
+
+    this.getLabels("monthly", 12);
     this.getFilteredIncomes("monthly", 12);
     this.getFilteredSpendings("monthly", 12);
     this.calculateSaved();
@@ -54,6 +59,7 @@ export class IncomeComponent implements OnInit {
     setTimeout(()=>{
       this.init();
     }, 500);
+
 
 
   }
@@ -86,9 +92,47 @@ export class IncomeComponent implements OnInit {
     });
 
   }
+  private getLabels(frequency: string, months: number) {
+    this.labels = [];
+
+    this.serviceExpense.getLabelsFiltered("Expense",frequency, months).subscribe(labels => {
+
+      for (let label of labels) {
+
+        if (frequency === "monthly") {
+          this.labels.push(label.name);
+        } else if (frequency === "weekly"){
+          this.labels.push("Week: "+label.name);
+        } else {
+          this.labels.push(label.name.slice(0,10));
+        }
+      }
+    });
+
+    this.serviceExpense.getLabelsFiltered("Income",frequency, months).subscribe(labels => {
+
+      for (let label of labels) {
+
+        if (frequency === "monthly") {
+          this.labels.push(label.name);
+        } else if (frequency === "weekly"){
+          this.labels.push("Week: "+label.name);
+        } else {
+          this.labels.push(label.name.slice(0,10));
+        }
+      }
+    });
+
+    this.labels.sort((a, b) => {
+      if (a < b) return -1;
+      if (a > b) return 1;
+      return 0;
+    }).reverse();
+
+  }
 
   private calculateSaved() {
-
+    this.savedData = [];
     for(let i = 0; i < this.incomeData.length; i++){
 
       // if(this.spendings[i].monthName == this.incomes[i].monthName) {
@@ -98,7 +142,7 @@ export class IncomeComponent implements OnInit {
     }
   }
 
-  eventPointY: string = this.monthly[new Date().getMonth()].toString();
+  // eventPointY: string = this.labels[new Date().getMonth()].toString();
 
   init() {
 
@@ -115,7 +159,7 @@ export class IncomeComponent implements OnInit {
         text: ''
       },
       xAxis: {
-        categories: this.monthly
+        categories: this.labels
       },
       plotOptions: {
         column: {
@@ -193,6 +237,9 @@ export class IncomeComponent implements OnInit {
 
 
   selectionChange(frequency: string, months: number) {
+    this.reloadServiceFinancial.setValues(frequency, months);
+
+    this.getLabels(frequency, months);
     this.getFilteredSpendings(frequency, months);
     this.getFilteredIncomes(frequency, months);
 
@@ -213,6 +260,11 @@ export class IncomeComponent implements OnInit {
 
 
 
+
+  }
+
+
+  private getCurrentAmounts() {
 
   }
 }

@@ -76,7 +76,18 @@ export class ExpensesComponent implements OnInit {
   }
 
   protected getExpensesOf(cat: Category):Expense[]{
-    return this.serviceExpenses.getExpensesOfcategory(cat, this.expenses);
+    let expenses: Expense[] = [];
+
+    this.expenses.filter(obj => {
+      if (obj.subcategoryFk === cat.id){
+        expenses.push(obj);
+      }
+    });
+
+    return expenses;
+
+
+    // return this.serviceExpenses.getExpensesOfcategory(cat, this.expenses);
   }
 
 
