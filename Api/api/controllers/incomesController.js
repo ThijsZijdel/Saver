@@ -92,11 +92,21 @@ router.get('/incomes/filter' ,  (req, res) => {
             }
         ],
         (err, results) => {
-            //Get the data from the initial call
-            let data = results[0];
+            if (err){
+                res.statusCode = 400;
+                res.json({
+                    "Could not get incomes of ":query,
+                    "queried":req.query,
+                    "error":err
+                });
+            } else {
 
-            res.statusCode = 200;
-            res.json(data);
+                //Get the data from the initial call
+                let data = results[0];
+
+                res.statusCode = 200;
+                res.json(data);
+            }
         }
     );
 
