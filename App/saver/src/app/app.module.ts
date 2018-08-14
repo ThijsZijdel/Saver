@@ -78,6 +78,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import { DataViewComponent } from './data/data-view/data-view.component';
 
 import {MaxCharsPipe, ValutaPipe} from "./data/service/pipes/CustomPipes";
+import {ReloadServiceFinancial} from "./sections/section_financial/service_reloadFinancial/reload.serviceFinancial";
 
 
 
@@ -160,7 +161,8 @@ import {MaxCharsPipe, ValutaPipe} from "./data/service/pipes/CustomPipes";
 
     AddViewsService,
 
-    ReloadService
+    ReloadService,
+    ReloadServiceFinancial
   ],
   bootstrap: [AppComponent]
 })
