@@ -218,7 +218,7 @@ export class IncomeComponent implements OnInit {
     function handleIt(event: any, category: any) {
       console.log("  >> "+category)
       // this.eventPointY = category;
-      alert(event.point.y+"Y   "+event.point.x+"X  "+event.point.category+"  "+this.eventPointY);
+      alert(event.point.y+"Y   "+event.point.x+"X  "+event.point.category+"  ");
     }
   }
 
