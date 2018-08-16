@@ -14,7 +14,7 @@ export class AddViewsService {
   editObj: boolean = false;
   addObj: boolean = false;
 
-  overflowOutlet: string[] = ["scroll","auto"];
+  overflowOutlet: string[] = ["",""];
 
   private expense: Expense = null;
   private category: Category = null;
@@ -34,7 +34,7 @@ export class AddViewsService {
 
     this.showAddViewOverlay = false
 
-    this.overflowOutlet = ["scroll","auto"];
+    this.overflowOutlet = ["",""];
   }
 
   show(){
