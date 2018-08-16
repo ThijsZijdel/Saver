@@ -44,6 +44,10 @@ export class SpendingComponent implements OnInit {
 
   totalSpendAmout: number = 0;
 
+  displayedCategories: number = 6;
+  toggleButtonOptions: string[] = ["Show all","Show less"];
+  toggleButtonText = this.toggleButtonOptions[0];
+
   ngOnInit() {
     this.getSpendings(12);
     this.categories = this.getCategories();
@@ -365,6 +369,12 @@ export class SpendingComponent implements OnInit {
     setTimeout(()=>{
       this.init();
     }, 500);
+  }
+
+  toggleCategories() {
+    this.displayedCategories === 6 ? this.displayedCategories = 99 : this.displayedCategories = 6;
+
+    this.toggleButtonText === this.toggleButtonOptions[0] ? this.toggleButtonText = this.toggleButtonOptions[1] : this.toggleButtonText = this.toggleButtonOptions[0];
   }
 }
 
