@@ -81,6 +81,10 @@ import {MaxCharsPipe, ValutaPipe} from "./data/service/pipes/CustomPipes";
 import {ReloadServiceFinancial} from "./sections/section_financial/service_reloadFinancial/reload.serviceFinancial";
 import { LocalSettingsComponent } from './data/settings/local-settings/local-settings.component';
 import { SettingsComponent } from './data/settings/settings.component';
+import {DragulaModule} from "ng2-dragula";
+import { ExpenseControllerComponent } from './expense-controller/expense-controller.component';
+import { FinancialControllerComponent } from './financial-controller/financial-controller.component';
+import { BillsControllerComponent } from './bills-controller/bills-controller.component';
 
 
 
@@ -120,7 +124,10 @@ import { SettingsComponent } from './data/settings/settings.component';
     MaxCharsPipe,
     ValutaPipe,
     LocalSettingsComponent,
-    SettingsComponent
+    SettingsComponent,
+    ExpenseControllerComponent,
+    FinancialControllerComponent,
+    BillsControllerComponent
   ],
   imports: [
     BrowserModule,
