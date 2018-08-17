@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageCategoryComponent } from './manage-category.component';
+import { ManageCompanyComponent } from './manage-company.component';
 
-describe('ManageCategoryComponent', () => {
-  let component: ManageCategoryComponent;
-  let fixture: ComponentFixture<ManageCategoryComponent>;
+describe('ManageCompanyComponent', () => {
+  let component: ManageCompanyComponent;
+  let fixture: ComponentFixture<ManageCompanyComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageCategoryComponent ]
+      declarations: [ ManageCompanyComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManageCategoryComponent);
+    fixture = TestBed.createComponent(ManageCompanyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
