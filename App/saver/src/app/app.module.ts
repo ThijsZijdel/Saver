@@ -79,6 +79,8 @@ import { DataViewComponent } from './data/data-view/data-view.component';
 
 import {MaxCharsPipe, ValutaPipe} from "./data/service/pipes/CustomPipes";
 import {ReloadServiceFinancial} from "./sections/section_financial/service_reloadFinancial/reload.serviceFinancial";
+import { LocalSettingsComponent } from './data/settings/local-settings/local-settings.component';
+import { SettingsComponent } from './data/settings/settings.component';
 
 
 
@@ -116,7 +118,9 @@ import {ReloadServiceFinancial} from "./sections/section_financial/service_reloa
     DataViewComponent,
 
     MaxCharsPipe,
-    ValutaPipe
+    ValutaPipe,
+    LocalSettingsComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
