@@ -87,7 +87,6 @@ export class SpendingComponent implements OnInit {
   private getSpendings(months: number) {
     //TODO the spendings should be collected in groups, sorted and the sum of the amounts for each category!
     //TODO This way they can be all loaded into the chart
-    console.log("spending")
     this.serviceSpending.getSpendings(months ).subscribe(spendings => {
       this.spendingData = [];
       this.spendings = [];

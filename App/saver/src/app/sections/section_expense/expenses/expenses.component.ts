@@ -110,7 +110,6 @@ export class ExpensesComponent implements OnInit {
 
     this.serviceCategories.getExpenseCategories(this.reloadService.month+1, this.reloadService.year, "onlyMain").subscribe(categories => {
       // loop trough all the categories
-      console.log("called")
       for (let category of categories) {
         this.mainCategories.push(category);
       }
