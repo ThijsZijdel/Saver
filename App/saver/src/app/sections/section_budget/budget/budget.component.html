@@ -1,10 +1,4 @@
-<div class="row correction">
-  <h1 (click)="reload()" class="clickable" >{{ reloadService.months[reloadService.month] }} {{reloadService.year}}</h1>
 
-  <button class="prev" (click)="changeMonth(-1)"> &#9664; </button> <button class="next" (click)="changeMonth(1)"> &#9654; </button>
-
-  <h1 class="bulkBudgetLeft">&euro;{{totalBudgetSpend}}</h1>
-</div>
 
 <div *ngFor="let budget of budgets; let i = index">
   <div class="row correction budget" *ngIf="i < budgetsShown">

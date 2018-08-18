@@ -1,0 +1,52 @@
+
+
+@import "../../../../assets/css/fonts.css";
+@import "../../../../assets/css/tooltip.css";
+
+.clickable {
+  cursor: pointer;
+}
+
+h1.bulkBudgetLeft {
+  right: 10px;
+  position: absolute;
+  color: #127BE0;
+}
+.row.budget{
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+.row.budget h3 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.row.budget .amount-box{
+  position: absolute;
+  right: 10px;
+  font-size: 13px;
+  font-weight: 300;
+  color: #bababa;
+  margin-top: 0;
+}
+button.prev, button.next {
+  border-radius: 50%;
+  border: 1.5px solid #222;
+  background: none;
+  font-size: 9px;
+  height: 20px;
+  font-weight: 800;
+  margin: 3px 0 0 5px;
+  padding: 0 4px;
+}
+button.prev {
+  margin-left: 7px;
+}
+
+.btn.wide{
+  margin: 5px 0 45px;
+}
+.correction {
+  margin: 0;
+}
