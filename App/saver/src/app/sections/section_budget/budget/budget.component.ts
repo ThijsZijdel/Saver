@@ -2,7 +2,7 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {Budget} from "../../../models/Budget";
 import {BudgetService} from "../service_budget/budget.service";
 import * as $ from "jquery"
-import {ReloadService} from "../service_reload/reload.service";
+import {ReloadService} from "../../../container-sections/expense-controller-section/service_reload/reload.service";
 
 @Component({
   selector: 'app-budget',

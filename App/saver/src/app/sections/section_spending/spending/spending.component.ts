@@ -12,7 +12,7 @@ import {ExpenseService} from "../../section_expense/service_expense/expense.serv
 
 import * as $ from "jquery"
 import * as Highcharts from "highcharts";
-import {ReloadServiceFinancial} from "../../section_financial/service_reloadFinancial/reload.serviceFinancial";
+import {ReloadServiceFinancial} from "../../../container-sections/financial-controller-section/service_reloadFinancial/reload.serviceFinancial";
 
 
 @Component({

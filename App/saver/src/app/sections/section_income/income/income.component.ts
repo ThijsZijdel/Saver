@@ -7,7 +7,7 @@ import * as $ from "jquery"
 import {ExpenseService} from "../../section_expense/service_expense/expense.service";
 import {Expense} from "../../../models/Expense";
 import {ContextMenuComponent, ContextMenuService} from "ngx-contextmenu";
-import {ReloadServiceFinancial} from "../../section_financial/service_reloadFinancial/reload.serviceFinancial";
+import {ReloadServiceFinancial} from "../../../container-sections/financial-controller-section/service_reloadFinancial/reload.serviceFinancial";
 
 @Component({
   selector: 'app-income',
