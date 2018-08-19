@@ -34,12 +34,11 @@ export class ExpensesComponent implements OnInit {
   @ViewChild(ContextMenuComponent) public expenseMenu: ContextMenuComponent;
 
 
+
+  //TODO remove test
   showMessage(mes: string){
     console.log(mes+" <test")
   }
-
-
-
 
 
   ngOnInit() {
@@ -51,8 +50,6 @@ export class ExpensesComponent implements OnInit {
     this.reloadService.change.subscribe(month => {
         this.refresh();
     });
-
-
 
   }
 
