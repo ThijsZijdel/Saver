@@ -60,7 +60,9 @@ export class IncomeComponent implements OnInit {
       this.init();
     }, 500);
 
-
+    this.reloadServiceFinancial.change.subscribe(month => {
+      this.refresh();
+    });
 
   }
 
@@ -236,20 +238,7 @@ export class IncomeComponent implements OnInit {
   }
 
 
-  selectionChange(frequency: string, months: number) {
-    this.reloadServiceFinancial.setValues(frequency, months);
 
-    this.getLabels(frequency, months);
-    this.getFilteredSpendings(frequency, months);
-    this.getFilteredIncomes(frequency, months);
-
-    this.calculateAvg();
-    this.calculateSaved();
-
-    setTimeout(()=>{
-      this.init();
-    }, 500);
-  }
 
 
 
@@ -266,6 +255,23 @@ export class IncomeComponent implements OnInit {
 
   private getCurrentAmounts() {
 
+  }
+
+  private refresh() {
+    console.log("reload  from rl service --> called the refresh in income")
+    let frequency = this.reloadServiceFinancial.frequency;
+    let months = this.reloadServiceFinancial.months;
+
+    this.getLabels(frequency, months);
+    this.getFilteredSpendings(frequency, months);
+    this.getFilteredIncomes(frequency, months);
+
+    this.calculateAvg();
+    this.calculateSaved();
+
+    setTimeout(()=>{
+      this.init();
+    }, 500);
   }
 }
 
