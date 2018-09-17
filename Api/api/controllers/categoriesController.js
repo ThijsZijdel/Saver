@@ -98,7 +98,7 @@ router.get('/categories/get/:month/:year/:filter' ,  (req, res) => {
 
     if(req.params.filter === "onlyMain") {
         generatedQuery =
-            'SELECT DISTINCT SUM(Expense.amount) AS total, mainCat.* FROM Expense ' +
+            'SELECT DISTINCT SUM(Expense.amount) AS total, COUNT(Expense.name) as count, mainCat.* FROM Expense ' +
             'LEFT JOIN Category ON Expense.subcategoryFk = Category.id ' +
             'LEFT JOIN Category AS mainCat ON Category.subCategoryFk = mainCat.id ' +
             'WHERE Expense.monthFk = ? AND Expense.year = ?  ' +
@@ -108,7 +108,7 @@ router.get('/categories/get/:month/:year/:filter' ,  (req, res) => {
 
     if (req.params.filter === "all" ){
        generatedQuery =
-            'SELECT DISTINCT Category.*, SUM(Expense.amount) as total FROM Expense ' +
+            'SELECT DISTINCT Category.*, SUM(Expense.amount) as total, COUNT(Expense.name) as count FROM Expense ' +
             'LEFT JOIN Category ON Expense.subcategoryFk = Category.id ' +
             'WHERE Expense.monthFk = ? AND Expense.year = ?  ' +
             'GROUP BY Category.id ' +

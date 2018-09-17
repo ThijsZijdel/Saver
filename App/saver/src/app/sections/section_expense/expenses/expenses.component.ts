@@ -9,7 +9,7 @@ import {catchOffline, Network} from '@ngx-pwa/offline';
 import * as $ from "jquery"
 import {ContextMenuComponent} from "ngx-contextmenu";
 import {AddViewsService} from "../../../data/manage/addViews/service_addViews/addViews.service";
-import {ReloadService} from "../../section_budget/service_reload/reload.service";
+import {ReloadService} from "../../../container-sections/expense-controller-section/service_reload/reload.service";
 import {Company} from "../../../models/Company";
 
 @Component({
@@ -34,12 +34,11 @@ export class ExpensesComponent implements OnInit {
   @ViewChild(ContextMenuComponent) public expenseMenu: ContextMenuComponent;
 
 
+
+  //TODO remove test
   showMessage(mes: string){
     console.log(mes+" <test")
   }
-
-
-
 
 
   ngOnInit() {
@@ -51,8 +50,6 @@ export class ExpensesComponent implements OnInit {
     this.reloadService.change.subscribe(month => {
         this.refresh();
     });
-
-
 
   }
 
@@ -76,7 +73,18 @@ export class ExpensesComponent implements OnInit {
   }
 
   protected getExpensesOf(cat: Category):Expense[]{
-    return this.serviceExpenses.getExpensesOfcategory(cat, this.expenses);
+    let expenses: Expense[] = [];
+
+    this.expenses.filter(obj => {
+      if (obj.subcategoryFk === cat.id){
+        expenses.push(obj);
+      }
+    });
+
+    return expenses;
+
+
+    // return this.serviceExpenses.getExpensesOfcategory(cat, this.expenses);
   }
 
 
@@ -99,7 +107,6 @@ export class ExpensesComponent implements OnInit {
 
     this.serviceCategories.getExpenseCategories(this.reloadService.month+1, this.reloadService.year, "onlyMain").subscribe(categories => {
       // loop trough all the categories
-      console.log("called")
       for (let category of categories) {
         this.mainCategories.push(category);
       }

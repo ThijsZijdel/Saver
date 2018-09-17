@@ -21,6 +21,7 @@ export class ReloadServiceFinancial {
    * Reloading by re emitting the values
    */
   reload(){
+    console.log("reload emitted in reload service")
     this.change.emit(this.months);
   }
 

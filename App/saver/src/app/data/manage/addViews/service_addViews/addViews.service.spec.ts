@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { AddViewsService } from './message.service';
+import { AddViewsService } from './addViews.service';
 
 describe('MessageService', () => {
   beforeEach(() => {
