@@ -361,6 +361,7 @@ export class SpendingComponent implements OnInit {
   }
 
   private refresh() {
+    this.spendings = [];
     this.getSpendings(this.reloadServiceFinancial.months);
     this.categories = this.getCategories();
 
