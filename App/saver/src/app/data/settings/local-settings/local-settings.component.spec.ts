@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageCompanyComponent } from './manage-company.component';
+import { LocalSettingsComponent } from './local-settings.component';
 
-describe('ManageCompanyComponent', () => {
-  let component: ManageCompanyComponent;
-  let fixture: ComponentFixture<ManageCompanyComponent>;
+describe('LocalSettingsComponent', () => {
+  let component: LocalSettingsComponent;
+  let fixture: ComponentFixture<LocalSettingsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageCompanyComponent ]
+      declarations: [ LocalSettingsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManageCompanyComponent);
+    fixture = TestBed.createComponent(LocalSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

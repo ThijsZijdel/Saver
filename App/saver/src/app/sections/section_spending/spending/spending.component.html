@@ -20,7 +20,7 @@
       <div class="expense" *ngFor="let category of spendings; let i = index;">
 
 
-        <div class="sub-layer {{category.name.split(' ').join('_')+'-'+category.id}}">
+        <div class="sub-layer {{category.name.split(' ').join('_')+'-'+category.id}}" *ngIf="i < displayedCategories">
 
 
           <li>
@@ -63,6 +63,11 @@
         </div>
 
       </div>
+      <button class="more btn wide paidShown"
+              (click)="toggleCategories()">
+        {{toggleButtonText}}
+        <span *ngIf="spendings.length-displayedCategories > 0">({{spendings.length-displayedCategories}})</span>
+      </button>
     </ul>
 
 

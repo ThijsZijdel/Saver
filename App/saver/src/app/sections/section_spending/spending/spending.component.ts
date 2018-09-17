@@ -12,7 +12,7 @@ import {ExpenseService} from "../../section_expense/service_expense/expense.serv
 
 import * as $ from "jquery"
 import * as Highcharts from "highcharts";
-import {ReloadServiceFinancial} from "../../section_financial/service_reloadFinancial/reload.serviceFinancial";
+import {ReloadServiceFinancial} from "../../../container-sections/financial-controller-section/service_reloadFinancial/reload.serviceFinancial";
 
 
 @Component({
@@ -43,6 +43,10 @@ export class SpendingComponent implements OnInit {
     '#00AEEF', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#B8E986'];
 
   totalSpendAmout: number = 0;
+
+  displayedCategories: number = 6;
+  toggleButtonOptions: string[] = ["Show all","Show less"];
+  toggleButtonText = this.toggleButtonOptions[0];
 
   ngOnInit() {
     this.getSpendings(12);
@@ -83,7 +87,6 @@ export class SpendingComponent implements OnInit {
   private getSpendings(months: number) {
     //TODO the spendings should be collected in groups, sorted and the sum of the amounts for each category!
     //TODO This way they can be all loaded into the chart
-    console.log("spending")
     this.serviceSpending.getSpendings(months ).subscribe(spendings => {
       this.spendingData = [];
       this.spendings = [];
@@ -358,6 +361,7 @@ export class SpendingComponent implements OnInit {
   }
 
   private refresh() {
+    this.spendings = [];
     this.getSpendings(this.reloadServiceFinancial.months);
     this.categories = this.getCategories();
 
@@ -365,6 +369,12 @@ export class SpendingComponent implements OnInit {
     setTimeout(()=>{
       this.init();
     }, 500);
+  }
+
+  toggleCategories() {
+    this.displayedCategories === 6 ? this.displayedCategories = 99 : this.displayedCategories = 6;
+
+    this.toggleButtonText === this.toggleButtonOptions[0] ? this.toggleButtonText = this.toggleButtonOptions[1] : this.toggleButtonText = this.toggleButtonOptions[0];
   }
 }
 

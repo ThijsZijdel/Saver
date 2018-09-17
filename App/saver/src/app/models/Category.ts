@@ -11,8 +11,9 @@ export class Category {
   subCategoryFk?: number;
 
   total?:number;
+  count?:number;
 
-  constructor(id: number, name: string, description: string, color: string, icon:string, subCategoryFk?: number, total?: number){
+  constructor(id: number, name: string, description: string, color: string, icon:string, subCategoryFk?: number, total?: number, count?: number){
     this.id = id;
     this.name = name;
     this.subCategoryFk = subCategoryFk;
@@ -23,6 +24,7 @@ export class Category {
     this.icon = icon;
 
     this.total = total;
+    this.count = count;
   }
 
 

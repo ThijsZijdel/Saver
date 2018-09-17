@@ -69,7 +69,7 @@ import {AddViewsService} from "./data/manage/addViews/service_addViews/addViews.
 import {AddViewsComponent} from "./data/manage/addViews/addViews.component";
 import {FormsModule} from "@angular/forms";
 import {ManageCategoryComponent} from "./data/categories/manage-category/manage-category.component";
-import {ReloadService} from "./sections/section_budget/service_reload/reload.service";
+import {ReloadService} from "./container-sections/expense-controller-section/service_reload/reload.service";
 import {BulkAddViewComponent} from "./data/manage/upload/bulkAddView/bulkAddView.component";
 import {CompanyService} from "./data/service/service_company/company.service";
 import {NgHttpLoaderModule} from "ng-http-loader";
@@ -78,7 +78,12 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import { DataViewComponent } from './data/data-view/data-view.component';
 
 import {MaxCharsPipe, ValutaPipe} from "./data/service/pipes/CustomPipes";
-import {ReloadServiceFinancial} from "./sections/section_financial/service_reloadFinancial/reload.serviceFinancial";
+import {ReloadServiceFinancial} from "./container-sections/financial-controller-section/service_reloadFinancial/reload.serviceFinancial";
+import { LocalSettingsComponent } from './data/settings/local-settings/local-settings.component';
+import { SettingsComponent } from './data/settings/settings.component';
+import { ExpenseControllerComponent } from './container-sections/expense-controller-section/expense-controller/expense-controller.component';
+import { FinancialControllerComponent } from './container-sections/financial-controller-section/financial-controller/financial-controller.component';
+import { BillsControllerComponent } from './container-sections/bill-controller-section/bills-controller/bills-controller.component';
 
 
 
@@ -116,7 +121,12 @@ import {ReloadServiceFinancial} from "./sections/section_financial/service_reloa
     DataViewComponent,
 
     MaxCharsPipe,
-    ValutaPipe
+    ValutaPipe,
+    LocalSettingsComponent,
+    SettingsComponent,
+    ExpenseControllerComponent,
+    FinancialControllerComponent,
+    BillsControllerComponent
   ],
   imports: [
     BrowserModule,
